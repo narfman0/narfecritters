@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 
 setup(
-    name="smb3-video-autosplitter",
+    name="pokeclone",
     version="0.0.1",
     description=("Ingest video data to render smb3 eh manip stimuli"),
     classifiers=[
@@ -11,7 +11,7 @@ setup(
         "Programming Language :: Python",
         "Topic :: Software Development :: Libraries :: Python Modules",
     ],
-    keywords="smb3-video-autosplitter",
+    keywords="pokeclone",
     author="Jon Robison",
     author_email="narfman0@blastedstudios.com",
     license="LICENSE",
