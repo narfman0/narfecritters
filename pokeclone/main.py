@@ -1,6 +1,3 @@
-"""
-video based autosplitter for smb3
-"""
 import logging
 
 from pokeclone import settings
@@ -21,27 +18,28 @@ from pygame_gui import UIManager, UI_BUTTON_PRESSED
 from pygame_gui.elements import UIButton
 
 
-from pokeclone import npc
+from pokeclone.world import MOVE_SPEED, World
 
-MOVE_SPEED = 5
+WINDOW_SIZE = (800, 600)
+TILE_SIZE = 16
 
 
 def main():
     initialize_logging()
     pygame.init()
-    pygame.display.set_caption("Quick Start")
-    window_surface = pygame.display.set_mode((800, 600))
-    manager = UIManager((800, 600), "data/theme.json")
-    background = pygame.Surface((800, 600))
+    pygame.display.set_caption("pokeclone")
+    window_surface = pygame.display.set_mode(WINDOW_SIZE)
+    manager = UIManager(WINDOW_SIZE, "data/theme.json")
+    background = pygame.Surface(WINDOW_SIZE)
     background.fill((0, 255, 0))
-    npc_surface = pygame.Surface((16, 16))
+    npc_surface = pygame.Surface((TILE_SIZE, TILE_SIZE))
     npc_surface.fill((255, 0, 0))
     hello_button = UIButton((350, 280), "Hello")
 
     clock = pygame.time.Clock()
     is_running = True
 
-    player = npc.NPC(x=10, y=10)
+    world = World()
 
     while is_running:
         time_delta = clock.tick(60) / 1000.0
@@ -49,25 +47,30 @@ def main():
             if event.type == pygame.QUIT:
                 is_running = False
             if event.type == UI_BUTTON_PRESSED:
-                pass
                 if event.ui_element == hello_button:
-                    player.x += 1
                     print("Hello World!")
             manager.process_events(event)
 
-        if pygame.key.get_pressed()[pygame.K_LEFT]:
-            player.x -= MOVE_SPEED
-        elif pygame.key.get_pressed()[pygame.K_RIGHT]:
-            player.x += MOVE_SPEED
-        elif pygame.key.get_pressed()[pygame.K_UP]:
-            player.y += MOVE_SPEED
-        elif pygame.key.get_pressed()[pygame.K_DOWN]:
-            player.y -= MOVE_SPEED
-
+        if pygame.key.get_pressed()[pygame.K_LEFT] and world.player.x > 0:
+            world.player.x -= MOVE_SPEED
+        elif (
+            pygame.key.get_pressed()[pygame.K_RIGHT] and world.player.x < WINDOW_SIZE[0]
+        ):
+            world.player.x += MOVE_SPEED
+        if pygame.key.get_pressed()[pygame.K_UP] and world.player.y < WINDOW_SIZE[1]:
+            world.player.y += MOVE_SPEED
+        elif pygame.key.get_pressed()[pygame.K_DOWN] and world.player.y > 0:
+            world.player.y -= MOVE_SPEED
+        world.update(time_delta)
         manager.update(time_delta)
-
         window_surface.blit(background, (0, 0))
-        window_surface.blit(npc_surface, (player.x, player.y))
+        window_surface.blit(
+            npc_surface,
+            (
+                world.player.x - TILE_SIZE / 2,
+                WINDOW_SIZE[1] - world.player.y - TILE_SIZE / 2,
+            ),
+        )
         manager.draw_ui(window_surface)
 
         pygame.display.update()
