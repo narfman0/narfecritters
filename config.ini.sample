@@ -1,0 +1,6 @@
+[app]
+
+video_capture_source = 1
+autosplitter_region = 565,517,82,109
+
+; show_capture_video = false

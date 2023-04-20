@@ -1,0 +1,46 @@
+image: Visual Studio 2019
+
+environment:
+  matrix:
+    - PYTHON: "C:\\Python310-x64"
+
+install:
+  - SET PATH=%PYTHON%;%PYTHON%\Scripts;%PATH%
+  - pip install -r requirements_test.txt
+
+build: off
+
+test_script:
+  - pytest --cov=pokeclone --cov-report term-missing tests/
+
+after_test:
+  - pyinstaller --noconfirm --onefile --console -n pokeclone --uac-admin app.py
+  - cp -r data/ dist/
+  - cp config.ini.sample dist/config.ini
+  - cp README.* dist/
+  - 7z a pokeclone.zip dist/*
+  - 7z rn pokeclone.zip dist pokeclone
+
+artifacts:
+  - path: pokeclone.zip
+    name: pokeclone
+
+deploy:
+  - provider: GitHub
+    tag: dev
+    release: dev
+    auth_token:
+      secure: 32wi9EYebbPOK8c8u2acHuSm2Gs/Mhm9nhnUOKmkuh10ftCGcdGu3yTo2PRiuuN/
+    artifact: pokeclone.zip
+    prerelease: true
+    on:
+      branch: main
+  - provider: GitHub
+    tag: $(APPVEYOR_REPO_TAG_NAME)
+    release: $(APPVEYOR_REPO_TAG_NAME)
+    auth_token:
+      secure: 32wi9EYebbPOK8c8u2acHuSm2Gs/Mhm9nhnUOKmkuh10ftCGcdGu3yTo2PRiuuN/
+    artifact: pokeclone.zip
+    prerelease: true
+    on:
+      APPVEYOR_REPO_TAG: true
