@@ -17,11 +17,17 @@ class BattleScreen:
         self.screens = screens
         self.world = world
         self.fight_buttons = []
-        y = 280
+        y = WINDOW_SIZE[1] - 156
         for move in self.world.active_pokemon().moves:
-            self.fight_buttons.append(UIButton((350, y), move.name))
+            self.fight_buttons.append(UIButton((WINDOW_SIZE[0] - 100, y), move.name))
             y += 32
         self.world.create_encounter()
+        self.enemy_pokemon_image = pygame.image.load(
+            f"data/sprites/{world.enemy.id}.png"
+        ).convert()
+        self.self_pokemon_image = pygame.image.load(
+            f"data/sprites/back/{world.active_pokemon().id}.png"
+        ).convert()
         LOGGER.info(f"You are fighting a {self.world.enemy}")
 
     def process_event(self, event):
@@ -52,3 +58,5 @@ class BattleScreen:
         background = pygame.Surface(WINDOW_SIZE)
         background.fill((128, 128, 128))
         surface.blit(background, (0, 0))
+        surface.blit(self.enemy_pokemon_image, (WINDOW_SIZE[0] - 128, 32))
+        surface.blit(self.self_pokemon_image, (32, WINDOW_SIZE[1] - 128))

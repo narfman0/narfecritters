@@ -27,6 +27,7 @@ class Move:
 
 @dataclass
 class Pokemon:
+    id: int
     name: str
     max_hp: int
     current_hp: int
