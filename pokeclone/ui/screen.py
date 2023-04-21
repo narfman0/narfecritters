@@ -24,5 +24,5 @@ class ScreenManager:
         self.screens.pop()
 
     @property
-    def current(self):
+    def current(self) -> Screen:
         return self.screens[-1]

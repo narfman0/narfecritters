@@ -30,10 +30,10 @@ def main():
     while is_running:
         dt = clock.tick(60) / 1000.0
         for event in pygame.event.get():
-            if event.type == UI_BUTTON_PRESSED:
-                screen_manager.current.process_event(event)
             if event.type == pygame.QUIT:
                 is_running = False
+            else:
+                screen_manager.current.process_event(event)
             manager.process_events(event)
 
         screen_manager.current.update(dt)
