@@ -21,7 +21,7 @@ from pokeclone.world import MOVE_SPEED, World
 
 WINDOW_SIZE = (800, 600)
 TILE_SIZE = 16
-ENCOUNTER_CHANCE = 0.01
+ENCOUNTER_CHANCE = 0.05
 
 
 class OverworldScreen:
@@ -33,7 +33,20 @@ class OverworldScreen:
     def process_event(self, event):
         if event.type == UI_BUTTON_PRESSED:
             if event.ui_element == self.attack_button:
-                print("Hello World!")
+                if not self.world.in_encounter:
+                    return
+                player_dmg, enemy_dmg = self.world.turn()
+                print(
+                    f"{self.world.active_pokemon().name} attacked for {enemy_dmg}, took {player_dmg}"
+                )
+                if self.world.active_pokemon().current_hp <= 0:
+                    LOGGER.info(f"Your {self.world.active_pokemon().name} passed out!")
+                    self.world.end_encounter()
+                    self.attack_button.kill()
+                if self.world.enemy.current_hp <= 0:
+                    LOGGER.info(f"Enemy {self.world.active_pokemon().name} passed out!")
+                    self.world.end_encounter()
+                    self.attack_button.kill()
 
     def update(self, dt: float, manager: UIManager):
         if not self.world.in_encounter:

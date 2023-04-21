@@ -28,7 +28,8 @@ class Move:
 @dataclass
 class Pokemon:
     name: str
-    hp: int
+    max_hp: int
+    current_hp: int
     attack: int
     defense: int
     spattack: int
