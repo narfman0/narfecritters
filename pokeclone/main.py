@@ -18,12 +18,13 @@ def main():
     window_surface = pygame.display.set_mode(WINDOW_SIZE)
     manager = UIManager(WINDOW_SIZE, "data/theme.json")
     background = pygame.Surface(WINDOW_SIZE)
-    background.fill((0, 255, 0))
+    background.fill((255, 255, 255))
 
     clock = pygame.time.Clock()
     is_running = True
 
-    screens = [OverworldScreen()]
+    screens = []
+    screens.append(OverworldScreen(screens))
 
     while is_running:
         dt = clock.tick(60) / 1000.0
@@ -34,7 +35,7 @@ def main():
                 is_running = False
             manager.process_events(event)
 
-        screens[-1].update(dt, manager)
+        screens[-1].update(dt)
 
         manager.update(dt)
         window_surface.blit(background, (0, 0))
