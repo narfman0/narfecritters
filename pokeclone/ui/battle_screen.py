@@ -33,7 +33,9 @@ class BattleScreen(Screen):
         self.self_pokemon_image = pygame.image.load(
             f"data/sprites/pokemon/back/{world.active_pokemon.id}.png"
         ).convert()
-        LOGGER.info(f"You are fighting a {self.world.enemy}")
+        LOGGER.info(
+            f"You are fighting a level {self.world.enemy.level} {self.world.enemy.name}"
+        )
 
     def process_event(self, event):
         if event.type == UI_BUTTON_PRESSED:
