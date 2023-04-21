@@ -65,7 +65,7 @@ class Pokedex(YAMLWizard):
             if pokemon.name == name:
                 return pokemon
 
-    def create(self, name, level):
+    def create(self, name, level) -> Pokemon:
         instance = copy.copy(self.find(name))
         instance.level = level
         return instance
