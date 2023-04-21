@@ -1,0 +1,23 @@
+---
+pokemon:
+  - name: bulbasaur
+    id: 1
+    hp: 45
+    attack: 49
+    defense: 49
+    spattack: 65
+    spdefense: 65
+    speed: 45
+    types:
+      - 5
+      - 8
+  - name: charmander
+    id: 4
+    hp: 39
+    attack: 52
+    defense: 43
+    spattack: 60
+    spdefense: 50
+    speed: 65
+    types:
+      - 2

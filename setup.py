@@ -19,6 +19,7 @@ setup(
     include_package_data=True,
     zip_safe=True,
     install_requires=[
+        "dataclass_wizard",
         "pygame",
         "pygame_gui",
     ],
