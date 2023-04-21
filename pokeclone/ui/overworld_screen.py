@@ -1,6 +1,7 @@
 import logging
 
 import pygame
+import pytmx
 
 from pokeclone.world import MOVE_SPEED, World
 from pokeclone.ui.battle_screen import BattleScreen
@@ -12,11 +13,14 @@ LOGGER = logging.getLogger(__name__)
 
 class OverworldScreen(Screen):
     def __init__(self, screen_manager: ScreenManager):
+        super().__init__()
         self.screen_manager = screen_manager
         self.world = World()
         self.player_image = pygame.image.load(
             "data/sprites/overworld/player_standing.png"
         ).convert()
+        # self.tmxdata = pytmx.TiledMap("data/tiled/overworld.tmx")
+        self.tmxdata = pytmx.load_pygame("data/tiled/overworld.tmx")
 
     def update(self, dt: float):
         if (
@@ -44,9 +48,12 @@ class OverworldScreen(Screen):
             self.screen_manager.push(BattleScreen(self.screen_manager, self.world))
 
     def draw(self, surface: pygame.Surface):
-        background = pygame.Surface(WINDOW_SIZE)
-        background.fill((0, 255, 0))
-        surface.blit(background, (0, 0))
+        surface.blit(self.background, (0, 0))
+        for x in range(0, 10):
+            for y in range(0, 10):
+                image = self.tmxdata.get_tile_image(x, y, 0)
+                if image:
+                    surface.blit(image, (x * 32, y * 32))
         self.draw_overworld(
             surface, self.player_image, self.world.player.x, self.world.player.y
         )
@@ -54,5 +61,7 @@ class OverworldScreen(Screen):
     @classmethod
     def draw_overworld(cls, surface: pygame.Surface, image, x, y):
         """Converts world coordinates to screen coordinates"""
+        if image is None:
+            return
         screen_y = WINDOW_SIZE[1] - y - image.get_height() / 2
         surface.blit(image, (x + image.get_width() / 2, screen_y))

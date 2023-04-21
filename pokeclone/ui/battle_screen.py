@@ -14,6 +14,7 @@ LOGGER = logging.getLogger(__name__)
 
 class BattleScreen(Screen):
     def __init__(self, screen_manager: ScreenManager, world: World):
+        super().__init__()
         self.screen_manager = screen_manager
         self.world = world
         self.fight_buttons = []
@@ -40,8 +41,6 @@ class BattleScreen(Screen):
                     self.screen_manager.pop()
 
     def draw(self, surface: pygame.Surface):
-        background = pygame.Surface(WINDOW_SIZE)
-        background.fill((128, 128, 128))
-        surface.blit(background, (0, 0))
+        surface.blit(self.background, (0, 0))
         surface.blit(self.enemy_pokemon_image, (WINDOW_SIZE[0] - 128, 32))
         surface.blit(self.self_pokemon_image, (32, WINDOW_SIZE[1] - 128))

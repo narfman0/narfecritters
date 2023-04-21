@@ -1,8 +1,14 @@
 from pygame.event import Event
 from pygame.surface import Surface
 
+from pokeclone.ui.settings import WINDOW_SIZE
+
 
 class Screen:
+    def __init__(self):
+        self.background = Surface(WINDOW_SIZE)
+        self.background.fill("gray")
+
     def process_event(self, event: Event):
         pass
 

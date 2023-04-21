@@ -22,6 +22,7 @@ setup(
         "dataclass_wizard",
         "pygame",
         "pygame_gui",
+        "pytmx",
     ],
     test_suite="tests",
 )
