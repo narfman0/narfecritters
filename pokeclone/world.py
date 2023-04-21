@@ -30,13 +30,10 @@ class World:
             self.player.y -= distance
 
         if random.random() < 0.01:
-            self.create_encounter()
-
-    def create_encounter(self):
-        enemy_pokemon_name = random.choice(["charmander", "bulbasaur"])
-        self.enemy = self.pokedex.create(
-            enemy_pokemon_name, round(random.random() * 4 + 1)
-        )
+            self.enemy = self.pokedex.create(
+                random.choice(["charmander", "bulbasaur"]),
+                round(random.random() * 4 + 1),
+            )
 
     def end_encounter(self):
         self.enemy = None

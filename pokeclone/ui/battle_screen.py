@@ -1,5 +1,4 @@
 import logging
-import random
 
 import pygame
 from pygame_gui import UI_BUTTON_PRESSED
@@ -37,12 +36,9 @@ class BattleScreen(Screen):
                 move_name = event.ui_element.text
                 self.world.turn(move_name)
                 if self.world.enemy is None:
-                    self.end_encounter()
-
-    def end_encounter(self):
-        for button in self.fight_buttons:
-            button.kill()
-        self.screen_manager.pop()
+                    for button in self.fight_buttons:
+                        button.kill()
+                    self.screen_manager.pop()
 
     def draw(self, surface: pygame.Surface):
         background = pygame.Surface(WINDOW_SIZE)
