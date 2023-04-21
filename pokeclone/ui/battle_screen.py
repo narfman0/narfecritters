@@ -19,9 +19,14 @@ class BattleScreen(Screen):
         self.world = world
         self.fight_buttons = []
         y = WINDOW_SIZE[1] - 156
-        for move in self.world.active_pokemon.moves:
+        current = 0
+        for move_id in self.world.active_pokemon.move_ids:
+            if current >= 4:
+                continue
+            move = self.world.moves.find_by_id(move_id)
             self.fight_buttons.append(UIButton((WINDOW_SIZE[0] - 100, y), move.name))
             y += 32
+            current += 1
         self.enemy_pokemon_image = pygame.image.load(
             f"data/sprites/pokemon/{world.enemy.id}.png"
         ).convert()

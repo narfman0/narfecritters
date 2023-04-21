@@ -36,6 +36,9 @@ pyinstaller: clean
 	7z a pokeclone.zip dist/*
 	7z rn pokeclone.zip dist pokeclone
 
+run-db-generate:
+	python -m pokeclone.db.generate
+
 run-main:
 	python -m pokeclone.main
 
@@ -52,6 +55,7 @@ release-prod: clean
 
 release: run-test release-test release-prod clean
 
+dbg: run-db-generate
 m: run-main
 main: init m
 t: run-test

@@ -12,6 +12,7 @@ MOVE_SPEED = 200
 class World:
     def __init__(self):
         self.pokedex = Pokedex.load()
+        self.moves = Moves.load()
         starting_pokemon = self.pokedex.create("charmander", 5)
         # TODO rebalance this
         starting_pokemon.base_stats.hp += 50
@@ -41,16 +42,12 @@ class World:
         # TODO add experience :D
 
     def turn(self, move_name):
-        move = None
-        for amove in self.active_pokemon.moves:
-            if amove.name == move_name:
-                move = amove
+        move = self.moves.find_by_name(move_name)
         # TODO model active pokemon
         enemy_damage = self.attack(self.active_pokemon, self.enemy, move)
         self.enemy.current_hp -= enemy_damage
-        player_damage = self.attack(
-            self.enemy, self.active_pokemon, random.choice(self.enemy.moves)
-        )
+        enemy_move = self.moves.find_by_id(random.choice(self.enemy.move_ids))
+        player_damage = self.attack(self.enemy, self.active_pokemon, enemy_move)
         self.active_pokemon.current_hp -= player_damage
 
         print(
@@ -63,8 +60,7 @@ class World:
             LOGGER.info(f"Enemy {self.active_pokemon.name} passed out!")
             self.end_encounter()
 
-    @classmethod
-    def attack(cls, attacker: Pokemon, defender: Pokemon, move: Move):
+    def attack(self, attacker: Pokemon, defender: Pokemon, move: Move):
         return (
             round(
                 (

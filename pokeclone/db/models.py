@@ -8,8 +8,23 @@ from dataclass_wizard import YAMLWizard
 class Type(Enum):
     NORMAL = 1
     FIRE = 2
+    WATER = 3
+    ELECTRIC = 4
     GRASS = 5
+    ICE = 6
+    FIGHTING = 7
     POISON = 8
+    GROUND = 9
+    FLYING = 10
+    PSYCHIC = 11
+    BUG = 12
+    ROCK = 13
+    GHOST = 14
+    DRAGON = 15
+    DARK = 16
+    STEEL = 17
+    FAIRY = 18
+    SHADOW = 19  # e.g. move 10001 :shrugs:
 
 
 @dataclass
@@ -21,8 +36,10 @@ class NPC:
 
 @dataclass
 class Move:
+    id: int
     name: str
     power: int
+    type: Type
 
 
 @dataclass
@@ -39,10 +56,10 @@ class Stats:
 class Pokemon:
     id: int
     name: str
-    current_hp: int
     base_stats: Stats
     types: list[Type]
-    moves: list[Move]
+    move_ids: list[int]
+    current_hp: int = field(default=False, init=False)
     level: int = field(default=False, init=False)
 
     @property
@@ -71,12 +88,31 @@ class Pokemon:
 
 
 @dataclass
+class Moves(YAMLWizard):
+    moves: list[Move]
+
+    @classmethod
+    def load(cls):
+        return Moves.from_yaml_file(f"data/db/moves.yml")
+
+    def find_by_name(self, name: str):
+        for move in self.moves:
+            if move.name == name:
+                return move
+
+    def find_by_id(self, id: int):
+        for move in self.moves:
+            if move.id == id:
+                return move
+
+
+@dataclass
 class Pokedex(YAMLWizard):
     pokemon: list[Pokemon]
 
     @classmethod
     def load(cls):
-        return Pokedex.from_yaml_file(f"data/pokemon.yml")
+        return Pokedex.from_yaml_file(f"data/db/pokemon.yml")
 
     def find(self, name):
         for pokemon in self.pokemon:
