@@ -15,6 +15,8 @@ pokemon:
     moves:
       - name: Scratch
         power: 35
+      - name: Razor Wind
+        power: 80
   - name: charmander
     id: 4
     max_hp: 39
@@ -29,3 +31,5 @@ pokemon:
     moves:
       - name: Scratch
         power: 35
+      - name: Bite
+        power: 60

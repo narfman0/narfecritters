@@ -35,13 +35,13 @@ class World:
     def active_pokemon(self) -> models.Pokemon:
         return self.player.pokemon[0]
 
-    def turn(self):
+    def turn(self, move_name):
+        move = None
+        for amove in self.active_pokemon().moves:
+            if amove.name == move_name:
+                move = amove
         # TODO model active pokemon
-        enemy_damage = models.attack(
-            self.active_pokemon(),
-            self.enemy,
-            random.choice(self.active_pokemon().moves),
-        )
+        enemy_damage = models.attack(self.active_pokemon(), self.enemy, move)
         self.enemy.current_hp -= enemy_damage
         player_damage = models.attack(
             self.enemy, self.active_pokemon(), random.choice(self.enemy.moves)

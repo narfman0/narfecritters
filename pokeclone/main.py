@@ -30,24 +30,24 @@ class OverworldScreen:
         self.world = World()
         self.npc_surface = pygame.Surface((TILE_SIZE, TILE_SIZE))
         self.npc_surface.fill((255, 0, 0))
+        self.fight_buttons = []
 
     def process_event(self, event):
         if event.type == UI_BUTTON_PRESSED:
-            if event.ui_element == self.attack_button:
+            if event.ui_element in self.fight_buttons:
                 if not self.world.in_encounter:
                     return
-                player_dmg, enemy_dmg = self.world.turn()
+                move_name = event.ui_element.text
+                player_dmg, enemy_dmg = self.world.turn(move_name)
                 print(
-                    f"{self.world.active_pokemon().name} attacked for {enemy_dmg}, took {player_dmg}"
+                    f"{self.world.active_pokemon().name} used {move_name} for {enemy_dmg}, took {player_dmg}"
                 )
                 if self.world.active_pokemon().current_hp <= 0:
                     LOGGER.info(f"Your {self.world.active_pokemon().name} passed out!")
-                    self.world.end_encounter()
-                    self.attack_button.kill()
+                    self.end_encounter()
                 if self.world.enemy.current_hp <= 0:
                     LOGGER.info(f"Enemy {self.world.active_pokemon().name} passed out!")
-                    self.world.end_encounter()
-                    self.attack_button.kill()
+                    self.end_encounter()
 
     def update(self, dt: float, manager: UIManager):
         if not self.world.in_encounter:
@@ -89,13 +89,20 @@ class OverworldScreen:
             self.world.player.y -= MOVE_SPEED
             self.maybe_create_encounter()
 
+    def end_encounter(self):
+        self.world.end_encounter()
+        for button in self.fight_buttons:
+            button.kill()
+
     def maybe_create_encounter(self):
         if random.random() > ENCOUNTER_CHANCE or self.world.in_encounter:
             return
         self.world.create_encounter()
-        self.attack_button = UIButton(
-            (350, 280), f"You are fighting a {self.world.enemy.name}"
-        )
+        LOGGER.info(f"You are fighting a {self.world.enemy}")
+        y = 280
+        for move in self.world.active_pokemon().moves:
+            self.fight_buttons.append(UIButton((350, y), move.name))
+            y += 32
 
 
 def main():
