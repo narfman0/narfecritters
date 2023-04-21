@@ -36,6 +36,7 @@ class Pokemon:
     spdefense: int
     speed: int
     types: list[Type]
+    moves: list[Move]
     level: int = field(default=False, init=False)
 
 

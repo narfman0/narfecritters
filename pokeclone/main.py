@@ -9,6 +9,7 @@ LOGGER = logging.getLogger(__name__)
 """
 * fight pokemon
 * final boss
+* level up
 """
 import random
 

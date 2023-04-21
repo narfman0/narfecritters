@@ -38,11 +38,13 @@ class World:
     def turn(self):
         # TODO model active pokemon
         enemy_damage = models.attack(
-            self.active_pokemon(), self.enemy, models.Move("scratch", 35)
+            self.active_pokemon(),
+            self.enemy,
+            random.choice(self.active_pokemon().moves),
         )
         self.enemy.current_hp -= enemy_damage
         player_damage = models.attack(
-            self.enemy, self.active_pokemon(), models.Move("scratch", 35)
+            self.enemy, self.active_pokemon(), random.choice(self.enemy.moves)
         )
         self.active_pokemon().current_hp -= player_damage
         return (player_damage, enemy_damage)

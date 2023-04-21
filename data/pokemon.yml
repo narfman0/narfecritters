@@ -12,6 +12,9 @@ pokemon:
     types:
       - 5
       - 8
+    moves:
+      - name: Scratch
+        power: 35
   - name: charmander
     id: 4
     max_hp: 39
@@ -23,3 +26,6 @@ pokemon:
     speed: 65
     types:
       - 2
+    moves:
+      - name: Scratch
+        power: 35
