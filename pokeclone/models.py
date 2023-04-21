@@ -16,6 +16,7 @@ class Type(Enum):
 class NPC:
     x: int
     y: int
+    pokemon: list
 
 
 @dataclass

@@ -24,6 +24,45 @@ WINDOW_SIZE = (800, 600)
 TILE_SIZE = 16
 
 
+class OverworldScreen:
+    def __init__(self):
+        self.world = World()
+        self.npc_surface = pygame.Surface((TILE_SIZE, TILE_SIZE))
+        self.npc_surface.fill((255, 0, 0))
+
+    def update(self, dt: float):
+        if (
+            pygame.key.get_pressed()[pygame.K_LEFT]
+            or pygame.key.get_pressed()[pygame.K_a]
+        ) and self.world.player.x > 0:
+            self.world.player.x -= MOVE_SPEED
+        elif (
+            pygame.key.get_pressed()[pygame.K_RIGHT]
+            or pygame.key.get_pressed()[pygame.K_d]
+        ) and self.world.player.x < WINDOW_SIZE[0]:
+            self.world.player.x += MOVE_SPEED
+        if (
+            pygame.key.get_pressed()[pygame.K_UP]
+            or pygame.key.get_pressed()[pygame.K_w]
+        ) and self.world.player.y < WINDOW_SIZE[1]:
+            self.world.player.y += MOVE_SPEED
+        elif (
+            pygame.key.get_pressed()[pygame.K_DOWN]
+            or pygame.key.get_pressed()[pygame.K_s]
+        ) and self.world.player.y > 0:
+            self.world.player.y -= MOVE_SPEED
+        self.world.update(dt)
+
+    def draw(self, surface):
+        surface.blit(
+            self.npc_surface,
+            (
+                self.world.player.x - TILE_SIZE / 2,
+                WINDOW_SIZE[1] - self.world.player.y - TILE_SIZE / 2,
+            ),
+        )
+
+
 def main():
     initialize_logging()
     pygame.init()
@@ -32,14 +71,12 @@ def main():
     manager = UIManager(WINDOW_SIZE, "data/theme.json")
     background = pygame.Surface(WINDOW_SIZE)
     background.fill((0, 255, 0))
-    npc_surface = pygame.Surface((TILE_SIZE, TILE_SIZE))
-    npc_surface.fill((255, 0, 0))
     hello_button = UIButton((350, 280), "Hello")
 
     clock = pygame.time.Clock()
     is_running = True
 
-    world = World()
+    overworld_screen = OverworldScreen()
 
     while is_running:
         dt = clock.tick(60) / 1000.0
@@ -51,36 +88,11 @@ def main():
                     print("Hello World!")
             manager.process_events(event)
 
-        if (
-            pygame.key.get_pressed()[pygame.K_LEFT]
-            or pygame.key.get_pressed()[pygame.K_a]
-        ) and world.player.x > 0:
-            world.player.x -= MOVE_SPEED
-        elif (
-            pygame.key.get_pressed()[pygame.K_RIGHT]
-            or pygame.key.get_pressed()[pygame.K_d]
-        ) and world.player.x < WINDOW_SIZE[0]:
-            world.player.x += MOVE_SPEED
-        if (
-            pygame.key.get_pressed()[pygame.K_UP]
-            or pygame.key.get_pressed()[pygame.K_w]
-        ) and world.player.y < WINDOW_SIZE[1]:
-            world.player.y += MOVE_SPEED
-        elif (
-            pygame.key.get_pressed()[pygame.K_DOWN]
-            or pygame.key.get_pressed()[pygame.K_s]
-        ) and world.player.y > 0:
-            world.player.y -= MOVE_SPEED
-        world.update(dt)
+        overworld_screen.update(dt)
+
         manager.update(dt)
         window_surface.blit(background, (0, 0))
-        window_surface.blit(
-            npc_surface,
-            (
-                world.player.x - TILE_SIZE / 2,
-                WINDOW_SIZE[1] - world.player.y - TILE_SIZE / 2,
-            ),
-        )
+        overworld_screen.draw(window_surface)
         manager.draw_ui(window_surface)
 
         pygame.display.update()
