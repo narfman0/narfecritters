@@ -26,33 +26,48 @@ class Move:
 
 
 @dataclass
+class Stats:
+    hp: int = 0
+    attack: int = 0
+    defense: int = 0
+    spattack: int = 0
+    spdefense: int = 0
+    speed: int = 0
+
+
+@dataclass
 class Pokemon:
     id: int
     name: str
-    max_hp: int
     current_hp: int
-    attack: int
-    defense: int
-    spattack: int
-    spdefense: int
-    speed: int
+    base_stats: Stats
     types: list[Type]
     moves: list[Move]
     level: int = field(default=False, init=False)
 
+    @property
+    def attack(self):
+        return self.base_stats.attack
 
-def attack(attacker: Pokemon, defender: Pokemon, move: Move):
-    return (
-        round(
-            (
-                (round((2 * attacker.level) / 5) + 2)
-                * move.power
-                * round(attacker.attack / defender.defense)
-            )
-            / 50
-        )
-        + 2
-    )
+    @property
+    def defense(self):
+        return self.base_stats.defense
+
+    @property
+    def max_hp(self):
+        return self.base_stats.hp
+
+    @property
+    def spattack(self):
+        return self.base_stats.spattack
+
+    @property
+    def spdefense(self):
+        return self.base_stats.spdefense
+
+    @property
+    def speed(self):
+        return self.base_stats.speed
 
 
 @dataclass

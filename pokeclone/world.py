@@ -4,19 +4,19 @@ import random
 LOGGER = logging.getLogger(__name__)
 
 
-from pokeclone import models
+from pokeclone.db.models import *
 
 MOVE_SPEED = 200
 
 
 class World:
     def __init__(self):
-        self.pokedex = models.Pokedex.load()
+        self.pokedex = Pokedex.load()
         starting_pokemon = self.pokedex.create("charmander", 5)
         # TODO rebalance this
-        starting_pokemon.max_hp += 50
+        starting_pokemon.base_stats.hp += 50
         starting_pokemon.current_hp += 50
-        self.player = models.NPC(x=10, y=10, pokemon=[starting_pokemon])
+        self.player = NPC(x=10, y=10, pokemon=[starting_pokemon])
         self.enemy = None
 
     def move(self, distance: int, up=False, down=False, left=False, right=False):
@@ -37,7 +37,7 @@ class World:
 
     def end_encounter(self):
         self.enemy = None
-        self.active_pokemon.current_hp = self.active_pokemon.max_hp
+        self.active_pokemon.current_hp = self.active_pokemon.base_stats.hp
         # TODO add experience :D
 
     def turn(self, move_name):
@@ -46,9 +46,9 @@ class World:
             if amove.name == move_name:
                 move = amove
         # TODO model active pokemon
-        enemy_damage = models.attack(self.active_pokemon, self.enemy, move)
+        enemy_damage = self.attack(self.active_pokemon, self.enemy, move)
         self.enemy.current_hp -= enemy_damage
-        player_damage = models.attack(
+        player_damage = self.attack(
             self.enemy, self.active_pokemon, random.choice(self.enemy.moves)
         )
         self.active_pokemon.current_hp -= player_damage
@@ -63,6 +63,20 @@ class World:
             LOGGER.info(f"Enemy {self.active_pokemon.name} passed out!")
             self.end_encounter()
 
+    @classmethod
+    def attack(cls, attacker: Pokemon, defender: Pokemon, move: Move):
+        return (
+            round(
+                (
+                    (round((2 * attacker.level) / 5) + 2)
+                    * move.power
+                    * round(attacker.attack / defender.defense)
+                )
+                / 50
+            )
+            + 2
+        )
+
     @property
-    def active_pokemon(self) -> models.Pokemon:
+    def active_pokemon(self) -> Pokemon:
         return self.player.pokemon[0]
