@@ -22,7 +22,6 @@ TODO
 
 * level up
 * observe type effectiveness
-* create full pokedex
 * develop world map
 
 License

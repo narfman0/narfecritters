@@ -60,7 +60,8 @@ class World:
             LOGGER.info(f"Enemy {self.active_pokemon.name} passed out!")
             self.end_encounter()
 
-    def attack(self, attacker: Pokemon, defender: Pokemon, move: Move):
+    @classmethod
+    def attack(cls, attacker: Pokemon, defender: Pokemon, move: Move):
         return (
             round(
                 (

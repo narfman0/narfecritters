@@ -111,15 +111,27 @@ class Pokedex(YAMLWizard):
     pokemon: list[Pokemon]
 
     @classmethod
-    def load(cls):
-        return Pokedex.from_yaml_file(f"data/db/pokemon.yml")
+    def load(cls, yaml_path="data/db/pokemon.yml"):
+        return Pokedex.from_yaml_file(yaml_path)
 
-    def find(self, name):
+    def find_by_id(self, id: int):
+        for pokemon in self.pokemon:
+            if pokemon.id == id:
+                return pokemon
+
+    def find_by_name(self, name):
         for pokemon in self.pokemon:
             if pokemon.name == name:
                 return pokemon
 
-    def create(self, name, level) -> Pokemon:
-        instance = copy.copy(self.find(name))
+    def create(self, name=None, id=None, level=0) -> Pokemon:
+        pokemon = None
+        if id is not None:
+            pokemon = self.find_by_id(id)
+        elif name is not None:
+            pokemon = self.find_by_name(name)
+        if pokemon is None:
+            raise Exception(f"Pokemon name {name} or id {id} not found")
+        instance = copy.copy(self.find_by_name(name))
         instance.level = level
         return instance

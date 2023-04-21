@@ -1,13 +1,13 @@
 import unittest
 
-from pokeclone.db.models import Move, Pokedex, Type
+from pokeclone.db.models import *
 from pokeclone.world import World
 
 
-class TestPokedox(unittest.TestCase):
+class TestPokedex(unittest.TestCase):
     def test_attack(self):
-        pokedex = Pokedex.load()
+        pokedex = Pokedex.load(yaml_path="tests/fixtures/pokemon.yml")
         scratch = Move(id=1, name="scratch", power=35, type=Type.NORMAL)
-        bulbasaur = pokedex.create("bulbasaur", 5)
-        charmander = pokedex.create("charmander", 5)
+        bulbasaur = pokedex.create(name="bulbasaur", level=5)
+        charmander = pokedex.create(name="charmander", level=5)
         self.assertEqual(5, World.attack(charmander, bulbasaur, scratch))
