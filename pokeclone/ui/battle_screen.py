@@ -24,10 +24,10 @@ class BattleScreen(Screen):
             y += 32
         self.world.create_encounter()
         self.enemy_pokemon_image = pygame.image.load(
-            f"data/sprites/{world.enemy.id}.png"
+            f"data/sprites/pokemon/{world.enemy.id}.png"
         ).convert()
         self.self_pokemon_image = pygame.image.load(
-            f"data/sprites/back/{world.active_pokemon().id}.png"
+            f"data/sprites/pokemon/back/{world.active_pokemon().id}.png"
         ).convert()
         LOGGER.info(f"You are fighting a {self.world.enemy}")
 
@@ -47,9 +47,9 @@ class BattleScreen(Screen):
                     self.end_encounter()
 
     def end_encounter(self):
+        self.world.end_encounter()
         for button in self.fight_buttons:
             button.kill()
-        self.world.end_encounter()
         self.screen_manager.pop()
 
     def draw(self, surface: pygame.Surface):

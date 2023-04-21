@@ -6,7 +6,7 @@ LOGGER = logging.getLogger(__name__)
 
 from pokeclone import models
 
-MOVE_SPEED = 5
+MOVE_SPEED = 200
 
 
 class World:
@@ -17,6 +17,20 @@ class World:
         starting_pokemon.max_hp += 50
         starting_pokemon.current_hp += 50
         self.player = models.NPC(x=10, y=10, pokemon=[starting_pokemon])
+        self.enemy = None
+
+    def move(self, distance: int, up=False, down=False, left=False, right=False):
+        if left:
+            self.player.x -= distance
+        elif right:
+            self.player.x += distance
+        if up:
+            self.player.y += distance
+        elif down:
+            self.player.y -= distance
+
+        if random.random() < 0.01:
+            self.create_encounter()
 
     def create_encounter(self):
         enemy_pokemon_name = random.choice(["charmander", "bulbasaur"])

@@ -10,55 +10,50 @@ from pokeclone.ui.settings import WINDOW_SIZE, TILE_SIZE
 
 LOGGER = logging.getLogger(__name__)
 
-ENCOUNTER_CHANCE = 0.05
-
 
 class OverworldScreen(Screen):
     def __init__(self, screen_manager: ScreenManager):
         self.screen_manager = screen_manager
         self.world = World()
-        self.npc_surface = pygame.Surface((TILE_SIZE, TILE_SIZE))
-        self.npc_surface.fill((255, 0, 0))
+        self.player_image = pygame.image.load(
+            "data/sprites/overworld/player_standing.png"
+        ).convert()
 
     def update(self, dt: float):
         if (
             pygame.key.get_pressed()[pygame.K_LEFT]
             or pygame.key.get_pressed()[pygame.K_a]
         ) and self.world.player.x > 0:
-            self.world.player.x -= MOVE_SPEED
-            self.maybe_create_encounter()
+            self.world.move(dt * MOVE_SPEED, left=True)
         elif (
             pygame.key.get_pressed()[pygame.K_RIGHT]
             or pygame.key.get_pressed()[pygame.K_d]
         ) and self.world.player.x < WINDOW_SIZE[0]:
-            self.world.player.x += MOVE_SPEED
-            self.maybe_create_encounter()
+            self.world.move(dt * MOVE_SPEED, right=True)
         if (
             pygame.key.get_pressed()[pygame.K_UP]
             or pygame.key.get_pressed()[pygame.K_w]
         ) and self.world.player.y < WINDOW_SIZE[1]:
-            self.world.player.y += MOVE_SPEED
-            self.maybe_create_encounter()
+            self.world.move(dt * MOVE_SPEED, up=True)
         elif (
             pygame.key.get_pressed()[pygame.K_DOWN]
             or pygame.key.get_pressed()[pygame.K_s]
         ) and self.world.player.y > 0:
-            self.world.player.y -= MOVE_SPEED
-            self.maybe_create_encounter()
+            self.world.move(dt * MOVE_SPEED, down=True)
+        if self.world.enemy:
+            # an encounter has been generated!
+            self.screen_manager.push(BattleScreen(self.screen_manager, self.world))
 
-    def draw(self, surface):
+    def draw(self, surface: pygame.Surface):
         background = pygame.Surface(WINDOW_SIZE)
         background.fill((0, 255, 0))
         surface.blit(background, (0, 0))
-        surface.blit(
-            self.npc_surface,
-            (
-                self.world.player.x - TILE_SIZE / 2,
-                WINDOW_SIZE[1] - self.world.player.y - TILE_SIZE / 2,
-            ),
+        self.draw_overworld(
+            surface, self.player_image, self.world.player.x, self.world.player.y
         )
 
-    def maybe_create_encounter(self):
-        if random.random() > ENCOUNTER_CHANCE:
-            return
-        self.screen_manager.push(BattleScreen(self.screen_manager, self.world))
+    @classmethod
+    def draw_overworld(cls, surface: pygame.Surface, image, x, y):
+        """Converts world coordinates to screen coordinates"""
+        screen_y = WINDOW_SIZE[1] - y - image.get_height() / 2
+        surface.blit(image, (x + image.get_width() / 2, screen_y))
