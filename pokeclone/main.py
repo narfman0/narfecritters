@@ -42,7 +42,7 @@ def main():
     world = World()
 
     while is_running:
-        time_delta = clock.tick(60) / 1000.0
+        dt = clock.tick(60) / 1000.0
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 is_running = False
@@ -71,8 +71,8 @@ def main():
             or pygame.key.get_pressed()[pygame.K_s]
         ) and world.player.y > 0:
             world.player.y -= MOVE_SPEED
-        world.update(time_delta)
-        manager.update(time_delta)
+        world.update(dt)
+        manager.update(dt)
         window_surface.blit(background, (0, 0))
         window_surface.blit(
             npc_surface,
