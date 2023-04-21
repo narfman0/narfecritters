@@ -51,15 +51,25 @@ def main():
                     print("Hello World!")
             manager.process_events(event)
 
-        if pygame.key.get_pressed()[pygame.K_LEFT] and world.player.x > 0:
+        if (
+            pygame.key.get_pressed()[pygame.K_LEFT]
+            or pygame.key.get_pressed()[pygame.K_a]
+        ) and world.player.x > 0:
             world.player.x -= MOVE_SPEED
         elif (
-            pygame.key.get_pressed()[pygame.K_RIGHT] and world.player.x < WINDOW_SIZE[0]
-        ):
+            pygame.key.get_pressed()[pygame.K_RIGHT]
+            or pygame.key.get_pressed()[pygame.K_d]
+        ) and world.player.x < WINDOW_SIZE[0]:
             world.player.x += MOVE_SPEED
-        if pygame.key.get_pressed()[pygame.K_UP] and world.player.y < WINDOW_SIZE[1]:
+        if (
+            pygame.key.get_pressed()[pygame.K_UP]
+            or pygame.key.get_pressed()[pygame.K_w]
+        ) and world.player.y < WINDOW_SIZE[1]:
             world.player.y += MOVE_SPEED
-        elif pygame.key.get_pressed()[pygame.K_DOWN] and world.player.y > 0:
+        elif (
+            pygame.key.get_pressed()[pygame.K_DOWN]
+            or pygame.key.get_pressed()[pygame.K_s]
+        ) and world.player.y > 0:
             world.player.y -= MOVE_SPEED
         world.update(time_delta)
         manager.update(time_delta)
