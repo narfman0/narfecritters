@@ -1,15 +1,15 @@
 import logging
 
-from pokeclone import settings
 from pokeclone.logging import initialize_logging
 
 LOGGER = logging.getLogger(__name__)
 
 
 """
-* fight pokemon
-* final boss
 * level up
+* observe type effectiveness
+* create full pokedex
+* develop world map
 """
 import random
 
@@ -31,6 +31,8 @@ class OverworldScreen:
         self.npc_surface = pygame.Surface((TILE_SIZE, TILE_SIZE))
         self.npc_surface.fill((255, 0, 0))
         self.fight_buttons = []
+        self.pokemon_til_boss = 10
+        self.is_boss = False
 
     def process_event(self, event):
         if event.type == UI_BUTTON_PRESSED:
@@ -48,6 +50,8 @@ class OverworldScreen:
                 if self.world.enemy.current_hp <= 0:
                     LOGGER.info(f"Enemy {self.world.active_pokemon().name} passed out!")
                     self.end_encounter()
+                    if self.is_boss:
+                        UIButton((350, 280), "You Win wowooowowwowooo!!!!!")
 
     def update(self, dt: float, manager: UIManager):
         if not self.world.in_encounter:
@@ -93,12 +97,21 @@ class OverworldScreen:
         self.world.end_encounter()
         for button in self.fight_buttons:
             button.kill()
+        self.pokemon_til_boss -= 1
+        if self.pokemon_til_boss == 0:
+            self.world.create_boss_encounter()
+            LOGGER.info(f"You are fighting a {self.world.enemy}")
+            self.create_encounter_fight_buttons()
+            self.is_boss = True
 
     def maybe_create_encounter(self):
         if random.random() > ENCOUNTER_CHANCE or self.world.in_encounter:
             return
         self.world.create_encounter()
         LOGGER.info(f"You are fighting a {self.world.enemy}")
+        self.create_encounter_fight_buttons()
+
+    def create_encounter_fight_buttons(self):
         y = 280
         for move in self.world.active_pokemon().moves:
             self.fight_buttons.append(UIButton((350, y), move.name))

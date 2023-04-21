@@ -19,6 +19,10 @@ class World:
         self.player = models.NPC(x=10, y=10, pokemon=[starting_pokemon])
         self.in_encounter = False
 
+    def create_boss_encounter(self):
+        self.in_encounter = True
+        self.enemy = self.pokedex.create("charmander", round(random.random() * 9 + 4))
+
     def create_encounter(self):
         self.in_encounter = True
         enemy_pokemon_name = random.choice(["charmander", "bulbasaur"])

@@ -1,13 +1,11 @@
 import logging
 
-from pokeclone import settings
-
 FILE_FORMAT = "[%(asctime)s] {%(pathname)s:%(lineno)d} %(levelname)s - %(message)s"
 
 
 def initialize_logging(
-    file_log_level=settings.get("file_log_level", fallback="INFO"),
-    console_log_level=settings.get("console_log_level", fallback="INFO"),
+    file_log_level="INFO",
+    console_log_level="INFO",
     filename="pokeclone.log",
 ):
     # set up logging to file
