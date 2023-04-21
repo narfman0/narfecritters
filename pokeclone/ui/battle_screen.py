@@ -5,6 +5,7 @@ import pygame
 from pygame_gui import UI_BUTTON_PRESSED
 from pygame_gui.elements import UIButton
 
+from pokeclone.ui.screen import Screen, ScreenManager
 from pokeclone.ui.settings import WINDOW_SIZE
 from pokeclone.world import World
 
@@ -12,9 +13,9 @@ from pokeclone.world import World
 LOGGER = logging.getLogger(__name__)
 
 
-class BattleScreen:
-    def __init__(self, screens: list, world: World):
-        self.screens = screens
+class BattleScreen(Screen):
+    def __init__(self, screen_manager: ScreenManager, world: World):
+        self.screen_manager = screen_manager
         self.world = world
         self.fight_buttons = []
         y = WINDOW_SIZE[1] - 156
@@ -49,10 +50,7 @@ class BattleScreen:
         for button in self.fight_buttons:
             button.kill()
         self.world.end_encounter()
-        self.screens.pop()
-
-    def update(self, dt: float):
-        pass
+        self.screen_manager.pop()
 
     def draw(self, surface: pygame.Surface):
         background = pygame.Surface(WINDOW_SIZE)

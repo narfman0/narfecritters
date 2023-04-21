@@ -5,6 +5,7 @@ import pygame
 
 from pokeclone.world import MOVE_SPEED, World
 from pokeclone.ui.battle_screen import BattleScreen
+from pokeclone.ui.screen import Screen, ScreenManager
 from pokeclone.ui.settings import WINDOW_SIZE, TILE_SIZE
 
 LOGGER = logging.getLogger(__name__)
@@ -12,15 +13,12 @@ LOGGER = logging.getLogger(__name__)
 ENCOUNTER_CHANCE = 0.05
 
 
-class OverworldScreen:
-    def __init__(self, screens: list):
-        self.screens = screens
+class OverworldScreen(Screen):
+    def __init__(self, screen_manager: ScreenManager):
+        self.screen_manager = screen_manager
         self.world = World()
         self.npc_surface = pygame.Surface((TILE_SIZE, TILE_SIZE))
         self.npc_surface.fill((255, 0, 0))
-
-    def process_event(self, event):
-        pass
 
     def update(self, dt: float):
         if (
@@ -63,4 +61,4 @@ class OverworldScreen:
     def maybe_create_encounter(self):
         if random.random() > ENCOUNTER_CHANCE:
             return
-        self.screens.append(BattleScreen(self.screens, self.world))
+        self.screen_manager.push(BattleScreen(self.screen_manager, self.world))
