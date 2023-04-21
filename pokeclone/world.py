@@ -40,22 +40,32 @@ class World:
 
     def end_encounter(self):
         self.enemy = None
-        self.active_pokemon().current_hp = self.active_pokemon().max_hp
+        self.active_pokemon.current_hp = self.active_pokemon.max_hp
         # TODO add experience :D
-
-    def active_pokemon(self) -> models.Pokemon:
-        return self.player.pokemon[0]
 
     def turn(self, move_name):
         move = None
-        for amove in self.active_pokemon().moves:
+        for amove in self.active_pokemon.moves:
             if amove.name == move_name:
                 move = amove
         # TODO model active pokemon
-        enemy_damage = models.attack(self.active_pokemon(), self.enemy, move)
+        enemy_damage = models.attack(self.active_pokemon, self.enemy, move)
         self.enemy.current_hp -= enemy_damage
         player_damage = models.attack(
-            self.enemy, self.active_pokemon(), random.choice(self.enemy.moves)
+            self.enemy, self.active_pokemon, random.choice(self.enemy.moves)
         )
-        self.active_pokemon().current_hp -= player_damage
-        return (player_damage, enemy_damage)
+        self.active_pokemon.current_hp -= player_damage
+
+        print(
+            f"{self.active_pokemon.name} used {move_name} for {enemy_damage}, took {player_damage}"
+        )
+        if self.active_pokemon.current_hp <= 0:
+            LOGGER.info(f"Your {self.active_pokemon.name} passed out!")
+            self.end_encounter()
+        if self.enemy.current_hp <= 0:
+            LOGGER.info(f"Enemy {self.active_pokemon.name} passed out!")
+            self.end_encounter()
+
+    @property
+    def active_pokemon(self) -> models.Pokemon:
+        return self.player.pokemon[0]

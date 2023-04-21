@@ -19,7 +19,7 @@ class BattleScreen(Screen):
         self.world = world
         self.fight_buttons = []
         y = WINDOW_SIZE[1] - 156
-        for move in self.world.active_pokemon().moves:
+        for move in self.world.active_pokemon.moves:
             self.fight_buttons.append(UIButton((WINDOW_SIZE[0] - 100, y), move.name))
             y += 32
         self.world.create_encounter()
@@ -27,7 +27,7 @@ class BattleScreen(Screen):
             f"data/sprites/pokemon/{world.enemy.id}.png"
         ).convert()
         self.self_pokemon_image = pygame.image.load(
-            f"data/sprites/pokemon/back/{world.active_pokemon().id}.png"
+            f"data/sprites/pokemon/back/{world.active_pokemon.id}.png"
         ).convert()
         LOGGER.info(f"You are fighting a {self.world.enemy}")
 
@@ -35,19 +35,11 @@ class BattleScreen(Screen):
         if event.type == UI_BUTTON_PRESSED:
             if event.ui_element in self.fight_buttons:
                 move_name = event.ui_element.text
-                player_dmg, enemy_dmg = self.world.turn(move_name)
-                print(
-                    f"{self.world.active_pokemon().name} used {move_name} for {enemy_dmg}, took {player_dmg}"
-                )
-                if self.world.active_pokemon().current_hp <= 0:
-                    LOGGER.info(f"Your {self.world.active_pokemon().name} passed out!")
-                    self.end_encounter()
-                if self.world.enemy.current_hp <= 0:
-                    LOGGER.info(f"Enemy {self.world.active_pokemon().name} passed out!")
+                self.world.turn(move_name)
+                if self.world.enemy is None:
                     self.end_encounter()
 
     def end_encounter(self):
-        self.world.end_encounter()
         for button in self.fight_buttons:
             button.kill()
         self.screen_manager.pop()

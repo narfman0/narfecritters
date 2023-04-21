@@ -6,7 +6,7 @@ import pygame
 from pokeclone.world import MOVE_SPEED, World
 from pokeclone.ui.battle_screen import BattleScreen
 from pokeclone.ui.screen import Screen, ScreenManager
-from pokeclone.ui.settings import WINDOW_SIZE, TILE_SIZE
+from pokeclone.ui.settings import WINDOW_SIZE
 
 LOGGER = logging.getLogger(__name__)
 
