@@ -17,6 +17,14 @@ https://github.com/narfman0/pokeclone/releases
 
 Download the zip and extract to your favorite directory.
 
+TODO
+----
+
+* level up
+* observe type effectiveness
+* create full pokedex
+* develop world map
+
 License
 -------
 
