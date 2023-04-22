@@ -70,7 +70,7 @@ class World:
 
     def turn_player(self, move_name):
         move = self.moves.find_by_name(move_name)
-        enemy_damage = self.attack(self.active_pokemon, self.enemy, move, self.random)
+        enemy_damage = self.attack(self.active_pokemon, self.enemy, move)
         self.enemy.take_damage(enemy_damage)
         LOGGER.info(f"Enemy {self.enemy.name} took {enemy_damage} dmg from {move_name}")
         if self.enemy.current_hp <= 0:
@@ -79,9 +79,7 @@ class World:
 
     def turn_enemy(self):
         enemy_move = self.moves.find_by_id(self.random.choice(self.enemy.moves).id)
-        player_damage = self.attack(
-            self.enemy, self.active_pokemon, enemy_move, self.random
-        )
+        player_damage = self.attack(self.enemy, self.active_pokemon, enemy_move)
         self.active_pokemon.take_damage(player_damage)
 
         LOGGER.info(
@@ -91,8 +89,7 @@ class World:
             LOGGER.info(f"Your {self.active_pokemon.name} fainted!")
             self.end_encounter()
 
-    @classmethod
-    def attack(cls, attacker: Pokemon, defender: Pokemon, move: Move, random: Random):
+    def attack(self, attacker: Pokemon, defender: Pokemon, move: Move):
         """Follows gen5 dmg formula as defined: https://bulbapedia.bulbagarden.net/wiki/Damage#Generation_V_onward"""
         base_damage = (
             round(
@@ -107,8 +104,8 @@ class World:
         )
         # TODO critical hits in gen5 use interesting stages, leaving at stage +0 for now
         # see https://bulbapedia.bulbagarden.net/wiki/Critical_hit for implementation details
-        critical_hit_scalar = 1 if random.random() > 0.0625 else 2
-        random_factor = random.random() * 0.15 + 0.85
+        critical_hit_scalar = 1 if self.random.random() > 0.0625 else 2
+        random_factor = self.random.random() * 0.15 + 0.85
         stab = 1.5 if move.type_id in attacker.type_ids else 1
 
         type_factor = 1

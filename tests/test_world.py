@@ -9,13 +9,14 @@ class TestPokedex(unittest.TestCase):
     def test_attack(self):
         pokedex = Pokedex.load()
         random = Random(x=12345)
+        world = World(pokedex=pokedex, random=random)
         bulbasaur = pokedex.create(random, name="bulbasaur", level=5)
         charmander = pokedex.create(random, name="charmander", level=5)
 
         scratch = Move(id=1, name="scratch", power=35, type_id=1)
-        self.assertEqual(4, World.attack(charmander, bulbasaur, scratch, random))
+        self.assertEqual(4, world.attack(charmander, bulbasaur, scratch))
         ember = Move(id=2, name="ember", power=35, type_id=10)
-        self.assertEqual(14, World.attack(charmander, bulbasaur, ember, random))
+        self.assertEqual(14, world.attack(charmander, bulbasaur, ember))
 
     def test_turn(self):
         random = Random(x=12345)
