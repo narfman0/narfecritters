@@ -192,4 +192,5 @@ class Pokedex(YAMLWizard):
         # only modeling medium-fast xp group
         instance.experience = max(instance.base_experience, level**3)
         instance.current_hp = instance.max_hp
+        # TODO develop moves according to level
         return instance
