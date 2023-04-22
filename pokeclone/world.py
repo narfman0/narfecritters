@@ -119,6 +119,10 @@ class World:
                 type_factor /= 2
             if move.type_id in TYPES.find_by_id(type_id).no_damage_from:
                 type_factor *= 0
+        if type_factor > 1:
+            LOGGER.info(f"Your {move.name} was super effective!")
+        elif type_factor < 1:
+            LOGGER.info(f"Your {move.name} was not very effective.")
         return round(
             base_damage * critical_hit_scalar * random_factor * stab * type_factor
         )
