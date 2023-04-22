@@ -67,7 +67,8 @@ class World:
 
     @classmethod
     def attack(cls, attacker: Pokemon, defender: Pokemon, move: Move):
-        return (
+        """Follows gen5 dmg formula as defined: https://bulbapedia.bulbagarden.net/wiki/Damage#Generation_V_onward"""
+        base_damage = (
             round(
                 (
                     (round((2 * attacker.level) / 5) + 2)
@@ -78,7 +79,13 @@ class World:
             )
             + 2
         )
+        # TODO critical hits in gen5 use interesting stages, leaving at stage +0 for now
+        # see https://bulbapedia.bulbagarden.net/wiki/Critical_hit for implementation details
+        critical_hit_scalar = 1 if random.random() > 0.0625 else 2
+        random_factor = random.random() * 0.15 + 0.85
+        stab = 1.5 if move.type in attacker.types else 1
+        return round(base_damage * critical_hit_scalar * random_factor * stab)
 
     @property
     def active_pokemon(self) -> Pokemon:
-        return self.player.pokemon[0]
+        return self.player.active_pokemon

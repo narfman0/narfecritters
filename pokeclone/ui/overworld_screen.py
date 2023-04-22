@@ -16,10 +16,7 @@ class OverworldScreen(Screen):
         super().__init__()
         self.screen_manager = screen_manager
         self.world = World()
-        self.player_image = pygame.image.load(
-            "data/sprites/overworld/player_standing.png"
-        ).convert()
-        # self.tmxdata = pytmx.TiledMap("data/tiled/overworld.tmx")
+        self.load_player_image()
         self.tmxdata = pytmx.load_pygame("data/tiled/overworld.tmx")
 
     def update(self, dt: float):
@@ -65,3 +62,12 @@ class OverworldScreen(Screen):
             return
         screen_y = WINDOW_SIZE[1] - y - image.get_height() / 2
         surface.blit(image, (x + image.get_width() / 2, screen_y))
+
+    def load_player_image(self):
+        image = pygame.image.load(
+            "data/sprites/overworld/player_standing.png"
+        ).convert_alpha()
+        size = image.get_size()
+        self.player_image = pygame.transform.scale(
+            image, (int(size[0] * 2), int(size[1] * 2))
+        )

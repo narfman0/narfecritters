@@ -20,8 +20,8 @@ Download the zip and extract to your favorite directory.
 TODO
 ----
 
-* level up
 * observe type effectiveness
+* level up
 * develop world map
 
 License
