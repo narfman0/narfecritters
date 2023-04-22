@@ -26,7 +26,7 @@ class TestPokedex(unittest.TestCase):
         world.player.pokemon.append(charmander)
         world.enemy = bulbasaur
 
-        player_move = world.moves.find_by_id(charmander.move_ids[0])
+        player_move = world.moves.find_by_id(charmander.moves[0].id)
         self.assertEqual(5, charmander.level)
         self.assertEqual(125, charmander.experience)
         world.turn_player(player_move.name)

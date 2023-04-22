@@ -12,91 +12,339 @@ pokemon:
   experience: false
   id: 1
   ivs: false
-  level: false
-  move-ids:
-  - 13
-  - 14
-  - 15
-  - 20
-  - 22
-  - 29
-  - 33
-  - 34
-  - 36
-  - 38
-  - 45
-  - 70
-  - 72
-  - 73
-  - 74
-  - 75
-  - 76
-  - 77
-  - 79
-  - 80
-  - 81
-  - 92
-  - 99
-  - 102
-  - 104
-  - 111
-  - 113
-  - 115
-  - 117
-  - 124
-  - 130
-  - 133
-  - 148
-  - 156
-  - 164
-  - 173
-  - 174
-  - 182
-  - 188
-  - 189
-  - 200
-  - 202
-  - 203
-  - 204
-  - 206
-  - 207
-  - 210
-  - 213
-  - 214
-  - 216
-  - 218
-  - 219
-  - 230
-  - 235
-  - 237
-  - 241
-  - 249
-  - 263
-  - 267
-  - 270
-  - 275
-  - 282
-  - 290
-  - 311
-  - 320
-  - 331
-  - 345
-  - 363
-  - 388
-  - 402
-  - 412
-  - 437
-  - 438
-  - 445
-  - 447
-  - 474
-  - 496
-  - 497
-  - 520
-  - 526
-  - 580
-  - 590
-  - 803
+  moves:
+  - id: 13
+    learn-method: egg
+    level-learned-at: 0
+    name: razor-wind
+  - id: 14
+    learn-method: machine
+    level-learned-at: 0
+    name: swords-dance
+  - id: 15
+    learn-method: machine
+    level-learned-at: 0
+    name: cut
+  - id: 20
+    learn-method: tutor
+    level-learned-at: 0
+    name: bind
+  - id: 22
+    learn-method: level-up
+    level-learned-at: 9
+    name: vine-whip
+  - id: 29
+    learn-method: machine
+    level-learned-at: 0
+    name: headbutt
+  - id: 33
+    learn-method: level-up
+    level-learned-at: 1
+    name: tackle
+  - id: 34
+    learn-method: machine
+    level-learned-at: 0
+    name: body-slam
+  - id: 36
+    learn-method: level-up
+    level-learned-at: 15
+    name: take-down
+  - id: 38
+    learn-method: level-up
+    level-learned-at: 27
+    name: double-edge
+  - id: 45
+    learn-method: level-up
+    level-learned-at: 3
+    name: growl
+  - id: 70
+    learn-method: machine
+    level-learned-at: 0
+    name: strength
+  - id: 72
+    learn-method: machine
+    level-learned-at: 0
+    name: mega-drain
+  - id: 73
+    learn-method: level-up
+    level-learned-at: 7
+    name: leech-seed
+  - id: 74
+    learn-method: level-up
+    level-learned-at: 25
+    name: growth
+  - id: 75
+    learn-method: level-up
+    level-learned-at: 19
+    name: razor-leaf
+  - id: 76
+    learn-method: machine
+    level-learned-at: 0
+    name: solar-beam
+  - id: 77
+    learn-method: level-up
+    level-learned-at: 13
+    name: poison-powder
+  - id: 79
+    learn-method: level-up
+    level-learned-at: 13
+    name: sleep-powder
+  - id: 80
+    learn-method: egg
+    level-learned-at: 0
+    name: petal-dance
+  - id: 81
+    learn-method: tutor
+    level-learned-at: 0
+    name: string-shot
+  - id: 92
+    learn-method: machine
+    level-learned-at: 0
+    name: toxic
+  - id: 99
+    learn-method: machine
+    level-learned-at: 0
+    name: rage
+  - id: 102
+    learn-method: machine
+    level-learned-at: 0
+    name: mimic
+  - id: 104
+    learn-method: machine
+    level-learned-at: 0
+    name: double-team
+  - id: 111
+    learn-method: machine
+    level-learned-at: 0
+    name: defense-curl
+  - id: 113
+    learn-method: machine
+    level-learned-at: 0
+    name: light-screen
+  - id: 115
+    learn-method: machine
+    level-learned-at: 0
+    name: reflect
+  - id: 117
+    learn-method: machine
+    level-learned-at: 0
+    name: bide
+  - id: 124
+    learn-method: egg
+    level-learned-at: 0
+    name: sludge
+  - id: 130
+    learn-method: egg
+    level-learned-at: 0
+    name: skull-bash
+  - id: 133
+    learn-method: egg
+    level-learned-at: 0
+    name: amnesia
+  - id: 148
+    learn-method: machine
+    level-learned-at: 0
+    name: flash
+  - id: 156
+    learn-method: machine
+    level-learned-at: 0
+    name: rest
+  - id: 164
+    learn-method: machine
+    level-learned-at: 0
+    name: substitute
+  - id: 173
+    learn-method: machine
+    level-learned-at: 0
+    name: snore
+  - id: 174
+    learn-method: egg
+    level-learned-at: 0
+    name: curse
+  - id: 182
+    learn-method: machine
+    level-learned-at: 0
+    name: protect
+  - id: 188
+    learn-method: machine
+    level-learned-at: 0
+    name: sludge-bomb
+  - id: 189
+    learn-method: machine
+    level-learned-at: 0
+    name: mud-slap
+  - id: 200
+    learn-method: machine
+    level-learned-at: 0
+    name: outrage
+  - id: 202
+    learn-method: egg
+    level-learned-at: 0
+    name: giga-drain
+  - id: 203
+    learn-method: egg
+    level-learned-at: 0
+    name: endure
+  - id: 204
+    learn-method: egg
+    level-learned-at: 0
+    name: charm
+  - id: 206
+    learn-method: machine
+    level-learned-at: 0
+    name: false-swipe
+  - id: 207
+    learn-method: machine
+    level-learned-at: 0
+    name: swagger
+  - id: 210
+    learn-method: machine
+    level-learned-at: 0
+    name: fury-cutter
+  - id: 213
+    learn-method: machine
+    level-learned-at: 0
+    name: attract
+  - id: 214
+    learn-method: machine
+    level-learned-at: 0
+    name: sleep-talk
+  - id: 216
+    learn-method: machine
+    level-learned-at: 0
+    name: return
+  - id: 218
+    learn-method: machine
+    level-learned-at: 0
+    name: frustration
+  - id: 219
+    learn-method: machine
+    level-learned-at: 0
+    name: safeguard
+  - id: 230
+    learn-method: level-up
+    level-learned-at: 21
+    name: sweet-scent
+  - id: 235
+    learn-method: level-up
+    level-learned-at: 33
+    name: synthesis
+  - id: 237
+    learn-method: machine
+    level-learned-at: 0
+    name: hidden-power
+  - id: 241
+    learn-method: machine
+    level-learned-at: 0
+    name: sunny-day
+  - id: 249
+    learn-method: machine
+    level-learned-at: 0
+    name: rock-smash
+  - id: 263
+    learn-method: machine
+    level-learned-at: 0
+    name: facade
+  - id: 267
+    learn-method: egg
+    level-learned-at: 0
+    name: nature-power
+  - id: 270
+    learn-method: machine
+    level-learned-at: 0
+    name: helping-hand
+  - id: 275
+    learn-method: egg
+    level-learned-at: 0
+    name: ingrain
+  - id: 282
+    learn-method: tutor
+    level-learned-at: 0
+    name: knock-off
+  - id: 290
+    learn-method: machine
+    level-learned-at: 0
+    name: secret-power
+  - id: 311
+    learn-method: machine
+    level-learned-at: 0
+    name: weather-ball
+  - id: 320
+    learn-method: egg
+    level-learned-at: 0
+    name: grass-whistle
+  - id: 331
+    learn-method: machine
+    level-learned-at: 0
+    name: bullet-seed
+  - id: 345
+    learn-method: egg
+    level-learned-at: 0
+    name: magical-leaf
+  - id: 363
+    learn-method: machine
+    level-learned-at: 0
+    name: natural-gift
+  - id: 388
+    learn-method: level-up
+    level-learned-at: 31
+    name: worry-seed
+  - id: 402
+    learn-method: level-up
+    level-learned-at: 37
+    name: seed-bomb
+  - id: 412
+    learn-method: machine
+    level-learned-at: 0
+    name: energy-ball
+  - id: 437
+    learn-method: egg
+    level-learned-at: 0
+    name: leaf-storm
+  - id: 438
+    learn-method: egg
+    level-learned-at: 0
+    name: power-whip
+  - id: 445
+    learn-method: machine
+    level-learned-at: 0
+    name: captivate
+  - id: 447
+    learn-method: machine
+    level-learned-at: 0
+    name: grass-knot
+  - id: 474
+    learn-method: machine
+    level-learned-at: 0
+    name: venoshock
+  - id: 496
+    learn-method: machine
+    level-learned-at: 0
+    name: round
+  - id: 497
+    learn-method: machine
+    level-learned-at: 0
+    name: echoed-voice
+  - id: 520
+    learn-method: tutor
+    level-learned-at: 0
+    name: grass-pledge
+  - id: 526
+    learn-method: machine
+    level-learned-at: 0
+    name: work-up
+  - id: 580
+    learn-method: egg
+    level-learned-at: 0
+    name: grassy-terrain
+  - id: 590
+    learn-method: machine
+    level-learned-at: 0
+    name: confide
+  - id: 803
+    learn-method: tutor
+    level-learned-at: 0
+    name: grassy-glide
   name: bulbasaur
   type-ids:
   - 12
@@ -114,85 +362,315 @@ pokemon:
   experience: false
   id: 2
   ivs: false
-  level: false
-  move-ids:
-  - 14
-  - 15
-  - 20
-  - 22
-  - 29
-  - 33
-  - 34
-  - 36
-  - 38
-  - 45
-  - 70
-  - 72
-  - 73
-  - 74
-  - 75
-  - 76
-  - 77
-  - 79
-  - 81
-  - 92
-  - 99
-  - 102
-  - 104
-  - 111
-  - 113
-  - 115
-  - 117
-  - 133
-  - 148
-  - 156
-  - 164
-  - 173
-  - 174
-  - 182
-  - 188
-  - 189
-  - 200
-  - 202
-  - 203
-  - 204
-  - 206
-  - 207
-  - 210
-  - 213
-  - 214
-  - 216
-  - 218
-  - 219
-  - 230
-  - 235
-  - 237
-  - 241
-  - 249
-  - 263
-  - 267
-  - 270
-  - 282
-  - 290
-  - 311
-  - 331
-  - 345
-  - 363
-  - 388
-  - 402
-  - 412
-  - 437
-  - 438
-  - 445
-  - 447
-  - 474
-  - 496
-  - 497
-  - 520
-  - 526
-  - 580
-  - 590
-  - 803
+  moves:
+  - id: 14
+    learn-method: machine
+    level-learned-at: 0
+    name: swords-dance
+  - id: 15
+    learn-method: machine
+    level-learned-at: 0
+    name: cut
+  - id: 20
+    learn-method: tutor
+    level-learned-at: 0
+    name: bind
+  - id: 22
+    learn-method: level-up
+    level-learned-at: 9
+    name: vine-whip
+  - id: 29
+    learn-method: machine
+    level-learned-at: 0
+    name: headbutt
+  - id: 33
+    learn-method: level-up
+    level-learned-at: 1
+    name: tackle
+  - id: 34
+    learn-method: machine
+    level-learned-at: 0
+    name: body-slam
+  - id: 36
+    learn-method: level-up
+    level-learned-at: 15
+    name: take-down
+  - id: 38
+    learn-method: level-up
+    level-learned-at: 31
+    name: double-edge
+  - id: 45
+    learn-method: level-up
+    level-learned-at: 3
+    name: growl
+  - id: 70
+    learn-method: machine
+    level-learned-at: 0
+    name: strength
+  - id: 72
+    learn-method: machine
+    level-learned-at: 0
+    name: mega-drain
+  - id: 73
+    learn-method: level-up
+    level-learned-at: 7
+    name: leech-seed
+  - id: 74
+    learn-method: level-up
+    level-learned-at: 28
+    name: growth
+  - id: 75
+    learn-method: level-up
+    level-learned-at: 20
+    name: razor-leaf
+  - id: 76
+    learn-method: machine
+    level-learned-at: 0
+    name: solar-beam
+  - id: 77
+    learn-method: level-up
+    level-learned-at: 13
+    name: poison-powder
+  - id: 79
+    learn-method: level-up
+    level-learned-at: 13
+    name: sleep-powder
+  - id: 81
+    learn-method: tutor
+    level-learned-at: 0
+    name: string-shot
+  - id: 92
+    learn-method: machine
+    level-learned-at: 0
+    name: toxic
+  - id: 99
+    learn-method: machine
+    level-learned-at: 0
+    name: rage
+  - id: 102
+    learn-method: machine
+    level-learned-at: 0
+    name: mimic
+  - id: 104
+    learn-method: machine
+    level-learned-at: 0
+    name: double-team
+  - id: 111
+    learn-method: machine
+    level-learned-at: 0
+    name: defense-curl
+  - id: 113
+    learn-method: machine
+    level-learned-at: 0
+    name: light-screen
+  - id: 115
+    learn-method: machine
+    level-learned-at: 0
+    name: reflect
+  - id: 117
+    learn-method: machine
+    level-learned-at: 0
+    name: bide
+  - id: 133
+    learn-method: machine
+    level-learned-at: 0
+    name: amnesia
+  - id: 148
+    learn-method: machine
+    level-learned-at: 0
+    name: flash
+  - id: 156
+    learn-method: machine
+    level-learned-at: 0
+    name: rest
+  - id: 164
+    learn-method: machine
+    level-learned-at: 0
+    name: substitute
+  - id: 173
+    learn-method: machine
+    level-learned-at: 0
+    name: snore
+  - id: 174
+    learn-method: machine
+    level-learned-at: 0
+    name: curse
+  - id: 182
+    learn-method: machine
+    level-learned-at: 0
+    name: protect
+  - id: 188
+    learn-method: machine
+    level-learned-at: 0
+    name: sludge-bomb
+  - id: 189
+    learn-method: machine
+    level-learned-at: 0
+    name: mud-slap
+  - id: 200
+    learn-method: machine
+    level-learned-at: 0
+    name: outrage
+  - id: 202
+    learn-method: machine
+    level-learned-at: 0
+    name: giga-drain
+  - id: 203
+    learn-method: machine
+    level-learned-at: 0
+    name: endure
+  - id: 204
+    learn-method: machine
+    level-learned-at: 0
+    name: charm
+  - id: 206
+    learn-method: machine
+    level-learned-at: 0
+    name: false-swipe
+  - id: 207
+    learn-method: machine
+    level-learned-at: 0
+    name: swagger
+  - id: 210
+    learn-method: machine
+    level-learned-at: 0
+    name: fury-cutter
+  - id: 213
+    learn-method: machine
+    level-learned-at: 0
+    name: attract
+  - id: 214
+    learn-method: machine
+    level-learned-at: 0
+    name: sleep-talk
+  - id: 216
+    learn-method: machine
+    level-learned-at: 0
+    name: return
+  - id: 218
+    learn-method: machine
+    level-learned-at: 0
+    name: frustration
+  - id: 219
+    learn-method: machine
+    level-learned-at: 0
+    name: safeguard
+  - id: 230
+    learn-method: level-up
+    level-learned-at: 23
+    name: sweet-scent
+  - id: 235
+    learn-method: level-up
+    level-learned-at: 39
+    name: synthesis
+  - id: 237
+    learn-method: machine
+    level-learned-at: 0
+    name: hidden-power
+  - id: 241
+    learn-method: machine
+    level-learned-at: 0
+    name: sunny-day
+  - id: 249
+    learn-method: machine
+    level-learned-at: 0
+    name: rock-smash
+  - id: 263
+    learn-method: machine
+    level-learned-at: 0
+    name: facade
+  - id: 267
+    learn-method: machine
+    level-learned-at: 0
+    name: nature-power
+  - id: 270
+    learn-method: machine
+    level-learned-at: 0
+    name: helping-hand
+  - id: 282
+    learn-method: tutor
+    level-learned-at: 0
+    name: knock-off
+  - id: 290
+    learn-method: machine
+    level-learned-at: 0
+    name: secret-power
+  - id: 311
+    learn-method: machine
+    level-learned-at: 0
+    name: weather-ball
+  - id: 331
+    learn-method: machine
+    level-learned-at: 0
+    name: bullet-seed
+  - id: 345
+    learn-method: machine
+    level-learned-at: 0
+    name: magical-leaf
+  - id: 363
+    learn-method: machine
+    level-learned-at: 0
+    name: natural-gift
+  - id: 388
+    learn-method: level-up
+    level-learned-at: 36
+    name: worry-seed
+  - id: 402
+    learn-method: tutor
+    level-learned-at: 0
+    name: seed-bomb
+  - id: 412
+    learn-method: machine
+    level-learned-at: 0
+    name: energy-ball
+  - id: 437
+    learn-method: machine
+    level-learned-at: 0
+    name: leaf-storm
+  - id: 438
+    learn-method: machine
+    level-learned-at: 0
+    name: power-whip
+  - id: 445
+    learn-method: machine
+    level-learned-at: 0
+    name: captivate
+  - id: 447
+    learn-method: machine
+    level-learned-at: 0
+    name: grass-knot
+  - id: 474
+    learn-method: machine
+    level-learned-at: 0
+    name: venoshock
+  - id: 496
+    learn-method: machine
+    level-learned-at: 0
+    name: round
+  - id: 497
+    learn-method: machine
+    level-learned-at: 0
+    name: echoed-voice
+  - id: 520
+    learn-method: tutor
+    level-learned-at: 0
+    name: grass-pledge
+  - id: 526
+    learn-method: machine
+    level-learned-at: 0
+    name: work-up
+  - id: 580
+    learn-method: machine
+    level-learned-at: 0
+    name: grassy-terrain
+  - id: 590
+    learn-method: machine
+    level-learned-at: 0
+    name: confide
+  - id: 803
+    learn-method: tutor
+    level-learned-at: 0
+    name: grassy-glide
   name: ivysaur
   type-ids:
   - 12
@@ -210,98 +688,367 @@ pokemon:
   experience: false
   id: 3
   ivs: false
-  level: false
-  move-ids:
-  - 14
-  - 15
-  - 20
-  - 22
-  - 29
-  - 33
-  - 34
-  - 36
-  - 38
-  - 45
-  - 46
-  - 63
-  - 70
-  - 72
-  - 73
-  - 74
-  - 75
-  - 76
-  - 77
-  - 79
-  - 80
-  - 81
-  - 89
-  - 92
-  - 99
-  - 102
-  - 104
-  - 111
-  - 113
-  - 115
-  - 117
-  - 133
-  - 148
-  - 156
-  - 164
-  - 173
-  - 174
-  - 182
-  - 188
-  - 189
-  - 200
-  - 202
-  - 203
-  - 204
-  - 206
-  - 207
-  - 210
-  - 213
-  - 214
-  - 216
-  - 218
-  - 219
-  - 230
-  - 235
-  - 237
-  - 241
-  - 249
-  - 263
-  - 267
-  - 270
-  - 282
-  - 290
-  - 311
-  - 331
-  - 335
-  - 338
-  - 345
-  - 363
-  - 388
-  - 402
-  - 412
-  - 414
-  - 416
-  - 431
-  - 437
-  - 438
-  - 445
-  - 447
-  - 474
-  - 496
-  - 497
-  - 520
-  - 523
-  - 526
-  - 572
-  - 580
-  - 590
-  - 707
-  - 803
-  - 805
+  moves:
+  - id: 14
+    learn-method: machine
+    level-learned-at: 0
+    name: swords-dance
+  - id: 15
+    learn-method: machine
+    level-learned-at: 0
+    name: cut
+  - id: 20
+    learn-method: tutor
+    level-learned-at: 0
+    name: bind
+  - id: 22
+    learn-method: level-up
+    level-learned-at: 9
+    name: vine-whip
+  - id: 29
+    learn-method: machine
+    level-learned-at: 0
+    name: headbutt
+  - id: 33
+    learn-method: level-up
+    level-learned-at: 1
+    name: tackle
+  - id: 34
+    learn-method: machine
+    level-learned-at: 0
+    name: body-slam
+  - id: 36
+    learn-method: level-up
+    level-learned-at: 15
+    name: take-down
+  - id: 38
+    learn-method: level-up
+    level-learned-at: 31
+    name: double-edge
+  - id: 45
+    learn-method: level-up
+    level-learned-at: 3
+    name: growl
+  - id: 46
+    learn-method: machine
+    level-learned-at: 0
+    name: roar
+  - id: 63
+    learn-method: machine
+    level-learned-at: 0
+    name: hyper-beam
+  - id: 70
+    learn-method: machine
+    level-learned-at: 0
+    name: strength
+  - id: 72
+    learn-method: machine
+    level-learned-at: 0
+    name: mega-drain
+  - id: 73
+    learn-method: level-up
+    level-learned-at: 7
+    name: leech-seed
+  - id: 74
+    learn-method: level-up
+    level-learned-at: 28
+    name: growth
+  - id: 75
+    learn-method: level-up
+    level-learned-at: 20
+    name: razor-leaf
+  - id: 76
+    learn-method: machine
+    level-learned-at: 0
+    name: solar-beam
+  - id: 77
+    learn-method: level-up
+    level-learned-at: 13
+    name: poison-powder
+  - id: 79
+    learn-method: level-up
+    level-learned-at: 13
+    name: sleep-powder
+  - id: 80
+    learn-method: level-up
+    level-learned-at: 32
+    name: petal-dance
+  - id: 81
+    learn-method: tutor
+    level-learned-at: 0
+    name: string-shot
+  - id: 89
+    learn-method: machine
+    level-learned-at: 0
+    name: earthquake
+  - id: 92
+    learn-method: machine
+    level-learned-at: 0
+    name: toxic
+  - id: 99
+    learn-method: machine
+    level-learned-at: 0
+    name: rage
+  - id: 102
+    learn-method: machine
+    level-learned-at: 0
+    name: mimic
+  - id: 104
+    learn-method: machine
+    level-learned-at: 0
+    name: double-team
+  - id: 111
+    learn-method: machine
+    level-learned-at: 0
+    name: defense-curl
+  - id: 113
+    learn-method: machine
+    level-learned-at: 0
+    name: light-screen
+  - id: 115
+    learn-method: machine
+    level-learned-at: 0
+    name: reflect
+  - id: 117
+    learn-method: machine
+    level-learned-at: 0
+    name: bide
+  - id: 133
+    learn-method: level-up
+    level-learned-at: 1
+    name: amnesia
+  - id: 148
+    learn-method: machine
+    level-learned-at: 0
+    name: flash
+  - id: 156
+    learn-method: machine
+    level-learned-at: 0
+    name: rest
+  - id: 164
+    learn-method: machine
+    level-learned-at: 0
+    name: substitute
+  - id: 173
+    learn-method: machine
+    level-learned-at: 0
+    name: snore
+  - id: 174
+    learn-method: machine
+    level-learned-at: 0
+    name: curse
+  - id: 182
+    learn-method: machine
+    level-learned-at: 0
+    name: protect
+  - id: 188
+    learn-method: machine
+    level-learned-at: 0
+    name: sludge-bomb
+  - id: 189
+    learn-method: machine
+    level-learned-at: 0
+    name: mud-slap
+  - id: 200
+    learn-method: tutor
+    level-learned-at: 0
+    name: outrage
+  - id: 202
+    learn-method: machine
+    level-learned-at: 0
+    name: giga-drain
+  - id: 203
+    learn-method: machine
+    level-learned-at: 0
+    name: endure
+  - id: 204
+    learn-method: machine
+    level-learned-at: 0
+    name: charm
+  - id: 206
+    learn-method: machine
+    level-learned-at: 0
+    name: false-swipe
+  - id: 207
+    learn-method: machine
+    level-learned-at: 0
+    name: swagger
+  - id: 210
+    learn-method: machine
+    level-learned-at: 0
+    name: fury-cutter
+  - id: 213
+    learn-method: machine
+    level-learned-at: 0
+    name: attract
+  - id: 214
+    learn-method: machine
+    level-learned-at: 0
+    name: sleep-talk
+  - id: 216
+    learn-method: machine
+    level-learned-at: 0
+    name: return
+  - id: 218
+    learn-method: machine
+    level-learned-at: 0
+    name: frustration
+  - id: 219
+    learn-method: machine
+    level-learned-at: 0
+    name: safeguard
+  - id: 230
+    learn-method: level-up
+    level-learned-at: 23
+    name: sweet-scent
+  - id: 235
+    learn-method: level-up
+    level-learned-at: 45
+    name: synthesis
+  - id: 237
+    learn-method: machine
+    level-learned-at: 0
+    name: hidden-power
+  - id: 241
+    learn-method: machine
+    level-learned-at: 0
+    name: sunny-day
+  - id: 249
+    learn-method: machine
+    level-learned-at: 0
+    name: rock-smash
+  - id: 263
+    learn-method: machine
+    level-learned-at: 0
+    name: facade
+  - id: 267
+    learn-method: machine
+    level-learned-at: 0
+    name: nature-power
+  - id: 270
+    learn-method: machine
+    level-learned-at: 0
+    name: helping-hand
+  - id: 282
+    learn-method: tutor
+    level-learned-at: 0
+    name: knock-off
+  - id: 290
+    learn-method: machine
+    level-learned-at: 0
+    name: secret-power
+  - id: 311
+    learn-method: machine
+    level-learned-at: 0
+    name: weather-ball
+  - id: 331
+    learn-method: machine
+    level-learned-at: 0
+    name: bullet-seed
+  - id: 335
+    learn-method: tutor
+    level-learned-at: 0
+    name: block
+  - id: 338
+    learn-method: tutor
+    level-learned-at: 0
+    name: frenzy-plant
+  - id: 345
+    learn-method: machine
+    level-learned-at: 0
+    name: magical-leaf
+  - id: 363
+    learn-method: machine
+    level-learned-at: 0
+    name: natural-gift
+  - id: 388
+    learn-method: level-up
+    level-learned-at: 39
+    name: worry-seed
+  - id: 402
+    learn-method: tutor
+    level-learned-at: 0
+    name: seed-bomb
+  - id: 412
+    learn-method: machine
+    level-learned-at: 0
+    name: energy-ball
+  - id: 414
+    learn-method: machine
+    level-learned-at: 0
+    name: earth-power
+  - id: 416
+    learn-method: machine
+    level-learned-at: 0
+    name: giga-impact
+  - id: 431
+    learn-method: machine
+    level-learned-at: 0
+    name: rock-climb
+  - id: 437
+    learn-method: machine
+    level-learned-at: 0
+    name: leaf-storm
+  - id: 438
+    learn-method: level-up
+    level-learned-at: 1
+    name: power-whip
+  - id: 445
+    learn-method: machine
+    level-learned-at: 0
+    name: captivate
+  - id: 447
+    learn-method: machine
+    level-learned-at: 0
+    name: grass-knot
+  - id: 474
+    learn-method: machine
+    level-learned-at: 0
+    name: venoshock
+  - id: 496
+    learn-method: machine
+    level-learned-at: 0
+    name: round
+  - id: 497
+    learn-method: machine
+    level-learned-at: 0
+    name: echoed-voice
+  - id: 520
+    learn-method: tutor
+    level-learned-at: 0
+    name: grass-pledge
+  - id: 523
+    learn-method: machine
+    level-learned-at: 0
+    name: bulldoze
+  - id: 526
+    learn-method: machine
+    level-learned-at: 0
+    name: work-up
+  - id: 572
+    learn-method: level-up
+    level-learned-at: 50
+    name: petal-blizzard
+  - id: 580
+    learn-method: machine
+    level-learned-at: 0
+    name: grassy-terrain
+  - id: 590
+    learn-method: machine
+    level-learned-at: 0
+    name: confide
+  - id: 707
+    learn-method: tutor
+    level-learned-at: 0
+    name: stomping-tantrum
+  - id: 803
+    learn-method: tutor
+    level-learned-at: 0
+    name: grassy-glide
+  - id: 805
+    learn-method: tutor
+    level-learned-at: 0
+    name: terrain-pulse
   name: venusaur
   type-ids:
   - 12
@@ -319,110 +1066,415 @@ pokemon:
   experience: false
   id: 4
   ivs: false
-  level: false
-  move-ids:
-  - 5
-  - 7
-  - 9
-  - 10
-  - 14
-  - 15
-  - 17
-  - 25
-  - 29
-  - 34
-  - 36
-  - 38
-  - 43
-  - 44
-  - 45
-  - 52
-  - 53
-  - 66
-  - 68
-  - 69
-  - 70
-  - 82
-  - 83
-  - 91
-  - 92
-  - 99
-  - 102
-  - 104
-  - 108
-  - 111
-  - 115
-  - 117
-  - 126
-  - 129
-  - 130
-  - 154
-  - 156
-  - 157
-  - 163
-  - 164
-  - 173
-  - 174
-  - 182
-  - 184
-  - 187
-  - 189
-  - 200
-  - 203
-  - 206
-  - 207
-  - 210
-  - 213
-  - 214
-  - 216
-  - 218
-  - 223
-  - 225
-  - 231
-  - 232
-  - 237
-  - 241
-  - 242
-  - 246
-  - 249
-  - 251
-  - 257
-  - 261
-  - 263
-  - 264
-  - 270
-  - 280
-  - 290
-  - 311
-  - 314
-  - 315
-  - 317
-  - 332
-  - 337
-  - 349
-  - 363
-  - 374
-  - 394
-  - 406
-  - 407
-  - 411
-  - 421
-  - 424
-  - 445
-  - 468
-  - 481
-  - 488
-  - 496
-  - 497
-  - 510
-  - 512
-  - 517
-  - 519
-  - 525
-  - 526
-  - 590
-  - 612
-  - 851
+  moves:
+  - id: 5
+    learn-method: machine
+    level-learned-at: 0
+    name: mega-punch
+  - id: 7
+    learn-method: machine
+    level-learned-at: 0
+    name: fire-punch
+  - id: 9
+    learn-method: tutor
+    level-learned-at: 0
+    name: thunder-punch
+  - id: 10
+    learn-method: level-up
+    level-learned-at: 1
+    name: scratch
+  - id: 14
+    learn-method: machine
+    level-learned-at: 0
+    name: swords-dance
+  - id: 15
+    learn-method: machine
+    level-learned-at: 0
+    name: cut
+  - id: 17
+    learn-method: egg
+    level-learned-at: 0
+    name: wing-attack
+  - id: 25
+    learn-method: machine
+    level-learned-at: 0
+    name: mega-kick
+  - id: 29
+    learn-method: machine
+    level-learned-at: 0
+    name: headbutt
+  - id: 34
+    learn-method: machine
+    level-learned-at: 0
+    name: body-slam
+  - id: 36
+    learn-method: machine
+    level-learned-at: 0
+    name: take-down
+  - id: 38
+    learn-method: machine
+    level-learned-at: 0
+    name: double-edge
+  - id: 43
+    learn-method: level-up
+    level-learned-at: 15
+    name: leer
+  - id: 44
+    learn-method: egg
+    level-learned-at: 0
+    name: bite
+  - id: 45
+    learn-method: level-up
+    level-learned-at: 1
+    name: growl
+  - id: 52
+    learn-method: level-up
+    level-learned-at: 7
+    name: ember
+  - id: 53
+    learn-method: machine
+    level-learned-at: 0
+    name: flamethrower
+  - id: 66
+    learn-method: machine
+    level-learned-at: 0
+    name: submission
+  - id: 68
+    learn-method: egg
+    level-learned-at: 0
+    name: counter
+  - id: 69
+    learn-method: machine
+    level-learned-at: 0
+    name: seismic-toss
+  - id: 70
+    learn-method: machine
+    level-learned-at: 0
+    name: strength
+  - id: 82
+    learn-method: level-up
+    level-learned-at: 16
+    name: dragon-rage
+  - id: 83
+    learn-method: level-up
+    level-learned-at: 43
+    name: fire-spin
+  - id: 91
+    learn-method: machine
+    level-learned-at: 0
+    name: dig
+  - id: 92
+    learn-method: machine
+    level-learned-at: 0
+    name: toxic
+  - id: 99
+    learn-method: level-up
+    level-learned-at: 22
+    name: rage
+  - id: 102
+    learn-method: machine
+    level-learned-at: 0
+    name: mimic
+  - id: 104
+    learn-method: machine
+    level-learned-at: 0
+    name: double-team
+  - id: 108
+    learn-method: level-up
+    level-learned-at: 10
+    name: smokescreen
+  - id: 111
+    learn-method: machine
+    level-learned-at: 0
+    name: defense-curl
+  - id: 115
+    learn-method: machine
+    level-learned-at: 0
+    name: reflect
+  - id: 117
+    learn-method: machine
+    level-learned-at: 0
+    name: bide
+  - id: 126
+    learn-method: machine
+    level-learned-at: 0
+    name: fire-blast
+  - id: 129
+    learn-method: machine
+    level-learned-at: 0
+    name: swift
+  - id: 130
+    learn-method: machine
+    level-learned-at: 0
+    name: skull-bash
+  - id: 154
+    learn-method: level-up
+    level-learned-at: 18
+    name: fury-swipes
+  - id: 156
+    learn-method: machine
+    level-learned-at: 0
+    name: rest
+  - id: 157
+    learn-method: machine
+    level-learned-at: 0
+    name: rock-slide
+  - id: 163
+    learn-method: level-up
+    level-learned-at: 34
+    name: slash
+  - id: 164
+    learn-method: machine
+    level-learned-at: 0
+    name: substitute
+  - id: 173
+    learn-method: machine
+    level-learned-at: 0
+    name: snore
+  - id: 174
+    learn-method: machine
+    level-learned-at: 0
+    name: curse
+  - id: 182
+    learn-method: machine
+    level-learned-at: 0
+    name: protect
+  - id: 184
+    learn-method: level-up
+    level-learned-at: 19
+    name: scary-face
+  - id: 187
+    learn-method: egg
+    level-learned-at: 0
+    name: belly-drum
+  - id: 189
+    learn-method: machine
+    level-learned-at: 0
+    name: mud-slap
+  - id: 200
+    learn-method: egg
+    level-learned-at: 0
+    name: outrage
+  - id: 203
+    learn-method: machine
+    level-learned-at: 0
+    name: endure
+  - id: 206
+    learn-method: machine
+    level-learned-at: 0
+    name: false-swipe
+  - id: 207
+    learn-method: machine
+    level-learned-at: 0
+    name: swagger
+  - id: 210
+    learn-method: machine
+    level-learned-at: 0
+    name: fury-cutter
+  - id: 213
+    learn-method: machine
+    level-learned-at: 0
+    name: attract
+  - id: 214
+    learn-method: machine
+    level-learned-at: 0
+    name: sleep-talk
+  - id: 216
+    learn-method: machine
+    level-learned-at: 0
+    name: return
+  - id: 218
+    learn-method: machine
+    level-learned-at: 0
+    name: frustration
+  - id: 223
+    learn-method: machine
+    level-learned-at: 0
+    name: dynamic-punch
+  - id: 225
+    learn-method: machine
+    level-learned-at: 0
+    name: dragon-breath
+  - id: 231
+    learn-method: machine
+    level-learned-at: 0
+    name: iron-tail
+  - id: 232
+    learn-method: egg
+    level-learned-at: 0
+    name: metal-claw
+  - id: 237
+    learn-method: machine
+    level-learned-at: 0
+    name: hidden-power
+  - id: 241
+    learn-method: machine
+    level-learned-at: 0
+    name: sunny-day
+  - id: 242
+    learn-method: egg
+    level-learned-at: 0
+    name: crunch
+  - id: 246
+    learn-method: egg
+    level-learned-at: 0
+    name: ancient-power
+  - id: 249
+    learn-method: machine
+    level-learned-at: 0
+    name: rock-smash
+  - id: 251
+    learn-method: egg
+    level-learned-at: 0
+    name: beat-up
+  - id: 257
+    learn-method: tutor
+    level-learned-at: 0
+    name: heat-wave
+  - id: 261
+    learn-method: machine
+    level-learned-at: 0
+    name: will-o-wisp
+  - id: 263
+    learn-method: machine
+    level-learned-at: 0
+    name: facade
+  - id: 264
+    learn-method: egg
+    level-learned-at: 0
+    name: focus-punch
+  - id: 270
+    learn-method: machine
+    level-learned-at: 0
+    name: helping-hand
+  - id: 280
+    learn-method: machine
+    level-learned-at: 0
+    name: brick-break
+  - id: 290
+    learn-method: machine
+    level-learned-at: 0
+    name: secret-power
+  - id: 311
+    learn-method: machine
+    level-learned-at: 0
+    name: weather-ball
+  - id: 314
+    learn-method: egg
+    level-learned-at: 0
+    name: air-cutter
+  - id: 315
+    learn-method: machine
+    level-learned-at: 0
+    name: overheat
+  - id: 317
+    learn-method: machine
+    level-learned-at: 0
+    name: rock-tomb
+  - id: 332
+    learn-method: machine
+    level-learned-at: 0
+    name: aerial-ace
+  - id: 337
+    learn-method: machine
+    level-learned-at: 0
+    name: dragon-claw
+  - id: 349
+    learn-method: egg
+    level-learned-at: 0
+    name: dragon-dance
+  - id: 363
+    learn-method: machine
+    level-learned-at: 0
+    name: natural-gift
+  - id: 374
+    learn-method: machine
+    level-learned-at: 0
+    name: fling
+  - id: 394
+    learn-method: egg
+    level-learned-at: 0
+    name: flare-blitz
+  - id: 406
+    learn-method: egg
+    level-learned-at: 0
+    name: dragon-pulse
+  - id: 407
+    learn-method: egg
+    level-learned-at: 0
+    name: dragon-rush
+  - id: 411
+    learn-method: machine
+    level-learned-at: 0
+    name: focus-blast
+  - id: 421
+    learn-method: machine
+    level-learned-at: 0
+    name: shadow-claw
+  - id: 424
+    learn-method: level-up
+    level-learned-at: 25
+    name: fire-fang
+  - id: 445
+    learn-method: machine
+    level-learned-at: 0
+    name: captivate
+  - id: 468
+    learn-method: machine
+    level-learned-at: 0
+    name: hone-claws
+  - id: 481
+    learn-method: level-up
+    level-learned-at: 28
+    name: flame-burst
+  - id: 488
+    learn-method: machine
+    level-learned-at: 0
+    name: flame-charge
+  - id: 496
+    learn-method: machine
+    level-learned-at: 0
+    name: round
+  - id: 497
+    learn-method: machine
+    level-learned-at: 0
+    name: echoed-voice
+  - id: 510
+    learn-method: machine
+    level-learned-at: 0
+    name: incinerate
+  - id: 512
+    learn-method: machine
+    level-learned-at: 0
+    name: acrobatics
+  - id: 517
+    learn-method: level-up
+    level-learned-at: 46
+    name: inferno
+  - id: 519
+    learn-method: tutor
+    level-learned-at: 0
+    name: fire-pledge
+  - id: 525
+    learn-method: egg
+    level-learned-at: 0
+    name: dragon-tail
+  - id: 526
+    learn-method: machine
+    level-learned-at: 0
+    name: work-up
+  - id: 590
+    learn-method: machine
+    level-learned-at: 0
+    name: confide
+  - id: 612
+    learn-method: machine
+    level-learned-at: 0
+    name: power-up-punch
+  - id: 851
+    learn-method: machine
+    level-learned-at: 0
+    name: tera-blast
   name: charmander
   type-ids:
   - 10
@@ -439,103 +1491,387 @@ pokemon:
   experience: false
   id: 5
   ivs: false
-  level: false
-  move-ids:
-  - 5
-  - 7
-  - 9
-  - 10
-  - 14
-  - 15
-  - 25
-  - 29
-  - 34
-  - 36
-  - 38
-  - 43
-  - 45
-  - 52
-  - 53
-  - 66
-  - 68
-  - 69
-  - 70
-  - 82
-  - 83
-  - 91
-  - 92
-  - 99
-  - 102
-  - 104
-  - 108
-  - 111
-  - 115
-  - 117
-  - 126
-  - 129
-  - 130
-  - 154
-  - 156
-  - 157
-  - 163
-  - 164
-  - 173
-  - 174
-  - 182
-  - 184
-  - 189
-  - 200
-  - 203
-  - 206
-  - 207
-  - 210
-  - 213
-  - 214
-  - 216
-  - 218
-  - 223
-  - 225
-  - 231
-  - 232
-  - 237
-  - 241
-  - 242
-  - 249
-  - 251
-  - 257
-  - 261
-  - 263
-  - 264
-  - 270
-  - 280
-  - 290
-  - 311
-  - 315
-  - 317
-  - 332
-  - 337
-  - 349
-  - 363
-  - 374
-  - 394
-  - 406
-  - 421
-  - 424
-  - 445
-  - 468
-  - 481
-  - 488
-  - 496
-  - 497
-  - 510
-  - 512
-  - 517
-  - 519
-  - 525
-  - 526
-  - 590
-  - 612
-  - 851
+  moves:
+  - id: 5
+    learn-method: machine
+    level-learned-at: 0
+    name: mega-punch
+  - id: 7
+    learn-method: machine
+    level-learned-at: 0
+    name: fire-punch
+  - id: 9
+    learn-method: tutor
+    level-learned-at: 0
+    name: thunder-punch
+  - id: 10
+    learn-method: level-up
+    level-learned-at: 1
+    name: scratch
+  - id: 14
+    learn-method: machine
+    level-learned-at: 0
+    name: swords-dance
+  - id: 15
+    learn-method: machine
+    level-learned-at: 0
+    name: cut
+  - id: 25
+    learn-method: machine
+    level-learned-at: 0
+    name: mega-kick
+  - id: 29
+    learn-method: machine
+    level-learned-at: 0
+    name: headbutt
+  - id: 34
+    learn-method: machine
+    level-learned-at: 0
+    name: body-slam
+  - id: 36
+    learn-method: machine
+    level-learned-at: 0
+    name: take-down
+  - id: 38
+    learn-method: machine
+    level-learned-at: 0
+    name: double-edge
+  - id: 43
+    learn-method: level-up
+    level-learned-at: 15
+    name: leer
+  - id: 45
+    learn-method: level-up
+    level-learned-at: 1
+    name: growl
+  - id: 52
+    learn-method: level-up
+    level-learned-at: 7
+    name: ember
+  - id: 53
+    learn-method: machine
+    level-learned-at: 0
+    name: flamethrower
+  - id: 66
+    learn-method: machine
+    level-learned-at: 0
+    name: submission
+  - id: 68
+    learn-method: machine
+    level-learned-at: 0
+    name: counter
+  - id: 69
+    learn-method: machine
+    level-learned-at: 0
+    name: seismic-toss
+  - id: 70
+    learn-method: machine
+    level-learned-at: 0
+    name: strength
+  - id: 82
+    learn-method: level-up
+    level-learned-at: 17
+    name: dragon-rage
+  - id: 83
+    learn-method: level-up
+    level-learned-at: 50
+    name: fire-spin
+  - id: 91
+    learn-method: machine
+    level-learned-at: 0
+    name: dig
+  - id: 92
+    learn-method: machine
+    level-learned-at: 0
+    name: toxic
+  - id: 99
+    learn-method: level-up
+    level-learned-at: 24
+    name: rage
+  - id: 102
+    learn-method: machine
+    level-learned-at: 0
+    name: mimic
+  - id: 104
+    learn-method: machine
+    level-learned-at: 0
+    name: double-team
+  - id: 108
+    learn-method: level-up
+    level-learned-at: 10
+    name: smokescreen
+  - id: 111
+    learn-method: machine
+    level-learned-at: 0
+    name: defense-curl
+  - id: 115
+    learn-method: machine
+    level-learned-at: 0
+    name: reflect
+  - id: 117
+    learn-method: machine
+    level-learned-at: 0
+    name: bide
+  - id: 126
+    learn-method: machine
+    level-learned-at: 0
+    name: fire-blast
+  - id: 129
+    learn-method: machine
+    level-learned-at: 0
+    name: swift
+  - id: 130
+    learn-method: machine
+    level-learned-at: 0
+    name: skull-bash
+  - id: 154
+    learn-method: level-up
+    level-learned-at: 20
+    name: fury-swipes
+  - id: 156
+    learn-method: machine
+    level-learned-at: 0
+    name: rest
+  - id: 157
+    learn-method: machine
+    level-learned-at: 0
+    name: rock-slide
+  - id: 163
+    learn-method: level-up
+    level-learned-at: 39
+    name: slash
+  - id: 164
+    learn-method: machine
+    level-learned-at: 0
+    name: substitute
+  - id: 173
+    learn-method: machine
+    level-learned-at: 0
+    name: snore
+  - id: 174
+    learn-method: machine
+    level-learned-at: 0
+    name: curse
+  - id: 182
+    learn-method: machine
+    level-learned-at: 0
+    name: protect
+  - id: 184
+    learn-method: level-up
+    level-learned-at: 21
+    name: scary-face
+  - id: 189
+    learn-method: machine
+    level-learned-at: 0
+    name: mud-slap
+  - id: 200
+    learn-method: tutor
+    level-learned-at: 0
+    name: outrage
+  - id: 203
+    learn-method: machine
+    level-learned-at: 0
+    name: endure
+  - id: 206
+    learn-method: machine
+    level-learned-at: 0
+    name: false-swipe
+  - id: 207
+    learn-method: machine
+    level-learned-at: 0
+    name: swagger
+  - id: 210
+    learn-method: machine
+    level-learned-at: 0
+    name: fury-cutter
+  - id: 213
+    learn-method: machine
+    level-learned-at: 0
+    name: attract
+  - id: 214
+    learn-method: machine
+    level-learned-at: 0
+    name: sleep-talk
+  - id: 216
+    learn-method: machine
+    level-learned-at: 0
+    name: return
+  - id: 218
+    learn-method: machine
+    level-learned-at: 0
+    name: frustration
+  - id: 223
+    learn-method: machine
+    level-learned-at: 0
+    name: dynamic-punch
+  - id: 225
+    learn-method: machine
+    level-learned-at: 0
+    name: dragon-breath
+  - id: 231
+    learn-method: machine
+    level-learned-at: 0
+    name: iron-tail
+  - id: 232
+    learn-method: level-up
+    level-learned-at: 13
+    name: metal-claw
+  - id: 237
+    learn-method: machine
+    level-learned-at: 0
+    name: hidden-power
+  - id: 241
+    learn-method: machine
+    level-learned-at: 0
+    name: sunny-day
+  - id: 242
+    learn-method: machine
+    level-learned-at: 0
+    name: crunch
+  - id: 249
+    learn-method: machine
+    level-learned-at: 0
+    name: rock-smash
+  - id: 251
+    learn-method: machine
+    level-learned-at: 0
+    name: beat-up
+  - id: 257
+    learn-method: tutor
+    level-learned-at: 0
+    name: heat-wave
+  - id: 261
+    learn-method: machine
+    level-learned-at: 0
+    name: will-o-wisp
+  - id: 263
+    learn-method: machine
+    level-learned-at: 0
+    name: facade
+  - id: 264
+    learn-method: machine
+    level-learned-at: 0
+    name: focus-punch
+  - id: 270
+    learn-method: machine
+    level-learned-at: 0
+    name: helping-hand
+  - id: 280
+    learn-method: machine
+    level-learned-at: 0
+    name: brick-break
+  - id: 290
+    learn-method: machine
+    level-learned-at: 0
+    name: secret-power
+  - id: 311
+    learn-method: machine
+    level-learned-at: 0
+    name: weather-ball
+  - id: 315
+    learn-method: machine
+    level-learned-at: 0
+    name: overheat
+  - id: 317
+    learn-method: machine
+    level-learned-at: 0
+    name: rock-tomb
+  - id: 332
+    learn-method: machine
+    level-learned-at: 0
+    name: aerial-ace
+  - id: 337
+    learn-method: machine
+    level-learned-at: 0
+    name: dragon-claw
+  - id: 349
+    learn-method: machine
+    level-learned-at: 0
+    name: dragon-dance
+  - id: 363
+    learn-method: machine
+    level-learned-at: 0
+    name: natural-gift
+  - id: 374
+    learn-method: machine
+    level-learned-at: 0
+    name: fling
+  - id: 394
+    learn-method: level-up
+    level-learned-at: 54
+    name: flare-blitz
+  - id: 406
+    learn-method: tutor
+    level-learned-at: 0
+    name: dragon-pulse
+  - id: 421
+    learn-method: machine
+    level-learned-at: 0
+    name: shadow-claw
+  - id: 424
+    learn-method: level-up
+    level-learned-at: 28
+    name: fire-fang
+  - id: 445
+    learn-method: machine
+    level-learned-at: 0
+    name: captivate
+  - id: 468
+    learn-method: machine
+    level-learned-at: 0
+    name: hone-claws
+  - id: 481
+    learn-method: level-up
+    level-learned-at: 32
+    name: flame-burst
+  - id: 488
+    learn-method: machine
+    level-learned-at: 0
+    name: flame-charge
+  - id: 496
+    learn-method: machine
+    level-learned-at: 0
+    name: round
+  - id: 497
+    learn-method: machine
+    level-learned-at: 0
+    name: echoed-voice
+  - id: 510
+    learn-method: machine
+    level-learned-at: 0
+    name: incinerate
+  - id: 512
+    learn-method: machine
+    level-learned-at: 0
+    name: acrobatics
+  - id: 517
+    learn-method: level-up
+    level-learned-at: 54
+    name: inferno
+  - id: 519
+    learn-method: tutor
+    level-learned-at: 0
+    name: fire-pledge
+  - id: 525
+    learn-method: machine
+    level-learned-at: 0
+    name: dragon-tail
+  - id: 526
+    learn-method: machine
+    level-learned-at: 0
+    name: work-up
+  - id: 590
+    learn-method: machine
+    level-learned-at: 0
+    name: confide
+  - id: 612
+    learn-method: machine
+    level-learned-at: 0
+    name: power-up-punch
+  - id: 851
+    learn-method: machine
+    level-learned-at: 0
+    name: tera-blast
   name: charmeleon
   type-ids:
   - 10
@@ -552,133 +1888,507 @@ pokemon:
   experience: false
   id: 6
   ivs: false
-  level: false
-  move-ids:
-  - 5
-  - 7
-  - 9
-  - 10
-  - 14
-  - 15
-  - 17
-  - 19
-  - 25
-  - 29
-  - 34
-  - 36
-  - 38
-  - 43
-  - 45
-  - 46
-  - 52
-  - 53
-  - 63
-  - 66
-  - 68
-  - 69
-  - 70
-  - 76
-  - 82
-  - 83
-  - 89
-  - 90
-  - 91
-  - 92
-  - 99
-  - 102
-  - 104
-  - 108
-  - 111
-  - 115
-  - 117
-  - 126
-  - 129
-  - 130
-  - 154
-  - 156
-  - 157
-  - 163
-  - 164
-  - 173
-  - 174
-  - 182
-  - 184
-  - 189
-  - 200
-  - 201
-  - 203
-  - 206
-  - 207
-  - 210
-  - 211
-  - 213
-  - 214
-  - 216
-  - 218
-  - 223
-  - 225
-  - 231
-  - 232
-  - 237
-  - 239
-  - 241
-  - 242
-  - 249
-  - 251
-  - 257
-  - 261
-  - 263
-  - 264
-  - 270
-  - 280
-  - 290
-  - 299
-  - 307
-  - 311
-  - 314
-  - 315
-  - 317
-  - 332
-  - 337
-  - 349
-  - 355
-  - 363
-  - 366
-  - 374
-  - 394
-  - 403
-  - 406
-  - 411
-  - 416
-  - 421
-  - 424
-  - 432
-  - 445
-  - 466
-  - 468
-  - 481
-  - 488
-  - 496
-  - 497
-  - 507
-  - 510
-  - 512
-  - 517
-  - 519
-  - 523
-  - 525
-  - 526
-  - 535
-  - 542
-  - 590
-  - 595
-  - 612
-  - 693
-  - 784
-  - 799
-  - 814
-  - 815
-  - 851
+  moves:
+  - id: 5
+    learn-method: machine
+    level-learned-at: 0
+    name: mega-punch
+  - id: 7
+    learn-method: machine
+    level-learned-at: 0
+    name: fire-punch
+  - id: 9
+    learn-method: tutor
+    level-learned-at: 0
+    name: thunder-punch
+  - id: 10
+    learn-method: level-up
+    level-learned-at: 1
+    name: scratch
+  - id: 14
+    learn-method: machine
+    level-learned-at: 0
+    name: swords-dance
+  - id: 15
+    learn-method: machine
+    level-learned-at: 0
+    name: cut
+  - id: 17
+    learn-method: level-up
+    level-learned-at: 36
+    name: wing-attack
+  - id: 19
+    learn-method: machine
+    level-learned-at: 0
+    name: fly
+  - id: 25
+    learn-method: machine
+    level-learned-at: 0
+    name: mega-kick
+  - id: 29
+    learn-method: machine
+    level-learned-at: 0
+    name: headbutt
+  - id: 34
+    learn-method: machine
+    level-learned-at: 0
+    name: body-slam
+  - id: 36
+    learn-method: machine
+    level-learned-at: 0
+    name: take-down
+  - id: 38
+    learn-method: machine
+    level-learned-at: 0
+    name: double-edge
+  - id: 43
+    learn-method: level-up
+    level-learned-at: 1
+    name: leer
+  - id: 45
+    learn-method: level-up
+    level-learned-at: 1
+    name: growl
+  - id: 46
+    learn-method: machine
+    level-learned-at: 0
+    name: roar
+  - id: 52
+    learn-method: level-up
+    level-learned-at: 7
+    name: ember
+  - id: 53
+    learn-method: machine
+    level-learned-at: 0
+    name: flamethrower
+  - id: 63
+    learn-method: machine
+    level-learned-at: 0
+    name: hyper-beam
+  - id: 66
+    learn-method: machine
+    level-learned-at: 0
+    name: submission
+  - id: 68
+    learn-method: machine
+    level-learned-at: 0
+    name: counter
+  - id: 69
+    learn-method: machine
+    level-learned-at: 0
+    name: seismic-toss
+  - id: 70
+    learn-method: machine
+    level-learned-at: 0
+    name: strength
+  - id: 76
+    learn-method: machine
+    level-learned-at: 0
+    name: solar-beam
+  - id: 82
+    learn-method: level-up
+    level-learned-at: 17
+    name: dragon-rage
+  - id: 83
+    learn-method: level-up
+    level-learned-at: 56
+    name: fire-spin
+  - id: 89
+    learn-method: machine
+    level-learned-at: 0
+    name: earthquake
+  - id: 90
+    learn-method: machine
+    level-learned-at: 0
+    name: fissure
+  - id: 91
+    learn-method: machine
+    level-learned-at: 0
+    name: dig
+  - id: 92
+    learn-method: machine
+    level-learned-at: 0
+    name: toxic
+  - id: 99
+    learn-method: level-up
+    level-learned-at: 24
+    name: rage
+  - id: 102
+    learn-method: machine
+    level-learned-at: 0
+    name: mimic
+  - id: 104
+    learn-method: machine
+    level-learned-at: 0
+    name: double-team
+  - id: 108
+    learn-method: level-up
+    level-learned-at: 10
+    name: smokescreen
+  - id: 111
+    learn-method: machine
+    level-learned-at: 0
+    name: defense-curl
+  - id: 115
+    learn-method: machine
+    level-learned-at: 0
+    name: reflect
+  - id: 117
+    learn-method: machine
+    level-learned-at: 0
+    name: bide
+  - id: 126
+    learn-method: machine
+    level-learned-at: 0
+    name: fire-blast
+  - id: 129
+    learn-method: machine
+    level-learned-at: 0
+    name: swift
+  - id: 130
+    learn-method: machine
+    level-learned-at: 0
+    name: skull-bash
+  - id: 154
+    learn-method: level-up
+    level-learned-at: 20
+    name: fury-swipes
+  - id: 156
+    learn-method: machine
+    level-learned-at: 0
+    name: rest
+  - id: 157
+    learn-method: machine
+    level-learned-at: 0
+    name: rock-slide
+  - id: 163
+    learn-method: level-up
+    level-learned-at: 41
+    name: slash
+  - id: 164
+    learn-method: machine
+    level-learned-at: 0
+    name: substitute
+  - id: 173
+    learn-method: machine
+    level-learned-at: 0
+    name: snore
+  - id: 174
+    learn-method: machine
+    level-learned-at: 0
+    name: curse
+  - id: 182
+    learn-method: machine
+    level-learned-at: 0
+    name: protect
+  - id: 184
+    learn-method: level-up
+    level-learned-at: 21
+    name: scary-face
+  - id: 189
+    learn-method: machine
+    level-learned-at: 0
+    name: mud-slap
+  - id: 200
+    learn-method: tutor
+    level-learned-at: 0
+    name: outrage
+  - id: 201
+    learn-method: machine
+    level-learned-at: 0
+    name: sandstorm
+  - id: 203
+    learn-method: machine
+    level-learned-at: 0
+    name: endure
+  - id: 206
+    learn-method: machine
+    level-learned-at: 0
+    name: false-swipe
+  - id: 207
+    learn-method: machine
+    level-learned-at: 0
+    name: swagger
+  - id: 210
+    learn-method: machine
+    level-learned-at: 0
+    name: fury-cutter
+  - id: 211
+    learn-method: machine
+    level-learned-at: 0
+    name: steel-wing
+  - id: 213
+    learn-method: machine
+    level-learned-at: 0
+    name: attract
+  - id: 214
+    learn-method: machine
+    level-learned-at: 0
+    name: sleep-talk
+  - id: 216
+    learn-method: machine
+    level-learned-at: 0
+    name: return
+  - id: 218
+    learn-method: machine
+    level-learned-at: 0
+    name: frustration
+  - id: 223
+    learn-method: machine
+    level-learned-at: 0
+    name: dynamic-punch
+  - id: 225
+    learn-method: machine
+    level-learned-at: 0
+    name: dragon-breath
+  - id: 231
+    learn-method: machine
+    level-learned-at: 0
+    name: iron-tail
+  - id: 232
+    learn-method: level-up
+    level-learned-at: 1
+    name: metal-claw
+  - id: 237
+    learn-method: machine
+    level-learned-at: 0
+    name: hidden-power
+  - id: 239
+    learn-method: tutor
+    level-learned-at: 0
+    name: twister
+  - id: 241
+    learn-method: machine
+    level-learned-at: 0
+    name: sunny-day
+  - id: 242
+    learn-method: level-up
+    level-learned-at: 1
+    name: crunch
+  - id: 249
+    learn-method: machine
+    level-learned-at: 0
+    name: rock-smash
+  - id: 251
+    learn-method: machine
+    level-learned-at: 0
+    name: beat-up
+  - id: 257
+    learn-method: level-up
+    level-learned-at: 71
+    name: heat-wave
+  - id: 261
+    learn-method: machine
+    level-learned-at: 0
+    name: will-o-wisp
+  - id: 263
+    learn-method: machine
+    level-learned-at: 0
+    name: facade
+  - id: 264
+    learn-method: machine
+    level-learned-at: 0
+    name: focus-punch
+  - id: 270
+    learn-method: machine
+    level-learned-at: 0
+    name: helping-hand
+  - id: 280
+    learn-method: machine
+    level-learned-at: 0
+    name: brick-break
+  - id: 290
+    learn-method: machine
+    level-learned-at: 0
+    name: secret-power
+  - id: 299
+    learn-method: machine
+    level-learned-at: 0
+    name: blaze-kick
+  - id: 307
+    learn-method: tutor
+    level-learned-at: 0
+    name: blast-burn
+  - id: 311
+    learn-method: machine
+    level-learned-at: 0
+    name: weather-ball
+  - id: 314
+    learn-method: tutor
+    level-learned-at: 0
+    name: air-cutter
+  - id: 315
+    learn-method: machine
+    level-learned-at: 0
+    name: overheat
+  - id: 317
+    learn-method: machine
+    level-learned-at: 0
+    name: rock-tomb
+  - id: 332
+    learn-method: machine
+    level-learned-at: 0
+    name: aerial-ace
+  - id: 337
+    learn-method: machine
+    level-learned-at: 0
+    name: dragon-claw
+  - id: 349
+    learn-method: machine
+    level-learned-at: 0
+    name: dragon-dance
+  - id: 355
+    learn-method: machine
+    level-learned-at: 0
+    name: roost
+  - id: 363
+    learn-method: machine
+    level-learned-at: 0
+    name: natural-gift
+  - id: 366
+    learn-method: tutor
+    level-learned-at: 0
+    name: tailwind
+  - id: 374
+    learn-method: machine
+    level-learned-at: 0
+    name: fling
+  - id: 394
+    learn-method: level-up
+    level-learned-at: 77
+    name: flare-blitz
+  - id: 403
+    learn-method: level-up
+    level-learned-at: 1
+    name: air-slash
+  - id: 406
+    learn-method: machine
+    level-learned-at: 0
+    name: dragon-pulse
+  - id: 411
+    learn-method: machine
+    level-learned-at: 0
+    name: focus-blast
+  - id: 416
+    learn-method: machine
+    level-learned-at: 0
+    name: giga-impact
+  - id: 421
+    learn-method: machine
+    level-learned-at: 0
+    name: shadow-claw
+  - id: 424
+    learn-method: level-up
+    level-learned-at: 28
+    name: fire-fang
+  - id: 432
+    learn-method: machine
+    level-learned-at: 0
+    name: defog
+  - id: 445
+    learn-method: machine
+    level-learned-at: 0
+    name: captivate
+  - id: 466
+    learn-method: tutor
+    level-learned-at: 0
+    name: ominous-wind
+  - id: 468
+    learn-method: machine
+    level-learned-at: 0
+    name: hone-claws
+  - id: 481
+    learn-method: level-up
+    level-learned-at: 32
+    name: flame-burst
+  - id: 488
+    learn-method: machine
+    level-learned-at: 0
+    name: flame-charge
+  - id: 496
+    learn-method: machine
+    level-learned-at: 0
+    name: round
+  - id: 497
+    learn-method: machine
+    level-learned-at: 0
+    name: echoed-voice
+  - id: 507
+    learn-method: machine
+    level-learned-at: 0
+    name: sky-drop
+  - id: 510
+    learn-method: machine
+    level-learned-at: 0
+    name: incinerate
+  - id: 512
+    learn-method: machine
+    level-learned-at: 0
+    name: acrobatics
+  - id: 517
+    learn-method: level-up
+    level-learned-at: 62
+    name: inferno
+  - id: 519
+    learn-method: tutor
+    level-learned-at: 0
+    name: fire-pledge
+  - id: 523
+    learn-method: machine
+    level-learned-at: 0
+    name: bulldoze
+  - id: 525
+    learn-method: machine
+    level-learned-at: 0
+    name: dragon-tail
+  - id: 526
+    learn-method: machine
+    level-learned-at: 0
+    name: work-up
+  - id: 535
+    learn-method: machine
+    level-learned-at: 0
+    name: heat-crash
+  - id: 542
+    learn-method: machine
+    level-learned-at: 0
+    name: hurricane
+  - id: 590
+    learn-method: machine
+    level-learned-at: 0
+    name: confide
+  - id: 595
+    learn-method: machine
+    level-learned-at: 0
+    name: mystical-fire
+  - id: 612
+    learn-method: machine
+    level-learned-at: 0
+    name: power-up-punch
+  - id: 693
+    learn-method: machine
+    level-learned-at: 0
+    name: brutal-swing
+  - id: 784
+    learn-method: machine
+    level-learned-at: 0
+    name: breaking-swipe
+  - id: 799
+    learn-method: tutor
+    level-learned-at: 0
+    name: scale-shot
+  - id: 814
+    learn-method: tutor
+    level-learned-at: 0
+    name: dual-wingbeat
+  - id: 815
+    learn-method: tutor
+    level-learned-at: 0
+    name: scorching-sands
+  - id: 851
+    learn-method: machine
+    level-learned-at: 0
+    name: tera-blast
   name: charizard
   type-ids:
   - 10
@@ -696,107 +2406,403 @@ pokemon:
   experience: false
   id: 7
   ivs: false
-  level: false
-  move-ids:
-  - 5
-  - 8
-  - 25
-  - 29
-  - 33
-  - 34
-  - 36
-  - 38
-  - 39
-  - 44
-  - 54
-  - 55
-  - 56
-  - 57
-  - 58
-  - 59
-  - 61
-  - 66
-  - 68
-  - 69
-  - 70
-  - 91
-  - 92
-  - 93
-  - 99
-  - 102
-  - 104
-  - 110
-  - 111
-  - 114
-  - 115
-  - 117
-  - 127
-  - 130
-  - 145
-  - 156
-  - 157
-  - 164
-  - 173
-  - 174
-  - 175
-  - 182
-  - 189
-  - 193
-  - 196
-  - 200
-  - 203
-  - 205
-  - 206
-  - 207
-  - 213
-  - 214
-  - 216
-  - 218
-  - 223
-  - 229
-  - 231
-  - 237
-  - 240
-  - 243
-  - 249
-  - 250
-  - 252
-  - 258
-  - 263
-  - 264
-  - 270
-  - 280
-  - 281
-  - 287
-  - 290
-  - 291
-  - 300
-  - 311
-  - 317
-  - 323
-  - 330
-  - 334
-  - 352
-  - 360
-  - 362
-  - 363
-  - 374
-  - 392
-  - 396
-  - 401
-  - 406
-  - 428
-  - 445
-  - 453
-  - 496
-  - 503
-  - 504
-  - 518
-  - 526
-  - 590
-  - 612
-  - 791
-  - 812
+  moves:
+  - id: 5
+    learn-method: machine
+    level-learned-at: 0
+    name: mega-punch
+  - id: 8
+    learn-method: machine
+    level-learned-at: 0
+    name: ice-punch
+  - id: 25
+    learn-method: machine
+    level-learned-at: 0
+    name: mega-kick
+  - id: 29
+    learn-method: machine
+    level-learned-at: 0
+    name: headbutt
+  - id: 33
+    learn-method: level-up
+    level-learned-at: 1
+    name: tackle
+  - id: 34
+    learn-method: machine
+    level-learned-at: 0
+    name: body-slam
+  - id: 36
+    learn-method: machine
+    level-learned-at: 0
+    name: take-down
+  - id: 38
+    learn-method: machine
+    level-learned-at: 0
+    name: double-edge
+  - id: 39
+    learn-method: level-up
+    level-learned-at: 4
+    name: tail-whip
+  - id: 44
+    learn-method: level-up
+    level-learned-at: 16
+    name: bite
+  - id: 54
+    learn-method: egg
+    level-learned-at: 0
+    name: mist
+  - id: 55
+    learn-method: level-up
+    level-learned-at: 13
+    name: water-gun
+  - id: 56
+    learn-method: level-up
+    level-learned-at: 40
+    name: hydro-pump
+  - id: 57
+    learn-method: machine
+    level-learned-at: 0
+    name: surf
+  - id: 58
+    learn-method: machine
+    level-learned-at: 0
+    name: ice-beam
+  - id: 59
+    learn-method: machine
+    level-learned-at: 0
+    name: blizzard
+  - id: 61
+    learn-method: machine
+    level-learned-at: 0
+    name: bubble-beam
+  - id: 66
+    learn-method: machine
+    level-learned-at: 0
+    name: submission
+  - id: 68
+    learn-method: machine
+    level-learned-at: 0
+    name: counter
+  - id: 69
+    learn-method: machine
+    level-learned-at: 0
+    name: seismic-toss
+  - id: 70
+    learn-method: machine
+    level-learned-at: 0
+    name: strength
+  - id: 91
+    learn-method: machine
+    level-learned-at: 0
+    name: dig
+  - id: 92
+    learn-method: machine
+    level-learned-at: 0
+    name: toxic
+  - id: 93
+    learn-method: egg
+    level-learned-at: 0
+    name: confusion
+  - id: 99
+    learn-method: machine
+    level-learned-at: 0
+    name: rage
+  - id: 102
+    learn-method: machine
+    level-learned-at: 0
+    name: mimic
+  - id: 104
+    learn-method: machine
+    level-learned-at: 0
+    name: double-team
+  - id: 110
+    learn-method: level-up
+    level-learned-at: 10
+    name: withdraw
+  - id: 111
+    learn-method: machine
+    level-learned-at: 0
+    name: defense-curl
+  - id: 114
+    learn-method: egg
+    level-learned-at: 0
+    name: haze
+  - id: 115
+    learn-method: machine
+    level-learned-at: 0
+    name: reflect
+  - id: 117
+    learn-method: machine
+    level-learned-at: 0
+    name: bide
+  - id: 127
+    learn-method: machine
+    level-learned-at: 0
+    name: waterfall
+  - id: 130
+    learn-method: level-up
+    level-learned-at: 31
+    name: skull-bash
+  - id: 145
+    learn-method: level-up
+    level-learned-at: 7
+    name: bubble
+  - id: 156
+    learn-method: machine
+    level-learned-at: 0
+    name: rest
+  - id: 157
+    learn-method: machine
+    level-learned-at: 0
+    name: rock-slide
+  - id: 164
+    learn-method: machine
+    level-learned-at: 0
+    name: substitute
+  - id: 173
+    learn-method: machine
+    level-learned-at: 0
+    name: snore
+  - id: 174
+    learn-method: machine
+    level-learned-at: 0
+    name: curse
+  - id: 175
+    learn-method: egg
+    level-learned-at: 0
+    name: flail
+  - id: 182
+    learn-method: machine
+    level-learned-at: 0
+    name: protect
+  - id: 189
+    learn-method: machine
+    level-learned-at: 0
+    name: mud-slap
+  - id: 193
+    learn-method: egg
+    level-learned-at: 0
+    name: foresight
+  - id: 196
+    learn-method: machine
+    level-learned-at: 0
+    name: icy-wind
+  - id: 200
+    learn-method: machine
+    level-learned-at: 0
+    name: outrage
+  - id: 203
+    learn-method: machine
+    level-learned-at: 0
+    name: endure
+  - id: 205
+    learn-method: machine
+    level-learned-at: 0
+    name: rollout
+  - id: 206
+    learn-method: machine
+    level-learned-at: 0
+    name: false-swipe
+  - id: 207
+    learn-method: machine
+    level-learned-at: 0
+    name: swagger
+  - id: 213
+    learn-method: machine
+    level-learned-at: 0
+    name: attract
+  - id: 214
+    learn-method: machine
+    level-learned-at: 0
+    name: sleep-talk
+  - id: 216
+    learn-method: machine
+    level-learned-at: 0
+    name: return
+  - id: 218
+    learn-method: machine
+    level-learned-at: 0
+    name: frustration
+  - id: 223
+    learn-method: machine
+    level-learned-at: 0
+    name: dynamic-punch
+  - id: 229
+    learn-method: level-up
+    level-learned-at: 19
+    name: rapid-spin
+  - id: 231
+    learn-method: machine
+    level-learned-at: 0
+    name: iron-tail
+  - id: 237
+    learn-method: machine
+    level-learned-at: 0
+    name: hidden-power
+  - id: 240
+    learn-method: machine
+    level-learned-at: 0
+    name: rain-dance
+  - id: 243
+    learn-method: egg
+    level-learned-at: 0
+    name: mirror-coat
+  - id: 249
+    learn-method: machine
+    level-learned-at: 0
+    name: rock-smash
+  - id: 250
+    learn-method: machine
+    level-learned-at: 0
+    name: whirlpool
+  - id: 252
+    learn-method: egg
+    level-learned-at: 0
+    name: fake-out
+  - id: 258
+    learn-method: machine
+    level-learned-at: 0
+    name: hail
+  - id: 263
+    learn-method: machine
+    level-learned-at: 0
+    name: facade
+  - id: 264
+    learn-method: machine
+    level-learned-at: 0
+    name: focus-punch
+  - id: 270
+    learn-method: machine
+    level-learned-at: 0
+    name: helping-hand
+  - id: 280
+    learn-method: machine
+    level-learned-at: 0
+    name: brick-break
+  - id: 281
+    learn-method: egg
+    level-learned-at: 0
+    name: yawn
+  - id: 287
+    learn-method: egg
+    level-learned-at: 0
+    name: refresh
+  - id: 290
+    learn-method: machine
+    level-learned-at: 0
+    name: secret-power
+  - id: 291
+    learn-method: machine
+    level-learned-at: 0
+    name: dive
+  - id: 300
+    learn-method: egg
+    level-learned-at: 0
+    name: mud-sport
+  - id: 311
+    learn-method: machine
+    level-learned-at: 0
+    name: weather-ball
+  - id: 317
+    learn-method: machine
+    level-learned-at: 0
+    name: rock-tomb
+  - id: 323
+    learn-method: egg
+    level-learned-at: 0
+    name: water-spout
+  - id: 330
+    learn-method: egg
+    level-learned-at: 0
+    name: muddy-water
+  - id: 334
+    learn-method: level-up
+    level-learned-at: 34
+    name: iron-defense
+  - id: 352
+    learn-method: level-up
+    level-learned-at: 25
+    name: water-pulse
+  - id: 360
+    learn-method: machine
+    level-learned-at: 0
+    name: gyro-ball
+  - id: 362
+    learn-method: egg
+    level-learned-at: 0
+    name: brine
+  - id: 363
+    learn-method: machine
+    level-learned-at: 0
+    name: natural-gift
+  - id: 374
+    learn-method: machine
+    level-learned-at: 0
+    name: fling
+  - id: 392
+    learn-method: egg
+    level-learned-at: 0
+    name: aqua-ring
+  - id: 396
+    learn-method: egg
+    level-learned-at: 0
+    name: aura-sphere
+  - id: 401
+    learn-method: level-up
+    level-learned-at: 28
+    name: aqua-tail
+  - id: 406
+    learn-method: egg
+    level-learned-at: 0
+    name: dragon-pulse
+  - id: 428
+    learn-method: tutor
+    level-learned-at: 0
+    name: zen-headbutt
+  - id: 445
+    learn-method: machine
+    level-learned-at: 0
+    name: captivate
+  - id: 453
+    learn-method: egg
+    level-learned-at: 0
+    name: aqua-jet
+  - id: 496
+    learn-method: machine
+    level-learned-at: 0
+    name: round
+  - id: 503
+    learn-method: machine
+    level-learned-at: 0
+    name: scald
+  - id: 504
+    learn-method: level-up
+    level-learned-at: 27
+    name: shell-smash
+  - id: 518
+    learn-method: tutor
+    level-learned-at: 0
+    name: water-pledge
+  - id: 526
+    learn-method: machine
+    level-learned-at: 0
+    name: work-up
+  - id: 590
+    learn-method: machine
+    level-learned-at: 0
+    name: confide
+  - id: 612
+    learn-method: machine
+    level-learned-at: 0
+    name: power-up-punch
+  - id: 791
+    learn-method: egg
+    level-learned-at: 0
+    name: life-dew
+  - id: 812
+    learn-method: tutor
+    level-learned-at: 0
+    name: flip-turn
   name: squirtle
   type-ids:
   - 11
@@ -813,93 +2819,347 @@ pokemon:
   experience: false
   id: 8
   ivs: false
-  level: false
-  move-ids:
-  - 5
-  - 8
-  - 25
-  - 29
-  - 33
-  - 34
-  - 36
-  - 38
-  - 39
-  - 44
-  - 55
-  - 56
-  - 57
-  - 58
-  - 59
-  - 61
-  - 66
-  - 68
-  - 69
-  - 70
-  - 91
-  - 92
-  - 99
-  - 102
-  - 104
-  - 110
-  - 111
-  - 115
-  - 117
-  - 127
-  - 130
-  - 145
-  - 156
-  - 157
-  - 164
-  - 173
-  - 174
-  - 182
-  - 189
-  - 196
-  - 200
-  - 203
-  - 205
-  - 206
-  - 207
-  - 213
-  - 214
-  - 216
-  - 218
-  - 223
-  - 229
-  - 231
-  - 237
-  - 240
-  - 249
-  - 250
-  - 258
-  - 263
-  - 264
-  - 270
-  - 280
-  - 290
-  - 291
-  - 311
-  - 317
-  - 330
-  - 334
-  - 352
-  - 360
-  - 362
-  - 363
-  - 374
-  - 396
-  - 401
-  - 406
-  - 428
-  - 445
-  - 496
-  - 503
-  - 504
-  - 518
-  - 526
-  - 590
-  - 612
-  - 812
+  moves:
+  - id: 5
+    learn-method: machine
+    level-learned-at: 0
+    name: mega-punch
+  - id: 8
+    learn-method: machine
+    level-learned-at: 0
+    name: ice-punch
+  - id: 25
+    learn-method: machine
+    level-learned-at: 0
+    name: mega-kick
+  - id: 29
+    learn-method: machine
+    level-learned-at: 0
+    name: headbutt
+  - id: 33
+    learn-method: level-up
+    level-learned-at: 1
+    name: tackle
+  - id: 34
+    learn-method: machine
+    level-learned-at: 0
+    name: body-slam
+  - id: 36
+    learn-method: machine
+    level-learned-at: 0
+    name: take-down
+  - id: 38
+    learn-method: machine
+    level-learned-at: 0
+    name: double-edge
+  - id: 39
+    learn-method: level-up
+    level-learned-at: 4
+    name: tail-whip
+  - id: 44
+    learn-method: level-up
+    level-learned-at: 16
+    name: bite
+  - id: 55
+    learn-method: level-up
+    level-learned-at: 13
+    name: water-gun
+  - id: 56
+    learn-method: level-up
+    level-learned-at: 48
+    name: hydro-pump
+  - id: 57
+    learn-method: machine
+    level-learned-at: 0
+    name: surf
+  - id: 58
+    learn-method: machine
+    level-learned-at: 0
+    name: ice-beam
+  - id: 59
+    learn-method: machine
+    level-learned-at: 0
+    name: blizzard
+  - id: 61
+    learn-method: machine
+    level-learned-at: 0
+    name: bubble-beam
+  - id: 66
+    learn-method: machine
+    level-learned-at: 0
+    name: submission
+  - id: 68
+    learn-method: machine
+    level-learned-at: 0
+    name: counter
+  - id: 69
+    learn-method: machine
+    level-learned-at: 0
+    name: seismic-toss
+  - id: 70
+    learn-method: machine
+    level-learned-at: 0
+    name: strength
+  - id: 91
+    learn-method: machine
+    level-learned-at: 0
+    name: dig
+  - id: 92
+    learn-method: machine
+    level-learned-at: 0
+    name: toxic
+  - id: 99
+    learn-method: machine
+    level-learned-at: 0
+    name: rage
+  - id: 102
+    learn-method: machine
+    level-learned-at: 0
+    name: mimic
+  - id: 104
+    learn-method: machine
+    level-learned-at: 0
+    name: double-team
+  - id: 110
+    learn-method: level-up
+    level-learned-at: 10
+    name: withdraw
+  - id: 111
+    learn-method: machine
+    level-learned-at: 0
+    name: defense-curl
+  - id: 115
+    learn-method: machine
+    level-learned-at: 0
+    name: reflect
+  - id: 117
+    learn-method: machine
+    level-learned-at: 0
+    name: bide
+  - id: 127
+    learn-method: machine
+    level-learned-at: 0
+    name: waterfall
+  - id: 130
+    learn-method: level-up
+    level-learned-at: 36
+    name: skull-bash
+  - id: 145
+    learn-method: level-up
+    level-learned-at: 7
+    name: bubble
+  - id: 156
+    learn-method: machine
+    level-learned-at: 0
+    name: rest
+  - id: 157
+    learn-method: machine
+    level-learned-at: 0
+    name: rock-slide
+  - id: 164
+    learn-method: machine
+    level-learned-at: 0
+    name: substitute
+  - id: 173
+    learn-method: machine
+    level-learned-at: 0
+    name: snore
+  - id: 174
+    learn-method: machine
+    level-learned-at: 0
+    name: curse
+  - id: 182
+    learn-method: machine
+    level-learned-at: 0
+    name: protect
+  - id: 189
+    learn-method: machine
+    level-learned-at: 0
+    name: mud-slap
+  - id: 196
+    learn-method: machine
+    level-learned-at: 0
+    name: icy-wind
+  - id: 200
+    learn-method: machine
+    level-learned-at: 0
+    name: outrage
+  - id: 203
+    learn-method: machine
+    level-learned-at: 0
+    name: endure
+  - id: 205
+    learn-method: machine
+    level-learned-at: 0
+    name: rollout
+  - id: 206
+    learn-method: machine
+    level-learned-at: 0
+    name: false-swipe
+  - id: 207
+    learn-method: machine
+    level-learned-at: 0
+    name: swagger
+  - id: 213
+    learn-method: machine
+    level-learned-at: 0
+    name: attract
+  - id: 214
+    learn-method: machine
+    level-learned-at: 0
+    name: sleep-talk
+  - id: 216
+    learn-method: machine
+    level-learned-at: 0
+    name: return
+  - id: 218
+    learn-method: machine
+    level-learned-at: 0
+    name: frustration
+  - id: 223
+    learn-method: machine
+    level-learned-at: 0
+    name: dynamic-punch
+  - id: 229
+    learn-method: level-up
+    level-learned-at: 20
+    name: rapid-spin
+  - id: 231
+    learn-method: machine
+    level-learned-at: 0
+    name: iron-tail
+  - id: 237
+    learn-method: machine
+    level-learned-at: 0
+    name: hidden-power
+  - id: 240
+    learn-method: machine
+    level-learned-at: 0
+    name: rain-dance
+  - id: 249
+    learn-method: machine
+    level-learned-at: 0
+    name: rock-smash
+  - id: 250
+    learn-method: machine
+    level-learned-at: 0
+    name: whirlpool
+  - id: 258
+    learn-method: machine
+    level-learned-at: 0
+    name: hail
+  - id: 263
+    learn-method: machine
+    level-learned-at: 0
+    name: facade
+  - id: 264
+    learn-method: machine
+    level-learned-at: 0
+    name: focus-punch
+  - id: 270
+    learn-method: machine
+    level-learned-at: 0
+    name: helping-hand
+  - id: 280
+    learn-method: machine
+    level-learned-at: 0
+    name: brick-break
+  - id: 290
+    learn-method: machine
+    level-learned-at: 0
+    name: secret-power
+  - id: 291
+    learn-method: machine
+    level-learned-at: 0
+    name: dive
+  - id: 311
+    learn-method: machine
+    level-learned-at: 0
+    name: weather-ball
+  - id: 317
+    learn-method: machine
+    level-learned-at: 0
+    name: rock-tomb
+  - id: 330
+    learn-method: machine
+    level-learned-at: 0
+    name: muddy-water
+  - id: 334
+    learn-method: level-up
+    level-learned-at: 40
+    name: iron-defense
+  - id: 352
+    learn-method: level-up
+    level-learned-at: 28
+    name: water-pulse
+  - id: 360
+    learn-method: machine
+    level-learned-at: 0
+    name: gyro-ball
+  - id: 362
+    learn-method: machine
+    level-learned-at: 0
+    name: brine
+  - id: 363
+    learn-method: machine
+    level-learned-at: 0
+    name: natural-gift
+  - id: 374
+    learn-method: machine
+    level-learned-at: 0
+    name: fling
+  - id: 396
+    learn-method: machine
+    level-learned-at: 0
+    name: aura-sphere
+  - id: 401
+    learn-method: level-up
+    level-learned-at: 32
+    name: aqua-tail
+  - id: 406
+    learn-method: tutor
+    level-learned-at: 0
+    name: dragon-pulse
+  - id: 428
+    learn-method: tutor
+    level-learned-at: 0
+    name: zen-headbutt
+  - id: 445
+    learn-method: machine
+    level-learned-at: 0
+    name: captivate
+  - id: 496
+    learn-method: machine
+    level-learned-at: 0
+    name: round
+  - id: 503
+    learn-method: machine
+    level-learned-at: 0
+    name: scald
+  - id: 504
+    learn-method: level-up
+    level-learned-at: 35
+    name: shell-smash
+  - id: 518
+    learn-method: tutor
+    level-learned-at: 0
+    name: water-pledge
+  - id: 526
+    learn-method: machine
+    level-learned-at: 0
+    name: work-up
+  - id: 590
+    learn-method: machine
+    level-learned-at: 0
+    name: confide
+  - id: 612
+    learn-method: machine
+    level-learned-at: 0
+    name: power-up-punch
+  - id: 812
+    learn-method: tutor
+    level-learned-at: 0
+    name: flip-turn
   name: wartortle
   type-ids:
   - 11
@@ -916,114 +3176,431 @@ pokemon:
   experience: false
   id: 9
   ivs: false
-  level: false
-  move-ids:
-  - 5
-  - 8
-  - 25
-  - 29
-  - 33
-  - 34
-  - 36
-  - 38
-  - 39
-  - 44
-  - 46
-  - 55
-  - 56
-  - 57
-  - 58
-  - 59
-  - 61
-  - 63
-  - 66
-  - 68
-  - 69
-  - 70
-  - 89
-  - 90
-  - 91
-  - 92
-  - 99
-  - 102
-  - 104
-  - 110
-  - 111
-  - 115
-  - 117
-  - 127
-  - 130
-  - 145
-  - 156
-  - 157
-  - 164
-  - 173
-  - 174
-  - 182
-  - 189
-  - 196
-  - 200
-  - 203
-  - 205
-  - 206
-  - 207
-  - 213
-  - 214
-  - 216
-  - 218
-  - 223
-  - 229
-  - 231
-  - 237
-  - 240
-  - 242
-  - 249
-  - 250
-  - 252
-  - 258
-  - 263
-  - 264
-  - 270
-  - 280
-  - 290
-  - 291
-  - 308
-  - 311
-  - 317
-  - 324
-  - 330
-  - 334
-  - 352
-  - 360
-  - 362
-  - 363
-  - 374
-  - 396
-  - 399
-  - 401
-  - 406
-  - 411
-  - 416
-  - 419
-  - 428
-  - 430
-  - 431
-  - 445
-  - 453
-  - 479
-  - 496
-  - 503
-  - 504
-  - 518
-  - 523
-  - 525
-  - 526
-  - 590
-  - 612
-  - 710
-  - 776
-  - 805
-  - 812
+  moves:
+  - id: 5
+    learn-method: machine
+    level-learned-at: 0
+    name: mega-punch
+  - id: 8
+    learn-method: machine
+    level-learned-at: 0
+    name: ice-punch
+  - id: 25
+    learn-method: machine
+    level-learned-at: 0
+    name: mega-kick
+  - id: 29
+    learn-method: machine
+    level-learned-at: 0
+    name: headbutt
+  - id: 33
+    learn-method: level-up
+    level-learned-at: 1
+    name: tackle
+  - id: 34
+    learn-method: machine
+    level-learned-at: 0
+    name: body-slam
+  - id: 36
+    learn-method: machine
+    level-learned-at: 0
+    name: take-down
+  - id: 38
+    learn-method: machine
+    level-learned-at: 0
+    name: double-edge
+  - id: 39
+    learn-method: level-up
+    level-learned-at: 4
+    name: tail-whip
+  - id: 44
+    learn-method: level-up
+    level-learned-at: 16
+    name: bite
+  - id: 46
+    learn-method: machine
+    level-learned-at: 0
+    name: roar
+  - id: 55
+    learn-method: level-up
+    level-learned-at: 13
+    name: water-gun
+  - id: 56
+    learn-method: level-up
+    level-learned-at: 60
+    name: hydro-pump
+  - id: 57
+    learn-method: machine
+    level-learned-at: 0
+    name: surf
+  - id: 58
+    learn-method: machine
+    level-learned-at: 0
+    name: ice-beam
+  - id: 59
+    learn-method: machine
+    level-learned-at: 0
+    name: blizzard
+  - id: 61
+    learn-method: machine
+    level-learned-at: 0
+    name: bubble-beam
+  - id: 63
+    learn-method: machine
+    level-learned-at: 0
+    name: hyper-beam
+  - id: 66
+    learn-method: machine
+    level-learned-at: 0
+    name: submission
+  - id: 68
+    learn-method: machine
+    level-learned-at: 0
+    name: counter
+  - id: 69
+    learn-method: machine
+    level-learned-at: 0
+    name: seismic-toss
+  - id: 70
+    learn-method: machine
+    level-learned-at: 0
+    name: strength
+  - id: 89
+    learn-method: machine
+    level-learned-at: 0
+    name: earthquake
+  - id: 90
+    learn-method: machine
+    level-learned-at: 0
+    name: fissure
+  - id: 91
+    learn-method: machine
+    level-learned-at: 0
+    name: dig
+  - id: 92
+    learn-method: machine
+    level-learned-at: 0
+    name: toxic
+  - id: 99
+    learn-method: machine
+    level-learned-at: 0
+    name: rage
+  - id: 102
+    learn-method: machine
+    level-learned-at: 0
+    name: mimic
+  - id: 104
+    learn-method: machine
+    level-learned-at: 0
+    name: double-team
+  - id: 110
+    learn-method: level-up
+    level-learned-at: 10
+    name: withdraw
+  - id: 111
+    learn-method: machine
+    level-learned-at: 0
+    name: defense-curl
+  - id: 115
+    learn-method: machine
+    level-learned-at: 0
+    name: reflect
+  - id: 117
+    learn-method: machine
+    level-learned-at: 0
+    name: bide
+  - id: 127
+    learn-method: machine
+    level-learned-at: 0
+    name: waterfall
+  - id: 130
+    learn-method: level-up
+    level-learned-at: 39
+    name: skull-bash
+  - id: 145
+    learn-method: level-up
+    level-learned-at: 7
+    name: bubble
+  - id: 156
+    learn-method: machine
+    level-learned-at: 0
+    name: rest
+  - id: 157
+    learn-method: machine
+    level-learned-at: 0
+    name: rock-slide
+  - id: 164
+    learn-method: machine
+    level-learned-at: 0
+    name: substitute
+  - id: 173
+    learn-method: machine
+    level-learned-at: 0
+    name: snore
+  - id: 174
+    learn-method: machine
+    level-learned-at: 0
+    name: curse
+  - id: 182
+    learn-method: machine
+    level-learned-at: 0
+    name: protect
+  - id: 189
+    learn-method: machine
+    level-learned-at: 0
+    name: mud-slap
+  - id: 196
+    learn-method: machine
+    level-learned-at: 0
+    name: icy-wind
+  - id: 200
+    learn-method: tutor
+    level-learned-at: 0
+    name: outrage
+  - id: 203
+    learn-method: machine
+    level-learned-at: 0
+    name: endure
+  - id: 205
+    learn-method: machine
+    level-learned-at: 0
+    name: rollout
+  - id: 206
+    learn-method: machine
+    level-learned-at: 0
+    name: false-swipe
+  - id: 207
+    learn-method: machine
+    level-learned-at: 0
+    name: swagger
+  - id: 213
+    learn-method: machine
+    level-learned-at: 0
+    name: attract
+  - id: 214
+    learn-method: machine
+    level-learned-at: 0
+    name: sleep-talk
+  - id: 216
+    learn-method: machine
+    level-learned-at: 0
+    name: return
+  - id: 218
+    learn-method: machine
+    level-learned-at: 0
+    name: frustration
+  - id: 223
+    learn-method: machine
+    level-learned-at: 0
+    name: dynamic-punch
+  - id: 229
+    learn-method: level-up
+    level-learned-at: 20
+    name: rapid-spin
+  - id: 231
+    learn-method: machine
+    level-learned-at: 0
+    name: iron-tail
+  - id: 237
+    learn-method: machine
+    level-learned-at: 0
+    name: hidden-power
+  - id: 240
+    learn-method: machine
+    level-learned-at: 0
+    name: rain-dance
+  - id: 242
+    learn-method: machine
+    level-learned-at: 0
+    name: crunch
+  - id: 249
+    learn-method: machine
+    level-learned-at: 0
+    name: rock-smash
+  - id: 250
+    learn-method: machine
+    level-learned-at: 0
+    name: whirlpool
+  - id: 252
+    learn-method: level-up
+    level-learned-at: 1
+    name: fake-out
+  - id: 258
+    learn-method: machine
+    level-learned-at: 0
+    name: hail
+  - id: 263
+    learn-method: machine
+    level-learned-at: 0
+    name: facade
+  - id: 264
+    learn-method: machine
+    level-learned-at: 0
+    name: focus-punch
+  - id: 270
+    learn-method: machine
+    level-learned-at: 0
+    name: helping-hand
+  - id: 280
+    learn-method: machine
+    level-learned-at: 0
+    name: brick-break
+  - id: 290
+    learn-method: machine
+    level-learned-at: 0
+    name: secret-power
+  - id: 291
+    learn-method: machine
+    level-learned-at: 0
+    name: dive
+  - id: 308
+    learn-method: tutor
+    level-learned-at: 0
+    name: hydro-cannon
+  - id: 311
+    learn-method: machine
+    level-learned-at: 0
+    name: weather-ball
+  - id: 317
+    learn-method: machine
+    level-learned-at: 0
+    name: rock-tomb
+  - id: 324
+    learn-method: tutor
+    level-learned-at: 0
+    name: signal-beam
+  - id: 330
+    learn-method: machine
+    level-learned-at: 0
+    name: muddy-water
+  - id: 334
+    learn-method: level-up
+    level-learned-at: 46
+    name: iron-defense
+  - id: 352
+    learn-method: level-up
+    level-learned-at: 28
+    name: water-pulse
+  - id: 360
+    learn-method: machine
+    level-learned-at: 0
+    name: gyro-ball
+  - id: 362
+    learn-method: machine
+    level-learned-at: 0
+    name: brine
+  - id: 363
+    learn-method: machine
+    level-learned-at: 0
+    name: natural-gift
+  - id: 374
+    learn-method: machine
+    level-learned-at: 0
+    name: fling
+  - id: 396
+    learn-method: machine
+    level-learned-at: 0
+    name: aura-sphere
+  - id: 399
+    learn-method: machine
+    level-learned-at: 0
+    name: dark-pulse
+  - id: 401
+    learn-method: level-up
+    level-learned-at: 32
+    name: aqua-tail
+  - id: 406
+    learn-method: tutor
+    level-learned-at: 0
+    name: dragon-pulse
+  - id: 411
+    learn-method: machine
+    level-learned-at: 0
+    name: focus-blast
+  - id: 416
+    learn-method: machine
+    level-learned-at: 0
+    name: giga-impact
+  - id: 419
+    learn-method: machine
+    level-learned-at: 0
+    name: avalanche
+  - id: 428
+    learn-method: tutor
+    level-learned-at: 0
+    name: zen-headbutt
+  - id: 430
+    learn-method: machine
+    level-learned-at: 0
+    name: flash-cannon
+  - id: 431
+    learn-method: machine
+    level-learned-at: 0
+    name: rock-climb
+  - id: 445
+    learn-method: machine
+    level-learned-at: 0
+    name: captivate
+  - id: 453
+    learn-method: level-up
+    level-learned-at: 1
+    name: aqua-jet
+  - id: 479
+    learn-method: machine
+    level-learned-at: 0
+    name: smack-down
+  - id: 496
+    learn-method: machine
+    level-learned-at: 0
+    name: round
+  - id: 503
+    learn-method: machine
+    level-learned-at: 0
+    name: scald
+  - id: 504
+    learn-method: level-up
+    level-learned-at: 35
+    name: shell-smash
+  - id: 518
+    learn-method: tutor
+    level-learned-at: 0
+    name: water-pledge
+  - id: 523
+    learn-method: machine
+    level-learned-at: 0
+    name: bulldoze
+  - id: 525
+    learn-method: machine
+    level-learned-at: 0
+    name: dragon-tail
+  - id: 526
+    learn-method: machine
+    level-learned-at: 0
+    name: work-up
+  - id: 590
+    learn-method: machine
+    level-learned-at: 0
+    name: confide
+  - id: 612
+    learn-method: machine
+    level-learned-at: 0
+    name: power-up-punch
+  - id: 710
+    learn-method: tutor
+    level-learned-at: 0
+    name: liquidation
+  - id: 776
+    learn-method: machine
+    level-learned-at: 0
+    name: body-press
+  - id: 805
+    learn-method: tutor
+    level-learned-at: 0
+    name: terrain-pulse
+  - id: 812
+    learn-method: tutor
+    level-learned-at: 0
+    name: flip-turn
   name: blastoise
   type-ids:
   - 11

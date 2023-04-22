@@ -19,14 +19,14 @@ class BattleScreen(Screen):
         self.world = world
         self.fight_buttons = []
         y = WINDOW_SIZE[1] - 156
-        current = 0
-        for move_id in self.world.active_pokemon.move_ids:
-            if current >= 4:
+        for pokemon_move in self.world.active_pokemon.moves:
+            if len(self.fight_buttons) >= 4:
+                LOGGER.warn(f"Pokemon has move than 4 moves!")
                 continue
-            move = self.world.moves.find_by_id(move_id)
-            self.fight_buttons.append(UIButton((WINDOW_SIZE[0] - 128, y), move.name))
+            self.fight_buttons.append(
+                UIButton((WINDOW_SIZE[0] - 128, y), pokemon_move.name)
+            )
             y += 32
-            current += 1
         self.to_kill.extend(self.fight_buttons)
         self.enemy_pokemon_image = self.load_scaled_pokemon_image(world.enemy.id, 4)
         self.self_pokemon_image = self.load_scaled_pokemon_image(

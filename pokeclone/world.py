@@ -78,7 +78,7 @@ class World:
             self.end_encounter()
 
     def turn_enemy(self):
-        enemy_move = self.moves.find_by_id(self.random.choice(self.enemy.move_ids))
+        enemy_move = self.moves.find_by_id(self.random.choice(self.enemy.moves).id)
         player_damage = self.attack(
             self.enemy, self.active_pokemon, enemy_move, self.random
         )
@@ -120,9 +120,9 @@ class World:
             if move.type_id in TYPES.find_by_id(type_id).no_damage_from:
                 type_factor *= 0
         if type_factor > 1:
-            LOGGER.info(f"Your {move.name} was super effective!")
+            LOGGER.info(f"{move.name} was super effective!")
         elif type_factor < 1:
-            LOGGER.info(f"Your {move.name} was not very effective.")
+            LOGGER.info(f"{move.name} was not very effective.")
         return round(
             base_damage * critical_hit_scalar * random_factor * stab * type_factor
         )

@@ -49,13 +49,21 @@ class Stats:
 
 
 @dataclass
+class PokemonMove:
+    id: int
+    name: str
+    learn_method: str
+    level_learned_at: int
+
+
+@dataclass
 class Pokemon:
     id: int
     name: str
     base_experience: int
     base_stats: Stats
     type_ids: list[int]
-    move_ids: list[int]
+    moves: list[PokemonMove]
     ivs: Optional[Stats] = field(default=False, init=False)
     evs: Optional[Stats] = field(default=False, init=False)
     current_hp: Optional[int] = field(default=False, init=False)
@@ -195,5 +203,13 @@ class Pokedex(YAMLWizard):
         # only modeling medium-fast xp group
         instance.experience = max(instance.base_experience, level**3)
         instance.current_hp = instance.max_hp
-        # TODO develop moves according to level
+        instance.moves = [
+            move
+            for move in instance.moves
+            if move.learn_method == "egg"
+            or (
+                move.learn_method == "level-up"
+                and move.level_learned_at <= instance.level
+            )
+        ][0::4]
         return instance

@@ -2,7 +2,7 @@ import logging
 import json
 import os
 
-from pokeclone.db import models
+from pokeclone.db.models import *
 from pokeclone.logging import initialize_logging
 
 LOGGER = logging.getLogger(__name__)
@@ -16,18 +16,16 @@ def main():
 
     types = list(generate_types(os.path.join(api_data_path, "type")))
     LOGGER.info(f"Writing {len(types)} types to file")
-    models.Types(types).to_yaml_file(os.path.join("data", "db", "types.yml"))
+    Types(types).to_yaml_file(os.path.join("data", "db", "types.yml"))
 
     pokemon = list(generate_pokemon(os.path.join(api_data_path, "pokemon")))
     LOGGER.info(f"Writing {len(pokemon)} pokemon to file")
-    models.Pokedex(pokemon).to_yaml_file(os.path.join("data", "db", "pokemon.yml"))
-    models.Pokedex(pokemon[0:9]).to_yaml_file(
-        os.path.join("tests", "fixtures", "pokemon.yml")
-    )
+    Pokedex(pokemon).to_yaml_file(os.path.join("data", "db", "pokemon.yml"))
+    Pokedex(pokemon[0:9]).to_yaml_file(os.path.join("tests", "fixtures", "pokemon.yml"))
 
     moves = list(generate_moves(os.path.join(api_data_path, "move")))
     LOGGER.info(f"Writing {len(moves)} moves to file")
-    models.Moves(moves).to_yaml_file(os.path.join("data", "db", "moves.yml"))
+    Moves(moves).to_yaml_file(os.path.join("data", "db", "moves.yml"))
 
     LOGGER.info(f"Done!")
 
@@ -39,7 +37,7 @@ def generate_types(api_types_path):
                 json_path = os.path.join(api_types_path, str(id), "index.json")
                 with open(json_path, "r") as json_file:
                     type_json = json.load(json_file)
-                    yield models.Type(
+                    yield Type(
                         id=type_json["id"],
                         name=type_json["name"],
                         double_damage_from=list(
@@ -89,7 +87,7 @@ def generate_moves(api_moves_path):
                 json_path = os.path.join(api_moves_path, str(id), "index.json")
                 with open(json_path, "r") as json_file:
                     move_json = json.load(json_file)
-                    yield models.Move(
+                    yield Move(
                         id=move_json["id"],
                         name=move_json["name"],
                         power=move_json["power"],
@@ -114,7 +112,7 @@ def generate_pokemon(api_pokemon_path):
 
 
 def parse_pokemon_from_json(pokemon_json):
-    pokemon_stats = models.Stats(
+    pokemon_stats = Stats(
         pokemon_json["stats"][0]["base_stat"],
         pokemon_json["stats"][1]["base_stat"],
         pokemon_json["stats"][2]["base_stat"],
@@ -125,17 +123,36 @@ def parse_pokemon_from_json(pokemon_json):
     type_ids = []
     for json_type in pokemon_json["types"]:
         type_ids.append(int(json_type["type"]["url"].split("/")[-2]))
-    move_ids = []
-    for move in pokemon_json["moves"]:
-        move_ids.append(int(move["move"]["url"].split("/")[-2]))
-    return models.Pokemon(
+    return Pokemon(
         id=pokemon_json["id"],
         name=pokemon_json["name"],
         base_stats=pokemon_stats,
         type_ids=type_ids,
-        move_ids=move_ids,
+        moves=list(parse_pokemon_moves_from_json(pokemon_json)),
         base_experience=pokemon_json["base_experience"],
     )
+
+
+def parse_pokemon_moves_from_json(pokemon_json):
+    for move in pokemon_json["moves"]:
+        id = int(move["move"]["url"].split("/")[-2])
+        name = move["move"]["name"]
+        level_learned_at = None
+        learn_method = None
+        for version_group_detail in move["version_group_details"]:
+            if (
+                level_learned_at is None
+                or learn_method is None
+                or version_group_detail["version_group"]["name"] == "black-white"
+            ):
+                level_learned_at = version_group_detail["level_learned_at"]
+                learn_method = version_group_detail["move_learn_method"]["name"]
+        yield PokemonMove(
+            id=id,
+            name=name,
+            level_learned_at=level_learned_at,
+            learn_method=learn_method,
+        )
 
 
 if __name__ == "__main__":
