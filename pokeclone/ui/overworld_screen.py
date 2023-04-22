@@ -46,11 +46,12 @@ class OverworldScreen(Screen):
 
     def draw(self, surface: pygame.Surface):
         surface.blit(self.background, (0, 0))
-        for x in range(0, 10):
-            for y in range(0, 10):
-                image = self.tmxdata.get_tile_image(x, y, 0)
-                if image:
-                    surface.blit(image, (x * 32, y * 32))
+        for layer in [0, 1]:
+            for x in range(0, 16):
+                for y in range(0, 16):
+                    image = self.tmxdata.get_tile_image(x, y, layer)
+                    if image:
+                        surface.blit(image, (x * 32, y * 32))
         self.draw_overworld(
             surface, self.player_image, self.world.player.x, self.world.player.y
         )

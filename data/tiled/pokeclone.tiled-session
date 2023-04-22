@@ -3,17 +3,17 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "tileset_exterior.tsx",
+    "activeFile": "overworld.tmx",
     "expandedProjectPaths": [
         "."
     ],
     "fileStates": {
         "overworld.tmx": {
             "scale": 1,
-            "selectedLayer": 0,
+            "selectedLayer": 1,
             "viewCenter": {
-                "x": 88.5,
-                "y": 306
+                "x": 566.5,
+                "y": 237
             }
         },
         "tileset_exterior.tsx": {
@@ -31,7 +31,8 @@
     "map.lastUsedExportFilter": "CSV files (*.csv)",
     "map.lastUsedFormat": "tmx",
     "openFiles": [
-        "tileset_exterior.tsx"
+        "tileset_exterior.tsx",
+        "overworld.tmx"
     ],
     "project": "pokeclone.tiled-project",
     "recentFiles": [
