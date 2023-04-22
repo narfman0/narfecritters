@@ -1,0 +1,17 @@
+base-experience: 265
+base-stats:
+  attack: 116
+  defense: 75
+  hp: 80
+  spattack: 65
+  spdefense: 75
+  speed: 119
+current-hp: false
+evs: false
+experience: false
+id: 10210
+ivs: false
+moves: []
+name: cinderace-gmax
+type-ids:
+- 10

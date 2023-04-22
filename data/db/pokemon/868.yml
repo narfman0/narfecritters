@@ -1,0 +1,121 @@
+base-experience: 54
+base-stats:
+  attack: 40
+  defense: 40
+  hp: 45
+  spattack: 50
+  spdefense: 61
+  speed: 34
+current-hp: false
+evs: false
+experience: false
+id: 868
+ivs: false
+moves:
+- id: 33
+  learn-method: level-up
+  level-learned-at: 1
+  name: tackle
+- id: 105
+  learn-method: level-up
+  level-learned-at: 40
+  name: recover
+- id: 151
+  learn-method: level-up
+  level-learned-at: 30
+  name: acid-armor
+- id: 156
+  learn-method: machine
+  level-learned-at: 0
+  name: rest
+- id: 164
+  learn-method: machine
+  level-learned-at: 0
+  name: substitute
+- id: 173
+  learn-method: machine
+  level-learned-at: 0
+  name: snore
+- id: 182
+  learn-method: machine
+  level-learned-at: 0
+  name: protect
+- id: 186
+  learn-method: level-up
+  level-learned-at: 5
+  name: sweet-kiss
+- id: 203
+  learn-method: machine
+  level-learned-at: 0
+  name: endure
+- id: 204
+  learn-method: machine
+  level-learned-at: 0
+  name: charm
+- id: 213
+  learn-method: level-up
+  level-learned-at: 25
+  name: attract
+- id: 214
+  learn-method: machine
+  level-learned-at: 0
+  name: sleep-talk
+- id: 230
+  learn-method: level-up
+  level-learned-at: 10
+  name: sweet-scent
+- id: 263
+  learn-method: machine
+  level-learned-at: 0
+  name: facade
+- id: 270
+  learn-method: machine
+  level-learned-at: 0
+  name: helping-hand
+- id: 312
+  learn-method: level-up
+  level-learned-at: 20
+  name: aromatherapy
+- id: 374
+  learn-method: machine
+  level-learned-at: 0
+  name: fling
+- id: 387
+  learn-method: egg
+  level-learned-at: 0
+  name: last-resort
+- id: 494
+  learn-method: level-up
+  level-learned-at: 50
+  name: entrainment
+- id: 496
+  learn-method: machine
+  level-learned-at: 0
+  name: round
+- id: 500
+  learn-method: machine
+  level-learned-at: 0
+  name: stored-power
+- id: 577
+  learn-method: level-up
+  level-learned-at: 15
+  name: draining-kiss
+- id: 581
+  learn-method: level-up
+  level-learned-at: 45
+  name: misty-terrain
+- id: 597
+  learn-method: level-up
+  level-learned-at: 1
+  name: aromatic-mist
+- id: 605
+  learn-method: level-up
+  level-learned-at: 35
+  name: dazzling-gleam
+- id: 608
+  learn-method: egg
+  level-learned-at: 0
+  name: baby-doll-eyes
+name: milcery
+type-ids:
+- 18

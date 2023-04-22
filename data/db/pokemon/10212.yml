@@ -1,0 +1,18 @@
+base-experience: 248
+base-stats:
+  attack: 87
+  defense: 105
+  hp: 98
+  spattack: 53
+  spdefense: 85
+  speed: 67
+current-hp: false
+evs: false
+experience: false
+id: 10212
+ivs: false
+moves: []
+name: corviknight-gmax
+type-ids:
+- 3
+- 9

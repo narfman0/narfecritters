@@ -1,0 +1,46 @@
+base-experience: 60
+base-stats:
+  attack: 55
+  defense: 80
+  hp: 40
+  spattack: 35
+  spdefense: 60
+  speed: 30
+current-hp: false
+evs: false
+experience: false
+id: 374
+ivs: false
+moves:
+- id: 29
+  learn-method: tutor
+  level-learned-at: 0
+  name: headbutt
+- id: 33
+  learn-method: level-up
+  level-learned-at: 1
+  name: tackle
+- id: 36
+  learn-method: level-up
+  level-learned-at: 1
+  name: take-down
+- id: 334
+  learn-method: tutor
+  level-learned-at: 0
+  name: iron-defense
+- id: 428
+  learn-method: tutor
+  level-learned-at: 0
+  name: zen-headbutt
+- id: 442
+  learn-method: tutor
+  level-learned-at: 0
+  name: iron-head
+- id: 796
+  learn-method: tutor
+  level-learned-at: 0
+  name: steel-beam
+name: beldum
+type-ids:
+- 9
+- 14

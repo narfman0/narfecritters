@@ -1,0 +1,98 @@
+base-experience: 37
+base-stats:
+  attack: 25
+  defense: 35
+  hp: 30
+  spattack: 45
+  spdefense: 30
+  speed: 20
+current-hp: false
+evs: false
+experience: false
+id: 872
+ivs: false
+moves:
+- id: 156
+  learn-method: machine
+  level-learned-at: 0
+  name: rest
+- id: 164
+  learn-method: machine
+  level-learned-at: 0
+  name: substitute
+- id: 173
+  learn-method: machine
+  level-learned-at: 0
+  name: snore
+- id: 181
+  learn-method: level-up
+  level-learned-at: 1
+  name: powder-snow
+- id: 182
+  learn-method: machine
+  level-learned-at: 0
+  name: protect
+- id: 196
+  learn-method: machine
+  level-learned-at: 0
+  name: icy-wind
+- id: 203
+  learn-method: machine
+  level-learned-at: 0
+  name: endure
+- id: 213
+  learn-method: machine
+  level-learned-at: 0
+  name: attract
+- id: 214
+  learn-method: machine
+  level-learned-at: 0
+  name: sleep-talk
+- id: 243
+  learn-method: egg
+  level-learned-at: 0
+  name: mirror-coat
+- id: 263
+  learn-method: machine
+  level-learned-at: 0
+  name: facade
+- id: 333
+  learn-method: machine
+  level-learned-at: 0
+  name: icicle-spear
+- id: 405
+  learn-method: machine
+  level-learned-at: 0
+  name: bug-buzz
+- id: 450
+  learn-method: egg
+  level-learned-at: 0
+  name: bug-bite
+- id: 496
+  learn-method: machine
+  level-learned-at: 0
+  name: round
+- id: 522
+  learn-method: level-up
+  level-learned-at: 1
+  name: struggle-bug
+- id: 584
+  learn-method: egg
+  level-learned-at: 0
+  name: fairy-wind
+- id: 806
+  learn-method: tutor
+  level-learned-at: 0
+  name: skitter-smack
+- id: 851
+  learn-method: machine
+  level-learned-at: 0
+  name: tera-blast
+- id: 884
+  learn-method: machine
+  level-learned-at: 0
+  name: pounce
+name: snom
+type-ids:
+- 15
+- 7

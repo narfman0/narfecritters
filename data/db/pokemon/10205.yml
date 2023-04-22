@@ -1,0 +1,17 @@
+base-experience: 65
+base-stats:
+  attack: 55
+  defense: 50
+  hp: 55
+  spattack: 45
+  spdefense: 65
+  speed: 55
+current-hp: false
+evs: false
+experience: false
+id: 10205
+ivs: false
+moves: []
+name: eevee-gmax
+type-ids:
+- 1

@@ -1,0 +1,17 @@
+base-experience: 239
+base-stats:
+  attack: 83
+  defense: 100
+  hp: 79
+  spattack: 85
+  spdefense: 105
+  speed: 78
+current-hp: false
+evs: false
+experience: false
+id: 10197
+ivs: false
+moves: []
+name: blastoise-gmax
+type-ids:
+- 11

@@ -1,0 +1,34 @@
+base-experience: 39
+base-stats:
+  attack: 35
+  defense: 30
+  hp: 40
+  spattack: 20
+  spdefense: 20
+  speed: 50
+current-hp: false
+evs: false
+experience: false
+id: 13
+ivs: false
+moves:
+- id: 40
+  learn-method: level-up
+  level-learned-at: 1
+  name: poison-sting
+- id: 81
+  learn-method: level-up
+  level-learned-at: 1
+  name: string-shot
+- id: 450
+  learn-method: level-up
+  level-learned-at: 15
+  name: bug-bite
+- id: 527
+  learn-method: tutor
+  level-learned-at: 0
+  name: electroweb
+name: weedle
+type-ids:
+- 7
+- 4

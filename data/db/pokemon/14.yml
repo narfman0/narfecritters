@@ -1,0 +1,38 @@
+base-experience: 72
+base-stats:
+  attack: 25
+  defense: 50
+  hp: 45
+  spattack: 25
+  spdefense: 25
+  speed: 35
+current-hp: false
+evs: false
+experience: false
+id: 14
+ivs: false
+moves:
+- id: 81
+  learn-method: tutor
+  level-learned-at: 0
+  name: string-shot
+- id: 106
+  learn-method: level-up
+  level-learned-at: 7
+  name: harden
+- id: 334
+  learn-method: tutor
+  level-learned-at: 0
+  name: iron-defense
+- id: 450
+  learn-method: tutor
+  level-learned-at: 0
+  name: bug-bite
+- id: 527
+  learn-method: tutor
+  level-learned-at: 0
+  name: electroweb
+name: kakuna
+type-ids:
+- 7
+- 4

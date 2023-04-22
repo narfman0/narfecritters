@@ -1,0 +1,97 @@
+base-experience: 150
+base-stats:
+  attack: 65
+  defense: 65
+  hp: 46
+  spattack: 55
+  spdefense: 35
+  speed: 34
+current-hp: false
+evs: false
+experience: false
+id: 808
+ivs: false
+moves:
+- id: 29
+  learn-method: level-up
+  level-learned-at: 1
+  name: headbutt
+- id: 39
+  learn-method: level-up
+  level-learned-at: 9
+  name: tail-whip
+- id: 84
+  learn-method: level-up
+  level-learned-at: 27
+  name: thunder-shock
+- id: 85
+  learn-method: machine
+  level-learned-at: 0
+  name: thunderbolt
+- id: 86
+  learn-method: level-up
+  level-learned-at: 18
+  name: thunder-wave
+- id: 92
+  learn-method: machine
+  level-learned-at: 0
+  name: toxic
+- id: 106
+  learn-method: level-up
+  level-learned-at: 1
+  name: harden
+- id: 151
+  learn-method: level-up
+  level-learned-at: 36
+  name: acid-armor
+- id: 156
+  learn-method: machine
+  level-learned-at: 0
+  name: rest
+- id: 164
+  learn-method: machine
+  level-learned-at: 0
+  name: substitute
+- id: 173
+  learn-method: machine
+  level-learned-at: 0
+  name: snore
+- id: 182
+  learn-method: machine
+  level-learned-at: 0
+  name: protect
+- id: 203
+  learn-method: machine
+  level-learned-at: 0
+  name: endure
+- id: 214
+  learn-method: machine
+  level-learned-at: 0
+  name: sleep-talk
+- id: 263
+  learn-method: machine
+  level-learned-at: 0
+  name: facade
+- id: 334
+  learn-method: machine
+  level-learned-at: 0
+  name: iron-defense
+- id: 360
+  learn-method: machine
+  level-learned-at: 0
+  name: gyro-ball
+- id: 430
+  learn-method: level-up
+  level-learned-at: 45
+  name: flash-cannon
+- id: 496
+  learn-method: machine
+  level-learned-at: 0
+  name: round
+- id: 796
+  learn-method: tutor
+  level-learned-at: 0
+  name: steel-beam
+name: meltan
+type-ids:
+- 9

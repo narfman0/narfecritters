@@ -1,0 +1,61 @@
+base-experience: 39
+base-stats:
+  attack: 25
+  defense: 41
+  hp: 37
+  spattack: 25
+  spdefense: 41
+  speed: 25
+current-hp: false
+evs: false
+experience: false
+id: 401
+ivs: false
+moves:
+- id: 33
+  learn-method: level-up
+  level-learned-at: 1
+  name: tackle
+- id: 45
+  learn-method: level-up
+  level-learned-at: 1
+  name: growl
+- id: 81
+  learn-method: tutor
+  level-learned-at: 0
+  name: string-shot
+- id: 117
+  learn-method: level-up
+  level-learned-at: 1
+  name: bide
+- id: 173
+  learn-method: tutor
+  level-learned-at: 0
+  name: snore
+- id: 189
+  learn-method: tutor
+  level-learned-at: 0
+  name: mud-slap
+- id: 253
+  learn-method: tutor
+  level-learned-at: 0
+  name: uproar
+- id: 283
+  learn-method: tutor
+  level-learned-at: 0
+  name: endeavor
+- id: 450
+  learn-method: level-up
+  level-learned-at: 16
+  name: bug-bite
+- id: 522
+  learn-method: level-up
+  level-learned-at: 6
+  name: struggle-bug
+- id: 851
+  learn-method: machine
+  level-learned-at: 0
+  name: tera-blast
+name: kricketot
+type-ids:
+- 7

@@ -1,0 +1,25 @@
+base-experience: 140
+base-stats:
+  attack: 29
+  defense: 131
+  hp: 43
+  spattack: 29
+  spdefense: 131
+  speed: 37
+current-hp: false
+evs: false
+experience: false
+id: 790
+ivs: false
+moves:
+- id: 100
+  learn-method: level-up
+  level-learned-at: 1
+  name: teleport
+- id: 322
+  learn-method: level-up
+  level-learned-at: 0
+  name: cosmic-power
+name: cosmoem
+type-ids:
+- 14

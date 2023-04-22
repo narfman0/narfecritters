@@ -1,0 +1,122 @@
+base-experience: 54
+base-stats:
+  attack: 60
+  defense: 30
+  hp: 28
+  spattack: 40
+  spdefense: 30
+  speed: 82
+current-hp: false
+evs: false
+experience: false
+id: 885
+ivs: false
+moves:
+- id: 44
+  learn-method: level-up
+  level-learned-at: 1
+  name: bite
+- id: 50
+  learn-method: egg
+  level-learned-at: 0
+  name: disable
+- id: 86
+  learn-method: machine
+  level-learned-at: 0
+  name: thunder-wave
+- id: 98
+  learn-method: level-up
+  level-learned-at: 1
+  name: quick-attack
+- id: 104
+  learn-method: egg
+  level-learned-at: 0
+  name: double-team
+- id: 109
+  learn-method: egg
+  level-learned-at: 0
+  name: confuse-ray
+- id: 129
+  learn-method: machine
+  level-learned-at: 0
+  name: swift
+- id: 156
+  learn-method: machine
+  level-learned-at: 0
+  name: rest
+- id: 164
+  learn-method: machine
+  level-learned-at: 0
+  name: substitute
+- id: 173
+  learn-method: machine
+  level-learned-at: 0
+  name: snore
+- id: 174
+  learn-method: egg
+  level-learned-at: 0
+  name: curse
+- id: 182
+  learn-method: machine
+  level-learned-at: 0
+  name: protect
+- id: 203
+  learn-method: machine
+  level-learned-at: 0
+  name: endure
+- id: 213
+  learn-method: machine
+  level-learned-at: 0
+  name: attract
+- id: 214
+  learn-method: machine
+  level-learned-at: 0
+  name: sleep-talk
+- id: 226
+  learn-method: machine
+  level-learned-at: 0
+  name: baton-pass
+- id: 263
+  learn-method: machine
+  level-learned-at: 0
+  name: facade
+- id: 270
+  learn-method: machine
+  level-learned-at: 0
+  name: helping-hand
+- id: 288
+  learn-method: egg
+  level-learned-at: 0
+  name: grudge
+- id: 310
+  learn-method: level-up
+  level-learned-at: 1
+  name: astonish
+- id: 389
+  learn-method: egg
+  level-learned-at: 0
+  name: sucker-punch
+- id: 434
+  learn-method: tutor
+  level-learned-at: 0
+  name: draco-meteor
+- id: 496
+  learn-method: machine
+  level-learned-at: 0
+  name: round
+- id: 525
+  learn-method: egg
+  level-learned-at: 0
+  name: dragon-tail
+- id: 611
+  learn-method: level-up
+  level-learned-at: 1
+  name: infestation
+- id: 851
+  learn-method: machine
+  level-learned-at: 0
+  name: tera-blast
+name: dreepy
+type-ids:
+- 16
+- 8

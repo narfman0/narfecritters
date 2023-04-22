@@ -57,7 +57,7 @@ class PokemonMove:
 
 
 @dataclass
-class Pokemon:
+class Pokemon(YAMLWizard):
     id: int
     name: str
     base_experience: int
@@ -173,21 +173,20 @@ class Moves(YAMLWizard):
 
 @dataclass
 class Pokedex(YAMLWizard):
-    pokemon: list[Pokemon]
+    name_to_id: dict[str, int]
+    id_to_pokemon: dict[int, Pokemon] = field(default_factory=dict)
 
     @classmethod
-    def load(cls, yaml_path="data/db/pokemon.yml"):
-        return Pokedex.from_yaml_file(yaml_path)
+    def load(cls):
+        return Pokedex.from_yaml_file("data/db/pokedex.yml")
 
     def find_by_id(self, id: int):
-        for pokemon in self.pokemon:
-            if pokemon.id == id:
-                return pokemon
+        if id not in self.id_to_pokemon:
+            self.id_to_pokemon[id] = Pokemon.from_yaml_file(f"data/db/pokemon/{id}.yml")
+        return self.id_to_pokemon[id]
 
     def find_by_name(self, name):
-        for pokemon in self.pokemon:
-            if pokemon.name == name:
-                return pokemon
+        return self.find_by_id(self.name_to_id[name])
 
     def create(self, random: Random, name=None, id=None, level=0) -> Pokemon:
         pokemon = None

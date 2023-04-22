@@ -1,0 +1,49 @@
+base-experience: 52
+base-stats:
+  attack: 23
+  defense: 48
+  hp: 95
+  spattack: 23
+  spdefense: 48
+  speed: 23
+current-hp: false
+evs: false
+experience: false
+id: 360
+ivs: false
+moves:
+- id: 68
+  learn-method: level-up
+  level-learned-at: 15
+  name: counter
+- id: 133
+  learn-method: level-up
+  level-learned-at: 1
+  name: amnesia
+- id: 150
+  learn-method: level-up
+  level-learned-at: 1
+  name: splash
+- id: 194
+  learn-method: level-up
+  level-learned-at: 15
+  name: destiny-bond
+- id: 204
+  learn-method: level-up
+  level-learned-at: 1
+  name: charm
+- id: 219
+  learn-method: level-up
+  level-learned-at: 15
+  name: safeguard
+- id: 227
+  learn-method: level-up
+  level-learned-at: 1
+  name: encore
+- id: 243
+  learn-method: level-up
+  level-learned-at: 15
+  name: mirror-coat
+name: wynaut
+type-ids:
+- 14

@@ -1,0 +1,18 @@
+base-experience: 170
+base-stats:
+  attack: 115
+  defense: 90
+  hp: 90
+  spattack: 48
+  spdefense: 68
+  speed: 74
+current-hp: false
+evs: false
+experience: false
+id: 10214
+ivs: false
+moves: []
+name: drednaw-gmax
+type-ids:
+- 11
+- 6

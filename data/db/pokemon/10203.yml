@@ -1,0 +1,17 @@
+base-experience: 166
+base-stats:
+  attack: 130
+  defense: 115
+  hp: 55
+  spattack: 50
+  spdefense: 50
+  speed: 75
+current-hp: false
+evs: false
+experience: false
+id: 10203
+ivs: false
+moves: []
+name: kingler-gmax
+type-ids:
+- 11

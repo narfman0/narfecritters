@@ -1,0 +1,17 @@
+base-experience: 227
+base-stats:
+  attack: 130
+  defense: 80
+  hp: 90
+  spattack: 65
+  spdefense: 85
+  speed: 55
+current-hp: false
+evs: false
+experience: false
+id: 10201
+ivs: false
+moves: []
+name: machamp-gmax
+type-ids:
+- 2

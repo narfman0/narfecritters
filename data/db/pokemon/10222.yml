@@ -1,0 +1,18 @@
+base-experience: 255
+base-stats:
+  attack: 120
+  defense: 65
+  hp: 95
+  spattack: 95
+  spdefense: 75
+  speed: 60
+current-hp: false
+evs: false
+experience: false
+id: 10222
+ivs: false
+moves: []
+name: grimmsnarl-gmax
+type-ids:
+- 17
+- 18

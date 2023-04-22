@@ -1,0 +1,17 @@
+base-experience: 179
+base-stats:
+  attack: 107
+  defense: 125
+  hp: 72
+  spattack: 65
+  spdefense: 70
+  speed: 71
+current-hp: false
+evs: false
+experience: false
+id: 10218
+ivs: false
+moves: []
+name: sandaconda-gmax
+type-ids:
+- 5

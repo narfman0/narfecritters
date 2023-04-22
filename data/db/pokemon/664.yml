@@ -1,0 +1,53 @@
+base-experience: 40
+base-stats:
+  attack: 35
+  defense: 40
+  hp: 38
+  spattack: 27
+  spdefense: 25
+  speed: 35
+current-hp: false
+evs: false
+experience: false
+id: 664
+ivs: false
+moves:
+- id: 33
+  learn-method: level-up
+  level-learned-at: 1
+  name: tackle
+- id: 77
+  learn-method: egg
+  level-learned-at: 0
+  name: poison-powder
+- id: 78
+  learn-method: level-up
+  level-learned-at: 6
+  name: stun-spore
+- id: 81
+  learn-method: level-up
+  level-learned-at: 1
+  name: string-shot
+- id: 450
+  learn-method: level-up
+  level-learned-at: 15
+  name: bug-bite
+- id: 476
+  learn-method: egg
+  level-learned-at: 0
+  name: rage-powder
+- id: 522
+  learn-method: machine
+  level-learned-at: 0
+  name: struggle-bug
+- id: 851
+  learn-method: machine
+  level-learned-at: 0
+  name: tera-blast
+- id: 884
+  learn-method: machine
+  level-learned-at: 0
+  name: pounce
+name: scatterbug
+type-ids:
+- 7

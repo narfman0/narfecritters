@@ -1,0 +1,18 @@
+base-experience: 225
+base-stats:
+  attack: 65
+  defense: 60
+  hp: 60
+  spattack: 130
+  spdefense: 75
+  speed: 110
+current-hp: false
+evs: false
+experience: false
+id: 10202
+ivs: false
+moves: []
+name: gengar-gmax
+type-ids:
+- 8
+- 4

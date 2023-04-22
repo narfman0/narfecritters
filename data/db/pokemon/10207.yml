@@ -1,0 +1,17 @@
+base-experience: 166
+base-stats:
+  attack: 95
+  defense: 82
+  hp: 80
+  spattack: 60
+  spdefense: 82
+  speed: 75
+current-hp: false
+evs: false
+experience: false
+id: 10207
+ivs: false
+moves: []
+name: garbodor-gmax
+type-ids:
+- 4

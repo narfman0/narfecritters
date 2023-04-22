@@ -1,0 +1,18 @@
+base-experience: 176
+base-stats:
+  attack: 98
+  defense: 70
+  hp: 75
+  spattack: 114
+  spdefense: 70
+  speed: 75
+current-hp: false
+evs: false
+experience: false
+id: 10219
+ivs: false
+moves: []
+name: toxtricity-amped-gmax
+type-ids:
+- 13
+- 4

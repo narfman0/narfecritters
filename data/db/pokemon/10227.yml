@@ -1,0 +1,18 @@
+base-experience: 275
+base-stats:
+  attack: 130
+  defense: 100
+  hp: 100
+  spattack: 63
+  spdefense: 60
+  speed: 97
+current-hp: false
+evs: false
+experience: false
+id: 10227
+ivs: false
+moves: []
+name: urshifu-rapid-strike-gmax
+type-ids:
+- 2
+- 11

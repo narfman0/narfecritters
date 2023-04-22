@@ -1,0 +1,17 @@
+base-experience: 112
+base-stats:
+  attack: 55
+  defense: 40
+  hp: 35
+  spattack: 50
+  spdefense: 50
+  speed: 90
+current-hp: false
+evs: false
+experience: false
+id: 10199
+ivs: false
+moves: []
+name: pikachu-gmax
+type-ids:
+- 13

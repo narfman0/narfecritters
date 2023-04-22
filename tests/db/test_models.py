@@ -5,12 +5,12 @@ from pokeclone.db.models import *
 
 class TestModels(unittest.TestCase):
     def test_pokedex_load(self):
-        pokedex = Pokedex.load(yaml_path="tests/fixtures/pokemon.yml")
-        self.assertTrue(len(pokedex.pokemon) > 1)
+        pokedex = Pokedex.load()
+        self.assertTrue(len(pokedex.name_to_id) > 10)
 
     def test_level_up(self):
         random = Random(x=12345)
-        pokedex = Pokedex.load(yaml_path="tests/fixtures/pokemon.yml")
+        pokedex = Pokedex.load()
         charmander = pokedex.create(random, name="charmander", level=5)
         self.assertEqual(5, charmander.level)
         self.assertEqual(10, charmander.attack)

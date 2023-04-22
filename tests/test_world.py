@@ -7,7 +7,7 @@ from pokeclone.world import World
 
 class TestPokedex(unittest.TestCase):
     def test_attack(self):
-        pokedex = Pokedex.load(yaml_path="tests/fixtures/pokemon.yml")
+        pokedex = Pokedex.load()
         random = Random(x=12345)
         bulbasaur = pokedex.create(random, name="bulbasaur", level=5)
         charmander = pokedex.create(random, name="charmander", level=5)
@@ -19,7 +19,7 @@ class TestPokedex(unittest.TestCase):
 
     def test_turn(self):
         random = Random(x=12345)
-        pokedex = Pokedex.load(yaml_path="tests/fixtures/pokemon.yml")
+        pokedex = Pokedex.load()
         charmander = pokedex.create(random, name="charmander", level=5)
         bulbasaur = pokedex.create(random, name="bulbasaur", level=5)
         world = World(pokedex=pokedex, random=random)
@@ -31,9 +31,11 @@ class TestPokedex(unittest.TestCase):
         self.assertEqual(125, charmander.experience)
         world.turn_player(player_move.name)
         world.turn_enemy()
-        self.assertEqual(14, charmander.current_hp)
-        self.assertEqual(13, bulbasaur.current_hp)
+        self.assertEqual(11, charmander.current_hp)
+        self.assertEqual(16, bulbasaur.current_hp)
 
+        world.turn_player(player_move.name)
+        world.turn_player(player_move.name)
         world.turn_player(player_move.name)
         world.turn_player(player_move.name)
         self.assertEqual(0, bulbasaur.current_hp)

@@ -1,0 +1,21 @@
+base-experience: 88
+base-stats:
+  attack: 20
+  defense: 35
+  hp: 55
+  spattack: 20
+  spdefense: 45
+  speed: 75
+current-hp: false
+evs: false
+experience: false
+id: 235
+ivs: false
+moves:
+- id: 166
+  learn-method: level-up
+  level-learned-at: 91
+  name: sketch
+name: smeargle
+type-ids:
+- 1

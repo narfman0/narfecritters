@@ -20,8 +20,11 @@ def main():
 
     pokemon = list(generate_pokemon(os.path.join(api_data_path, "pokemon")))
     LOGGER.info(f"Writing {len(pokemon)} pokemon to file")
-    Pokedex(pokemon).to_yaml_file(os.path.join("data", "db", "pokemon.yml"))
-    Pokedex(pokemon[0:9]).to_yaml_file(os.path.join("tests", "fixtures", "pokemon.yml"))
+    Pokedex(name_to_id={item.name: item.id for item in pokemon}).to_yaml_file(
+        os.path.join("data", "db", "pokedex.yml")
+    )
+    for item in pokemon:
+        item.to_yaml_file(os.path.join("data", "db", "pokemon", f"{item.id}.yml"))
 
     moves = list(generate_moves(os.path.join(api_data_path, "move")))
     LOGGER.info(f"Writing {len(moves)} moves to file")

@@ -1,0 +1,41 @@
+base-experience: 56
+base-stats:
+  attack: 45
+  defense: 35
+  hp: 45
+  spattack: 20
+  spdefense: 30
+  speed: 20
+current-hp: false
+evs: false
+experience: false
+id: 265
+ivs: false
+moves:
+- id: 33
+  learn-method: level-up
+  level-learned-at: 1
+  name: tackle
+- id: 40
+  learn-method: level-up
+  level-learned-at: 5
+  name: poison-sting
+- id: 81
+  learn-method: level-up
+  level-learned-at: 1
+  name: string-shot
+- id: 173
+  learn-method: tutor
+  level-learned-at: 0
+  name: snore
+- id: 450
+  learn-method: level-up
+  level-learned-at: 15
+  name: bug-bite
+- id: 527
+  learn-method: tutor
+  level-learned-at: 0
+  name: electroweb
+name: wurmple
+type-ids:
+- 7
