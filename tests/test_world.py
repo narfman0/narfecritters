@@ -2,7 +2,7 @@ from random import Random
 import unittest
 
 from pokeclone.db.models import *
-from pokeclone.world import World
+from pokeclone.world import Encounter, World
 
 
 class TestPokedex(unittest.TestCase):
@@ -25,7 +25,7 @@ class TestPokedex(unittest.TestCase):
         bulbasaur = pokedex.create(random, name="bulbasaur", level=5)
         world = World(pokedex=pokedex, random=random)
         world.player.pokemon.append(charmander)
-        world.enemy = bulbasaur
+        world.encounter = Encounter(bulbasaur)
 
         player_move = world.moves.find_by_id(charmander.moves[0].id)
         self.assertEqual(5, charmander.level)

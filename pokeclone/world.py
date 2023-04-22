@@ -1,5 +1,6 @@
 import logging
 import math
+from dataclasses import dataclass
 from random import Random
 
 LOGGER = logging.getLogger(__name__)
@@ -11,13 +12,18 @@ MOVE_SPEED = 200
 TYPES = Types.load()  # this is a trick for performance and usability in tests, refactor
 
 
+@dataclass
+class Encounter:
+    enemy: Pokemon
+
+
 class World:
     def __init__(self, pokedex=None, random=None):
         self.pokedex = pokedex if pokedex else Pokedex.load()
         self.moves = Moves.load()
         self.random = random if random else Random()
         self.player = NPC(x=16, y=16)
-        self.enemy = None
+        self.encounter = None
 
     def move(self, distance: int, up=False, down=False, left=False, right=False):
         if left:
@@ -30,10 +36,12 @@ class World:
             self.player.y -= distance
 
         if self.random.random() < 0.01:
-            self.enemy = self.pokedex.create(
-                self.random,
-                name=self.random.choice(["charmander", "bulbasaur"]),
-                level=round(self.random.random() * 3 + 1),
+            self.encounter = Encounter(
+                enemy=self.pokedex.create(
+                    self.random,
+                    name=self.random.choice(["charmander", "bulbasaur"]),
+                    level=round(self.random.random() * 3 + 1),
+                )
             )
 
     def end_encounter(self):
@@ -60,12 +68,13 @@ class World:
             LOGGER.info(
                 f"{self.active_pokemon.name} leveled up to {self.active_pokemon.level}"
             )
-        self.enemy = None
+        self.encounter = None
+        # TODO do not heal after each battle
         self.active_pokemon.current_hp = self.active_pokemon.max_hp
 
     def turn(self, move_name):
         self.turn_player(move_name)
-        if self.enemy:
+        if self.encounter:
             self.turn_enemy()
 
     def turn_player(self, move_name):
@@ -127,3 +136,7 @@ class World:
     @property
     def active_pokemon(self) -> Pokemon:
         return self.player.active_pokemon
+
+    @property
+    def enemy(self) -> Pokemon:
+        return self.encounter.enemy

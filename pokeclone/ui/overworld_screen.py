@@ -41,7 +41,7 @@ class OverworldScreen(Screen):
             or pygame.key.get_pressed()[pygame.K_s]
         ) and self.world.player.y > 0:
             self.world.move(dt * MOVE_SPEED, down=True)
-        if self.world.enemy:
+        if self.world.encounter:
             # an encounter has been generated!
             self.screen_manager.push(BattleScreen(self.screen_manager, self.world))
 

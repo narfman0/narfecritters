@@ -41,7 +41,7 @@ class BattleScreen(Screen):
             if event.ui_element in self.fight_buttons:
                 move_name = event.ui_element.text
                 self.world.turn(move_name)
-                if self.world.enemy is None:
+                if self.world.encounter is None:
                     self.screen_manager.pop()
                     self.kill()
 
