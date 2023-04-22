@@ -1,33 +1,21 @@
 import copy
-from enum import auto, Enum
 from typing import Optional
-import random
+from random import Random
 
 from dataclasses import dataclass, field
 from dataclass_wizard import YAMLWizard
 
 
-class Type(Enum):
-    NORMAL = auto()
-    FIGHTING = auto()
-    FLYING = auto()
-    POISON = auto()
-    GROUND = auto()
-    ROCK = auto()
-    BUG = auto()
-    GHOST = auto()
-    STEEL = auto()
-    FIRE = auto()
-    WATER = auto()
-    GRASS = auto()
-    ELECTRIC = auto()
-    PSYCHIC = auto()
-    ICE = auto()
-    DRAGON = auto()
-    DARK = auto()
-    FAIRY = auto()
-    UNKNOWN = 10001
-    SHADOW = 10002
+@dataclass
+class Type:
+    id: int
+    name: str
+    double_damage_from: list[int] = field(default_factory=set)
+    double_damage_to: list[int] = field(default_factory=set)
+    half_damage_from: list[int] = field(default_factory=set)
+    half_damage_to: list[int] = field(default_factory=set)
+    no_damage_from: list[int] = field(default_factory=set)
+    no_damage_to: list[int] = field(default_factory=set)
 
 
 @dataclass
@@ -35,7 +23,7 @@ class Move:
     id: int
     name: str
     power: int
-    type: Type
+    type_id: int
 
 
 @dataclass
@@ -48,7 +36,7 @@ class Stats:
     speed: int = 0
 
     @classmethod
-    def create_random_ivs(cls):
+    def create_random_ivs(cls, random: Random):
         return Stats(
             random.randint(0, 31),
             random.randint(0, 31),
@@ -64,7 +52,7 @@ class Pokemon:
     id: int
     name: str
     base_stats: Stats
-    types: list[Type]
+    type_ids: list[int]
     move_ids: list[int]
     ivs: Optional[Stats] = field(default=False, init=False)
     evs: Optional[Stats] = field(default=False, init=False)
@@ -120,6 +108,25 @@ class NPC:
 
 
 @dataclass
+class Types(YAMLWizard):
+    types: list[Type]
+
+    @classmethod
+    def load(cls):
+        return Types.from_yaml_file(f"data/db/types.yml")
+
+    def find_by_name(self, name: str):
+        for type in self.types:
+            if type.name == name:
+                return type
+
+    def find_by_id(self, id: int):
+        for type in self.types:
+            if type.id == id:
+                return type
+
+
+@dataclass
 class Moves(YAMLWizard):
     moves: list[Move]
 
@@ -156,7 +163,7 @@ class Pokedex(YAMLWizard):
             if pokemon.name == name:
                 return pokemon
 
-    def create(self, name=None, id=None, level=0) -> Pokemon:
+    def create(self, random: Random, name=None, id=None, level=0) -> Pokemon:
         pokemon = None
         if id is not None:
             pokemon = self.find_by_id(id)
@@ -166,7 +173,7 @@ class Pokedex(YAMLWizard):
             raise Exception(f"Pokemon name {name} or id {id} not found")
         instance = copy.copy(self.find_by_name(name))
         instance.evs = Stats()
-        instance.ivs = Stats.create_random_ivs()
+        instance.ivs = Stats.create_random_ivs(random)
         instance.level = level
         instance.current_hp = instance.max_hp
         return instance
