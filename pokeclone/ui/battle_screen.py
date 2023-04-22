@@ -28,7 +28,7 @@ class BattleScreen(Screen):
             y += 32
             current += 1
         self.enemy_pokemon_image = pygame.image.load(
-            f"data/sprites/pokemon/{world.enemy.id}.png"
+            f"data/sprites/pokemon/front/{world.enemy.id}.png"
         ).convert()
         self.self_pokemon_image = pygame.image.load(
             f"data/sprites/pokemon/back/{world.active_pokemon.id}.png"
