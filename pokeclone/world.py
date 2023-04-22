@@ -17,8 +17,7 @@ class World:
         self.pokedex = Pokedex.load()
         self.moves = Moves.load()
         self.random = random.Random()
-        starting_pokemon = self.pokedex.create(self.random, name="charmander", level=4)
-        self.player = NPC(x=10, y=10, pokemon=[starting_pokemon])
+        self.player = NPC(x=16, y=16)
         self.enemy = None
 
     def move(self, distance: int, up=False, down=False, left=False, right=False):

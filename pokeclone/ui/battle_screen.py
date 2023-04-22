@@ -24,9 +24,10 @@ class BattleScreen(Screen):
             if current >= 4:
                 continue
             move = self.world.moves.find_by_id(move_id)
-            self.fight_buttons.append(UIButton((WINDOW_SIZE[0] - 100, y), move.name))
+            self.fight_buttons.append(UIButton((WINDOW_SIZE[0] - 128, y), move.name))
             y += 32
             current += 1
+        self.to_kill.extend(self.fight_buttons)
         self.enemy_pokemon_image = pygame.image.load(
             f"data/sprites/pokemon/front/{world.enemy.id}.png"
         ).convert()
@@ -43,9 +44,8 @@ class BattleScreen(Screen):
                 move_name = event.ui_element.text
                 self.world.turn(move_name)
                 if self.world.enemy is None:
-                    for button in self.fight_buttons:
-                        button.kill()
                     self.screen_manager.pop()
+                    self.kill()
 
     def draw(self, surface: pygame.Surface):
         surface.blit(self.background, (0, 0))

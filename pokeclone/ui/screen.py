@@ -8,6 +8,7 @@ class Screen:
     def __init__(self):
         self.background = Surface(WINDOW_SIZE)
         self.background.fill("gray")
+        self.to_kill = []
 
     def process_event(self, event: Event):
         pass
@@ -17,6 +18,10 @@ class Screen:
 
     def draw(self, surface: Surface):
         pass
+
+    def kill(self):
+        for element_to_kill in self.to_kill:
+            element_to_kill.kill()
 
 
 class ScreenManager:

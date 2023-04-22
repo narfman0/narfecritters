@@ -12,10 +12,10 @@ LOGGER = logging.getLogger(__name__)
 
 
 class OverworldScreen(Screen):
-    def __init__(self, screen_manager: ScreenManager):
+    def __init__(self, screen_manager: ScreenManager, world: World):
         super().__init__()
         self.screen_manager = screen_manager
-        self.world = World()
+        self.world = world
         self.load_player_image()
         self.tmxdata = pytmx.load_pygame("data/tiled/overworld.tmx")
 

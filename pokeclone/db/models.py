@@ -99,7 +99,7 @@ class Pokemon:
 class NPC:
     x: int
     y: int
-    pokemon: list[Pokemon]
+    pokemon: list[Pokemon] = field(default_factory=list)
     active_pokemon_index: int = 0
 
     @property
