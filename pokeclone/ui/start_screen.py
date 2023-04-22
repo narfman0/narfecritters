@@ -51,9 +51,7 @@ class StartScreen(Screen):
             if event.ui_element in self.buttons:
                 pokemon_name = event.ui_element.text
                 LOGGER.info(f"{pokemon_name} chosen! Congratulations!")
-                pokemon = self.world.pokedex.create(
-                    self.world.random, pokemon_name, level=4
-                )
+                pokemon = self.world.pokedex.create(self.world.random, pokemon_name)
                 self.world.player.pokemon.append(pokemon)
                 self.screen_manager.pop()
                 self.screen_manager.push(

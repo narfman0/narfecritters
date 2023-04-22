@@ -1,5 +1,6 @@
 pokemon:
-- base-stats:
+- base-experience: 64
+  base-stats:
     attack: 49
     defense: 49
     hp: 45
@@ -8,6 +9,7 @@ pokemon:
     speed: 45
   current-hp: false
   evs: false
+  experience: false
   id: 1
   ivs: false
   level: false
@@ -99,7 +101,8 @@ pokemon:
   type-ids:
   - 12
   - 4
-- base-stats:
+- base-experience: 142
+  base-stats:
     attack: 62
     defense: 63
     hp: 60
@@ -108,6 +111,7 @@ pokemon:
     speed: 60
   current-hp: false
   evs: false
+  experience: false
   id: 2
   ivs: false
   level: false
@@ -193,7 +197,8 @@ pokemon:
   type-ids:
   - 12
   - 4
-- base-stats:
+- base-experience: 263
+  base-stats:
     attack: 82
     defense: 83
     hp: 80
@@ -202,6 +207,7 @@ pokemon:
     speed: 80
   current-hp: false
   evs: false
+  experience: false
   id: 3
   ivs: false
   level: false
@@ -300,7 +306,8 @@ pokemon:
   type-ids:
   - 12
   - 4
-- base-stats:
+- base-experience: 62
+  base-stats:
     attack: 52
     defense: 43
     hp: 39
@@ -309,6 +316,7 @@ pokemon:
     speed: 65
   current-hp: false
   evs: false
+  experience: false
   id: 4
   ivs: false
   level: false
@@ -418,7 +426,8 @@ pokemon:
   name: charmander
   type-ids:
   - 10
-- base-stats:
+- base-experience: 142
+  base-stats:
     attack: 64
     defense: 58
     hp: 58
@@ -427,6 +436,7 @@ pokemon:
     speed: 80
   current-hp: false
   evs: false
+  experience: false
   id: 5
   ivs: false
   level: false
@@ -529,7 +539,8 @@ pokemon:
   name: charmeleon
   type-ids:
   - 10
-- base-stats:
+- base-experience: 267
+  base-stats:
     attack: 84
     defense: 78
     hp: 78
@@ -538,6 +549,7 @@ pokemon:
     speed: 100
   current-hp: false
   evs: false
+  experience: false
   id: 6
   ivs: false
   level: false
@@ -671,7 +683,8 @@ pokemon:
   type-ids:
   - 10
   - 3
-- base-stats:
+- base-experience: 63
+  base-stats:
     attack: 48
     defense: 65
     hp: 44
@@ -680,6 +693,7 @@ pokemon:
     speed: 43
   current-hp: false
   evs: false
+  experience: false
   id: 7
   ivs: false
   level: false
@@ -786,7 +800,8 @@ pokemon:
   name: squirtle
   type-ids:
   - 11
-- base-stats:
+- base-experience: 142
+  base-stats:
     attack: 63
     defense: 80
     hp: 59
@@ -795,6 +810,7 @@ pokemon:
     speed: 58
   current-hp: false
   evs: false
+  experience: false
   id: 8
   ivs: false
   level: false
@@ -887,7 +903,8 @@ pokemon:
   name: wartortle
   type-ids:
   - 11
-- base-stats:
+- base-experience: 265
+  base-stats:
     attack: 83
     defense: 100
     hp: 79
@@ -896,6 +913,7 @@ pokemon:
     speed: 78
   current-hp: false
   evs: false
+  experience: false
   id: 9
   ivs: false
   level: false

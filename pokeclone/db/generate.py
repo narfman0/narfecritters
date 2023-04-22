@@ -134,6 +134,7 @@ def parse_pokemon_from_json(pokemon_json):
         base_stats=pokemon_stats,
         type_ids=type_ids,
         move_ids=move_ids,
+        base_experience=pokemon_json["base_experience"],
     )
 
 

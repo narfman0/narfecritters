@@ -1,6 +1,7 @@
 import copy
 from typing import Optional
 from random import Random
+from functools import lru_cache
 
 from dataclasses import dataclass, field
 from dataclass_wizard import YAMLWizard
@@ -51,13 +52,19 @@ class Stats:
 class Pokemon:
     id: int
     name: str
+    base_experience: int
     base_stats: Stats
     type_ids: list[int]
     move_ids: list[int]
     ivs: Optional[Stats] = field(default=False, init=False)
     evs: Optional[Stats] = field(default=False, init=False)
     current_hp: Optional[int] = field(default=False, init=False)
-    level: Optional[int] = field(default=False, init=False)
+    experience: Optional[int] = field(default=False, init=False)
+
+    @property
+    def level(self):
+        # only modeling medium-fast experience group for now
+        return self.level_for_medium_fast_xp(self.experience)
 
     @property
     def max_hp(self):
@@ -93,6 +100,14 @@ class Pokemon:
         return (
             2 * self.base_stats.speed + self.evs.speed // 4 + self.ivs.speed
         ) * self.level // 100 + 5
+
+    @classmethod
+    @lru_cache(maxsize=100)
+    def level_for_medium_fast_xp(cls, experience):
+        candidate_level = 1
+        while candidate_level**3 < experience:
+            candidate_level += 1
+        return candidate_level - 1
 
 
 @dataclass
@@ -174,6 +189,7 @@ class Pokedex(YAMLWizard):
         instance = copy.copy(self.find_by_name(name))
         instance.evs = Stats()
         instance.ivs = Stats.create_random_ivs(random)
-        instance.level = level
+        # only modeling medium-fast xp group
+        instance.experience = max(instance.base_experience, level**3)
         instance.current_hp = instance.max_hp
         return instance

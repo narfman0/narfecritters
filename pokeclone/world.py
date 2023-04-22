@@ -1,4 +1,5 @@
 import logging
+import math
 import random
 
 LOGGER = logging.getLogger(__name__)
@@ -36,9 +37,31 @@ class World:
             )
 
     def end_encounter(self):
+        # xp gain formula described: https://bulbapedia.bulbagarden.net/wiki/Experience
+        xp_gain_level_scalar_numerator = int(
+            round(math.sqrt(2 * self.enemy.level + 10))
+            * (2 * self.enemy.level + 10) ** 2
+        )
+        xp_gain_level_scalar_denominator = int(
+            round(math.sqrt(self.enemy.level + self.active_pokemon.level + 10))
+            * (self.enemy.level + self.active_pokemon.level + 10) ** 2
+        )
+        xp_gain = (
+            round(
+                ((self.enemy.base_experience * self.enemy.level) / 5)
+                * (xp_gain_level_scalar_numerator / xp_gain_level_scalar_denominator)
+            )
+            + 1
+        )
+        current_level = self.active_pokemon.level
+        self.active_pokemon.experience += xp_gain
+        LOGGER.info(f"{self.active_pokemon.name} gained {xp_gain} experience!")
+        if current_level < self.active_pokemon.level:
+            LOGGER.info(
+                f"{self.active_pokemon.name} leveled up to {self.active_pokemon.level}"
+            )
         self.enemy = None
         self.active_pokemon.current_hp = self.active_pokemon.max_hp
-        # TODO add experience :D
 
     def turn(self, move_name):
         self.turn_player(move_name)
@@ -49,7 +72,7 @@ class World:
         move = self.moves.find_by_name(move_name)
         enemy_damage = self.attack(self.active_pokemon, self.enemy, move, self.random)
         self.enemy.current_hp -= enemy_damage
-        LOGGER.info(f"Enemy {self.enemy.name} took {enemy_damage} from {move_name}")
+        LOGGER.info(f"Enemy {self.enemy.name} took {enemy_damage} dmg from {move_name}")
         if self.enemy.current_hp <= 0:
             LOGGER.info(f"Enemy {self.active_pokemon.name} passed out!")
             self.end_encounter()
@@ -62,7 +85,7 @@ class World:
         self.active_pokemon.current_hp -= player_damage
 
         LOGGER.info(
-            f"{self.active_pokemon.name} took {player_damage} from {enemy_move.name}"
+            f"{self.active_pokemon.name} took {player_damage} dmg from {enemy_move.name}"
         )
         if self.active_pokemon.current_hp <= 0:
             LOGGER.info(f"Your {self.active_pokemon.name} passed out!")
