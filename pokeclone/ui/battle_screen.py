@@ -28,12 +28,10 @@ class BattleScreen(Screen):
             y += 32
             current += 1
         self.to_kill.extend(self.fight_buttons)
-        self.enemy_pokemon_image = pygame.image.load(
-            f"data/sprites/pokemon/front/{world.enemy.id}.png"
-        ).convert()
-        self.self_pokemon_image = pygame.image.load(
-            f"data/sprites/pokemon/back/{world.active_pokemon.id}.png"
-        ).convert()
+        self.enemy_pokemon_image = self.load_scaled_pokemon_image(world.enemy.id, 4)
+        self.self_pokemon_image = self.load_scaled_pokemon_image(
+            world.active_pokemon.id, 5, back=True
+        )
         LOGGER.info(
             f"You are fighting a level {self.world.enemy.level} {self.world.enemy.name}"
         )
@@ -49,5 +47,24 @@ class BattleScreen(Screen):
 
     def draw(self, surface: pygame.Surface):
         surface.blit(self.background, (0, 0))
-        surface.blit(self.enemy_pokemon_image, (WINDOW_SIZE[0] - 128, 32))
-        surface.blit(self.self_pokemon_image, (32, WINDOW_SIZE[1] - 128))
+        surface.blit(
+            self.enemy_pokemon_image,
+            (
+                WINDOW_SIZE[0] - self.enemy_pokemon_image.get_width(),
+                0,
+            ),
+        )
+        trainer_pokemon_img_pos = (
+            0,
+            WINDOW_SIZE[1] - self.self_pokemon_image.get_height(),
+        )
+        surface.blit(self.self_pokemon_image, trainer_pokemon_img_pos)
+
+    @classmethod
+    def load_scaled_pokemon_image(cls, id, scale, back=False):
+        back_str = "back" if back else "front"
+        image = pygame.image.load(f"data/sprites/pokemon/{back_str}/{id}.png").convert()
+        size = image.get_size()
+        return pygame.transform.scale(
+            image, (int(size[0] * scale), int(size[1] * scale))
+        )
