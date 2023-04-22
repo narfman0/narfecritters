@@ -1,6 +1,6 @@
 import logging
 import math
-import random
+from random import Random
 
 LOGGER = logging.getLogger(__name__)
 
@@ -12,10 +12,10 @@ TYPES = Types.load()  # this is a trick for performance and usability in tests, 
 
 
 class World:
-    def __init__(self):
-        self.pokedex = Pokedex.load()
+    def __init__(self, pokedex=None, random=None):
+        self.pokedex = pokedex if pokedex else Pokedex.load()
         self.moves = Moves.load()
-        self.random = random.Random()
+        self.random = random if random else Random()
         self.player = NPC(x=16, y=16)
         self.enemy = None
 
@@ -29,11 +29,11 @@ class World:
         elif down:
             self.player.y -= distance
 
-        if random.random() < 0.01:
+        if self.random.random() < 0.01:
             self.enemy = self.pokedex.create(
                 self.random,
-                name=random.choice(["charmander", "bulbasaur"]),
-                level=round(random.random() * 3 + 1),
+                name=self.random.choice(["charmander", "bulbasaur"]),
+                level=round(self.random.random() * 3 + 1),
             )
 
     def end_encounter(self):
@@ -71,24 +71,24 @@ class World:
     def turn_player(self, move_name):
         move = self.moves.find_by_name(move_name)
         enemy_damage = self.attack(self.active_pokemon, self.enemy, move, self.random)
-        self.enemy.current_hp -= enemy_damage
+        self.enemy.take_damage(enemy_damage)
         LOGGER.info(f"Enemy {self.enemy.name} took {enemy_damage} dmg from {move_name}")
         if self.enemy.current_hp <= 0:
-            LOGGER.info(f"Enemy {self.active_pokemon.name} passed out!")
+            LOGGER.info(f"Enemy {self.active_pokemon.name} fainted!")
             self.end_encounter()
 
     def turn_enemy(self):
-        enemy_move = self.moves.find_by_id(random.choice(self.enemy.move_ids))
+        enemy_move = self.moves.find_by_id(self.random.choice(self.enemy.move_ids))
         player_damage = self.attack(
             self.enemy, self.active_pokemon, enemy_move, self.random
         )
-        self.active_pokemon.current_hp -= player_damage
+        self.active_pokemon.take_damage(player_damage)
 
         LOGGER.info(
             f"{self.active_pokemon.name} took {player_damage} dmg from {enemy_move.name}"
         )
         if self.active_pokemon.current_hp <= 0:
-            LOGGER.info(f"Your {self.active_pokemon.name} passed out!")
+            LOGGER.info(f"Your {self.active_pokemon.name} fainted!")
             self.end_encounter()
 
     @classmethod

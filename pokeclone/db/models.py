@@ -61,6 +61,9 @@ class Pokemon:
     current_hp: Optional[int] = field(default=False, init=False)
     experience: Optional[int] = field(default=False, init=False)
 
+    def take_damage(self, damage: int):
+        self.current_hp = max(0, self.current_hp - damage)
+
     @property
     def level(self):
         # only modeling medium-fast experience group for now
@@ -105,7 +108,7 @@ class Pokemon:
     @lru_cache(maxsize=100)
     def level_for_medium_fast_xp(cls, experience):
         candidate_level = 1
-        while candidate_level**3 < experience:
+        while candidate_level**3 <= experience:
             candidate_level += 1
         return candidate_level - 1
 
