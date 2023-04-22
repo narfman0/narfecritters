@@ -7,9 +7,7 @@ LOGGER = logging.getLogger(__name__)
 from pokeclone.db.models import *
 
 MOVE_SPEED = 200
-TYPES = (
-    Types.load()
-)  # TODO this is a trick for performance and usability in tests, refactor
+TYPES = Types.load()  # this is a trick for performance and usability in tests, refactor
 
 
 class World:
@@ -49,7 +47,6 @@ class World:
 
     def turn_player(self, move_name):
         move = self.moves.find_by_name(move_name)
-        # TODO model active pokemon
         enemy_damage = self.attack(self.active_pokemon, self.enemy, move, self.random)
         self.enemy.current_hp -= enemy_damage
         LOGGER.info(f"Enemy {self.enemy.name} took {enemy_damage} from {move_name}")
@@ -98,7 +95,7 @@ class World:
             if move.type_id in TYPES.find_by_id(type_id).half_damage_from:
                 type_factor /= 2
             if move.type_id in TYPES.find_by_id(type_id).no_damage_from:
-                type_factor *= 0  # TODO confirm this is really how this works
+                type_factor *= 0
         return round(
             base_damage * critical_hit_scalar * random_factor * stab * type_factor
         )
