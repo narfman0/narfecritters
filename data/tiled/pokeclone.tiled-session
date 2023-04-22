@@ -9,11 +9,11 @@
     ],
     "fileStates": {
         "overworld.tmx": {
-            "scale": 1,
+            "scale": 0.33,
             "selectedLayer": 1,
             "viewCenter": {
-                "x": 566.5,
-                "y": 237
+                "x": 421.21212121212125,
+                "y": 140.90909090909088
             }
         },
         "tileset_exterior.tsx": {
@@ -28,8 +28,13 @@
     "last.exportedFilePath": "C:/Users/narfm/Desktop",
     "last.imagePath": "C:/Users/narfm/workspace/pokeclone/data/tiled",
     "map.fixedSize": false,
+    "map.height": 100,
     "map.lastUsedExportFilter": "CSV files (*.csv)",
     "map.lastUsedFormat": "tmx",
+    "map.orientation": 1,
+    "map.tileHeight": 32,
+    "map.tileWidth": 32,
+    "map.width": 100,
     "openFiles": [
         "tileset_exterior.tsx",
         "overworld.tmx"
@@ -40,5 +45,15 @@
         "overworld.tmx",
         "tileset_interior.tsx"
     ],
-    "tileset.lastUsedFormat": "tsx"
+    "tileset.embedInMap": false,
+    "tileset.lastUsedFormat": "tsx",
+    "tileset.margin": 0,
+    "tileset.spacing": 0,
+    "tileset.tileSize": {
+        "height": 32,
+        "width": 32
+    },
+    "tileset.transparentColor": "#ff00ff",
+    "tileset.type": 0,
+    "tileset.useTransparentColor": false
 }

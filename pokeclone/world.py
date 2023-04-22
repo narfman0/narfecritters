@@ -2,6 +2,7 @@ import logging
 import math
 from dataclasses import dataclass
 from random import Random
+from pokeclone.ui.settings import TILE_SIZE
 
 LOGGER = logging.getLogger(__name__)
 
@@ -22,7 +23,7 @@ class World:
         self.pokedex = pokedex if pokedex else Pokedex.load()
         self.moves = Moves.load()
         self.random = random if random else Random()
-        self.player = NPC(x=16, y=16)
+        self.player = NPC(x=TILE_SIZE * 10, y=TILE_SIZE * 10)
         self.encounter = None
 
     def move(self, distance: int, up=False, down=False, left=False, right=False):
@@ -31,9 +32,9 @@ class World:
         elif right:
             self.player.x += distance
         if up:
-            self.player.y += distance
-        elif down:
             self.player.y -= distance
+        elif down:
+            self.player.y += distance
 
         if self.random.random() < 0.01:
             self.encounter = Encounter(
@@ -44,7 +45,14 @@ class World:
                 )
             )
 
-    def end_encounter(self):
+    def end_encounter(self, win):
+        if win:
+            self.grant_experience()
+        self.encounter = None
+        # TODO do not heal after each battle
+        self.active_pokemon.current_hp = self.active_pokemon.max_hp
+
+    def grant_experience(self):
         # xp gain formula described: https://bulbapedia.bulbagarden.net/wiki/Experience
         xp_gain_level_scalar_numerator = int(
             round(math.sqrt(2 * self.enemy.level + 10))
@@ -68,9 +76,6 @@ class World:
             LOGGER.info(
                 f"{self.active_pokemon.name} leveled up to {self.active_pokemon.level}"
             )
-        self.encounter = None
-        # TODO do not heal after each battle
-        self.active_pokemon.current_hp = self.active_pokemon.max_hp
 
     def turn(self, move_name):
         self.turn_player(move_name)
@@ -84,7 +89,7 @@ class World:
         LOGGER.info(f"Enemy {self.enemy.name} took {enemy_damage} dmg from {move_name}")
         if self.enemy.current_hp <= 0:
             LOGGER.info(f"Enemy {self.active_pokemon.name} fainted!")
-            self.end_encounter()
+            self.end_encounter(True)
 
     def turn_enemy(self):
         enemy_move = self.moves.find_by_id(self.random.choice(self.enemy.moves).id)
@@ -96,7 +101,7 @@ class World:
         )
         if self.active_pokemon.current_hp <= 0:
             LOGGER.info(f"Your {self.active_pokemon.name} fainted!")
-            self.end_encounter()
+            self.end_encounter(False)
 
     def attack(self, attacker: Pokemon, defender: Pokemon, move: Move):
         """Follows gen5 dmg formula as defined: https://bulbapedia.bulbagarden.net/wiki/Damage#Generation_V_onward"""
