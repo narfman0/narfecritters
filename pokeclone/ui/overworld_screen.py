@@ -9,6 +9,7 @@ from pokeclone.ui.screen import Screen, ScreenManager
 from pokeclone.ui.settings import TILE_SIZE, WINDOW_SIZE
 
 LOGGER = logging.getLogger(__name__)
+TILE_VIEW_SPAN = 16  # how many tiles away shall we paint
 
 
 class OverworldScreen(Screen):
@@ -29,7 +30,7 @@ class OverworldScreen(Screen):
         elif (
             pygame.key.get_pressed()[pygame.K_RIGHT]
             or pygame.key.get_pressed()[pygame.K_d]
-        ) and self.world.player.x < WINDOW_SIZE[0]:
+        ) and self.world.player.x < self.tmxdata.width * TILE_SIZE:
             self.world.move(dt * MOVE_SPEED, right=True)
         if (
             pygame.key.get_pressed()[pygame.K_UP]
@@ -39,7 +40,7 @@ class OverworldScreen(Screen):
         elif (
             pygame.key.get_pressed()[pygame.K_DOWN]
             or pygame.key.get_pressed()[pygame.K_s]
-        ) and self.world.player.y < WINDOW_SIZE[1]:
+        ) and self.world.player.y < self.tmxdata.height * TILE_SIZE:
             self.world.move(dt * MOVE_SPEED, down=True)
         if self.world.encounter:
             # an encounter has been generated!
@@ -47,22 +48,39 @@ class OverworldScreen(Screen):
 
     def draw(self, surface: pygame.Surface):
         surface.blit(self.background, (0, 0))
+        self.draw_terrain(surface)
+        self.draw_player(surface)
+
+    def draw_terrain(self, surface):
+        px = self.world.player.x
+        py = self.world.player.y
+        tile_x = int(px // TILE_SIZE)
+        tile_y = int(py // TILE_SIZE)
+        tile_x_begin = max(0, tile_x - TILE_VIEW_SPAN)
+        tile_x_end = min(tile_x + TILE_VIEW_SPAN, self.tmxdata.width)
+        tile_y_begin = max(0, tile_y - TILE_VIEW_SPAN)
+        tile_y_end = min(tile_y + TILE_VIEW_SPAN, self.tmxdata.height)
         for layer in [0, 1]:
-            for x in range(0, 16):
-                for y in range(0, 16):
+            for x in range(tile_x_begin, tile_x_end):
+                for y in range(tile_y_begin, tile_y_end):
                     image = self.tmxdata.get_tile_image(x, y, layer)
                     if image:
-                        surface.blit(image, (x * TILE_SIZE, y * TILE_SIZE))
-        self.draw_overworld(
-            surface, self.player_image, self.world.player.x, self.world.player.y
-        )
+                        surface.blit(
+                            image,
+                            (
+                                WINDOW_SIZE[0] // 2 + x * TILE_SIZE - px,
+                                WINDOW_SIZE[1] // 2 + y * TILE_SIZE - py,
+                            ),
+                        )
 
-    @classmethod
-    def draw_overworld(cls, surface: pygame.Surface, image, x, y):
-        """Converts world coordinates to screen coordinates"""
-        if image is None:
-            return
-        surface.blit(image, (x - image.get_width() / 2, y - image.get_height() / 2))
+    def draw_player(self, surface):
+        surface.blit(
+            self.player_image,
+            (
+                WINDOW_SIZE[0] // 2 - self.player_image.get_width() // 2,
+                WINDOW_SIZE[1] // 2 - self.player_image.get_height() // 2,
+            ),
+        )
 
     def load_player_image(self):
         image = pygame.image.load(

@@ -2,6 +2,9 @@ import logging
 import math
 from dataclasses import dataclass
 from random import Random
+
+import pytmx
+
 from pokeclone.ui.settings import TILE_SIZE
 
 LOGGER = logging.getLogger(__name__)
@@ -9,6 +12,7 @@ LOGGER = logging.getLogger(__name__)
 
 from pokeclone.db.models import *
 
+ENCOUNTER_PROBABILITY = 0.01
 MOVE_SPEED = 200
 TYPES = Types.load()  # this is a trick for performance and usability in tests, refactor
 
@@ -36,7 +40,7 @@ class World:
         elif down:
             self.player.y += distance
 
-        if self.random.random() < 0.01:
+        if self.random.random() < ENCOUNTER_PROBABILITY:
             self.encounter = Encounter(
                 enemy=self.pokedex.create(
                     self.random,
