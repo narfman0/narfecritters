@@ -4,7 +4,8 @@ import pygame
 from pygame_gui import UI_BUTTON_PRESSED
 from pygame_gui.elements import UIButton
 
-from pokeclone.ui.overworld_screen import OverworldScreen
+from pokeclone.db.models import Area
+from pokeclone.ui.area_screen import AreaScreen
 from pokeclone.ui.screen import Screen, ScreenManager
 from pokeclone.ui.settings import WINDOW_SIZE
 from pokeclone.world import World
@@ -57,7 +58,11 @@ class StartScreen(Screen):
                 self.world.player.pokemon.append(pokemon)
                 self.screen_manager.pop()
                 self.screen_manager.push(
-                    OverworldScreen(self.screen_manager, self.world)
+                    AreaScreen(
+                        self.screen_manager,
+                        self.world,
+                        Area.OVERWORLD,
+                    )
                 )
                 self.kill()
 

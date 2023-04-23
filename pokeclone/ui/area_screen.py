@@ -3,6 +3,7 @@ import logging
 import pygame
 import pytmx
 
+from pokeclone.db.models import Area
 from pokeclone.world import MOVE_SPEED, World
 from pokeclone.ui.battle_screen import BattleScreen
 from pokeclone.ui.screen import Screen, ScreenManager
@@ -12,39 +13,49 @@ LOGGER = logging.getLogger(__name__)
 TILE_VIEW_SPAN = 16  # how many tiles away shall we paint
 
 
-class OverworldScreen(Screen):
-    def __init__(self, screen_manager: ScreenManager, world: World):
+class AreaScreen(Screen):
+    def __init__(self, screen_manager: ScreenManager, world: World, area: Area):
         super().__init__()
         self.screen_manager = screen_manager
         self.world = world
         self.load_player_image()
-        self.tmxdata = pytmx.load_pygame("data/tiled/overworld.tmx")
+        self.tmxdata = pytmx.load_pygame(f"data/tiled/{area.name.lower()}.tmx")
+        self.world.area = area
         self.world.tmxdata = self.tmxdata
 
     def update(self, dt: float):
+        move_kwargs = {}
         if (
             pygame.key.get_pressed()[pygame.K_LEFT]
             or pygame.key.get_pressed()[pygame.K_a]
-        ) and self.world.player.x > 0:
-            self.world.move(dt * MOVE_SPEED, left=True)
+        ):
+            move_kwargs["left"] = True
         elif (
             pygame.key.get_pressed()[pygame.K_RIGHT]
             or pygame.key.get_pressed()[pygame.K_d]
-        ) and self.world.player.x < self.tmxdata.width * TILE_SIZE:
-            self.world.move(dt * MOVE_SPEED, right=True)
+        ):
+            move_kwargs["right"] = True
         if (
             pygame.key.get_pressed()[pygame.K_UP]
             or pygame.key.get_pressed()[pygame.K_w]
-        ) and self.world.player.y > 0:
-            self.world.move(dt * MOVE_SPEED, up=True)
+        ):
+            move_kwargs["up"] = True
         elif (
             pygame.key.get_pressed()[pygame.K_DOWN]
             or pygame.key.get_pressed()[pygame.K_s]
-        ) and self.world.player.y < self.tmxdata.height * TILE_SIZE:
-            self.world.move(dt * MOVE_SPEED, down=True)
-        if self.world.encounter:
-            # an encounter has been generated!
-            self.screen_manager.push(BattleScreen(self.screen_manager, self.world))
+        ):
+            move_kwargs["down"] = True
+        if move_kwargs:
+            move_result = self.world.move(dt * MOVE_SPEED, **move_kwargs)
+            if move_result.encounter:
+                self.screen_manager.push(BattleScreen(self.screen_manager, self.world))
+            if move_result.area_change:
+                self.screen_manager.pop()
+                screen = AreaScreen(
+                    self.screen_manager, self.world, move_result.area_change
+                )
+                self.screen_manager.push(screen)
+                self.kill()
 
     def draw(self, surface: pygame.Surface):
         surface.blit(self.background, (0, 0))

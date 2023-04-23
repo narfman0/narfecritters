@@ -1,10 +1,16 @@
 import copy
+from enum import Enum
 from typing import Optional
 from random import Random
 from functools import lru_cache
 
 from dataclasses import dataclass, field
 from dataclass_wizard import YAMLWizard
+
+
+class Area(Enum):
+    OVERWORLD = 1
+    POKECENTER = 2
 
 
 @dataclass

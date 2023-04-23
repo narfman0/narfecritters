@@ -6,12 +6,9 @@ from random import Random
 import pytmx
 
 from pokeclone.ui.settings import TILE_SIZE
-
-LOGGER = logging.getLogger(__name__)
-
-
 from pokeclone.db.models import *
 
+LOGGER = logging.getLogger(__name__)
 ENCOUNTER_PROBABILITY = 0.01
 MOVE_SPEED = 200
 TYPES = Types.load()  # this is a trick for performance and usability in tests, refactor
@@ -22,6 +19,14 @@ class Encounter:
     enemy: Pokemon
 
 
+@dataclass
+class MoveResult:
+    encounter: bool = False
+    area_change: Area = None
+    collision: bool = False
+    moved: bool = False
+
+
 class World:
     def __init__(self, pokedex=None, random=None):
         self.pokedex = pokedex if pokedex else Pokedex.load()
@@ -29,6 +34,7 @@ class World:
         self.random = random if random else Random()
         self.player = NPC(x=TILE_SIZE * 10, y=TILE_SIZE * 10)
         self.encounter = None
+        self.area: Optional[Area] = None
         self.tmxdata: Optional[pytmx.TiledMap] = None
 
     def move(self, distance: int, up=False, down=False, left=False, right=False):
@@ -42,29 +48,57 @@ class World:
             self.player.y -= distance
         elif down:
             self.player.y += distance
-        collision_detected = self.detect_and_handle_collisions(orig_x, orig_y)
 
-        if not collision_detected and self.random.random() < ENCOUNTER_PROBABILITY:
-            self.encounter = Encounter(
-                enemy=self.pokedex.create(
-                    self.random,
-                    name=self.random.choice(
-                        ["charmander", "bulbasaur", "squirtle", "eevee", "pikachu"]
-                    ),
-                    level=round(self.random.random() * 3 + 1),
+        collision_detected = self.detect_and_handle_collisions()
+        if collision_detected:
+            self.player.x = orig_x
+            self.player.y = orig_y
+            return MoveResult(collision=True)
+
+        destination_area = self.detect_area_door()
+        if destination_area:
+            return MoveResult(area_change=destination_area)
+
+        if self.random.random() < ENCOUNTER_PROBABILITY:
+            self.create_encounter()
+            return MoveResult(encounter=True)
+        return MoveResult(moved=True)
+
+    def detect_area_door(self):
+        px = int(self.player.x // TILE_SIZE)
+        py = int(self.player.y // TILE_SIZE)
+        for layer in range(0, 2):
+            tile_props = self.tmxdata.get_tile_properties(px, py, layer) or {}
+            if tile_props.get("type") == "door":
+                object = self.tmxdata.get_object_by_name(
+                    f"door,{self.area.name.lower()},{px},{py}"
                 )
-            )
+                destination_area = Area[object.properties["Destination"].upper()]
+                dest_x, dest_y = map(int, object.properties["DestinationXY"].split(","))
+                self.player.x = TILE_SIZE * dest_x
+                self.player.y = TILE_SIZE * dest_y
+                return destination_area
+        return None
 
-    def detect_and_handle_collisions(self, orig_x, orig_y):
+    def detect_and_handle_collisions(self):
         px = self.player.x // TILE_SIZE
         py = self.player.y // TILE_SIZE
         for layer in range(0, 2):
-            tile_props = self.tmxdata.get_tile_properties(px, py, layer)
-            if tile_props and tile_props["colliders"]:
-                self.player.x = orig_x
-                self.player.y = orig_y
+            tile_props = self.tmxdata.get_tile_properties(px, py, layer) or {}
+            if tile_props.get("colliders"):
                 return True
         return False
+
+    def create_encounter(self):
+        self.encounter = Encounter(
+            enemy=self.pokedex.create(
+                self.random,
+                name=self.random.choice(
+                    ["charmander", "bulbasaur", "squirtle", "eevee", "pikachu"]
+                ),
+                level=round(self.random.random() * 3 + 1),
+            )
+        )
 
     def end_encounter(self, win):
         if win:

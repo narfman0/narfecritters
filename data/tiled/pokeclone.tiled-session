@@ -9,11 +9,19 @@
     ],
     "fileStates": {
         "overworld.tmx": {
-            "scale": 0.75,
-            "selectedLayer": 1,
+            "scale": 5.5,
+            "selectedLayer": 2,
             "viewCenter": {
-                "x": 477.33333333333337,
-                "y": 319.33333333333337
+                "x": 601.7272727272727,
+                "y": 442.09090909090907
+            }
+        },
+        "pokecenter.tmx": {
+            "scale": 1.484375,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 259.0315789473685,
+                "y": 158.65263157894736
             }
         },
         "tileset_exterior.tsx": {
@@ -27,21 +35,22 @@
     },
     "last.exportedFilePath": "C:/Users/narfm/Desktop",
     "last.imagePath": "C:/Users/narfm/workspace/pokeclone/data/tiled",
-    "map.fixedSize": false,
-    "map.height": 100,
+    "map.fixedSize": true,
+    "map.height": 10,
     "map.lastUsedExportFilter": "CSV files (*.csv)",
     "map.lastUsedFormat": "tmx",
     "map.orientation": 1,
     "map.tileHeight": 32,
     "map.tileWidth": 32,
-    "map.width": 100,
+    "map.width": 15,
     "openFiles": [
     ],
     "project": "pokeclone.tiled-project",
     "recentFiles": [
-        "tileset_exterior.tsx",
+        "tileset_interior.tsx",
+        "pokecenter.tmx",
         "overworld.tmx",
-        "tileset_interior.tsx"
+        "tileset_exterior.tsx"
     ],
     "tileset.embedInMap": false,
     "tileset.lastUsedFormat": "tsx",
