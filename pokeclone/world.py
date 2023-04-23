@@ -29,8 +29,11 @@ class World:
         self.random = random if random else Random()
         self.player = NPC(x=TILE_SIZE * 10, y=TILE_SIZE * 10)
         self.encounter = None
+        self.tmxdata: Optional[pytmx.TiledMap] = None
 
     def move(self, distance: int, up=False, down=False, left=False, right=False):
+        orig_x = self.player.x
+        orig_y = self.player.y
         if left:
             self.player.x -= distance
         elif right:
@@ -39,15 +42,29 @@ class World:
             self.player.y -= distance
         elif down:
             self.player.y += distance
+        collision_detected = self.detect_and_handle_collisions(orig_x, orig_y)
 
-        if self.random.random() < ENCOUNTER_PROBABILITY:
+        if not collision_detected and self.random.random() < ENCOUNTER_PROBABILITY:
             self.encounter = Encounter(
                 enemy=self.pokedex.create(
                     self.random,
-                    name=self.random.choice(["charmander", "bulbasaur"]),
+                    name=self.random.choice(
+                        ["charmander", "bulbasaur", "squirtle", "eevee", "pikachu"]
+                    ),
                     level=round(self.random.random() * 3 + 1),
                 )
             )
+
+    def detect_and_handle_collisions(self, orig_x, orig_y):
+        px = self.player.x // TILE_SIZE
+        py = self.player.y // TILE_SIZE
+        for layer in range(0, 2):
+            tile_props = self.tmxdata.get_tile_properties(px, py, layer)
+            if tile_props and tile_props["colliders"]:
+                self.player.x = orig_x
+                self.player.y = orig_y
+                return True
+        return False
 
     def end_encounter(self, win):
         if win:

@@ -3,17 +3,17 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "overworld.tmx",
+    "activeFile": "",
     "expandedProjectPaths": [
         "."
     ],
     "fileStates": {
         "overworld.tmx": {
-            "scale": 0.33,
+            "scale": 0.75,
             "selectedLayer": 1,
             "viewCenter": {
-                "x": 421.21212121212125,
-                "y": 137.87878787878788
+                "x": 477.33333333333337,
+                "y": 319.33333333333337
             }
         },
         "tileset_exterior.tsx": {
@@ -36,8 +36,6 @@
     "map.tileWidth": 32,
     "map.width": 100,
     "openFiles": [
-        "tileset_exterior.tsx",
-        "overworld.tmx"
     ],
     "project": "pokeclone.tiled-project",
     "recentFiles": [

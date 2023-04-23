@@ -18,8 +18,8 @@ class OverworldScreen(Screen):
         self.screen_manager = screen_manager
         self.world = world
         self.load_player_image()
-        # TODO develop world map. camera follow player, detect collisions, etc
         self.tmxdata = pytmx.load_pygame("data/tiled/overworld.tmx")
+        self.world.tmxdata = self.tmxdata
 
     def update(self, dt: float):
         if (
