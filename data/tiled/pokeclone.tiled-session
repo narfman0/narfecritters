@@ -3,25 +3,31 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "",
+    "activeFile": "pokecenter.tmx",
     "expandedProjectPaths": [
         "."
     ],
     "fileStates": {
         "overworld.tmx": {
+            "expandedObjectLayers": [
+                4
+            ],
             "scale": 5.5,
             "selectedLayer": 2,
             "viewCenter": {
-                "x": 601.7272727272727,
-                "y": 442.09090909090907
+                "x": 590.2727272727273,
+                "y": 432.8181818181818
             }
         },
         "pokecenter.tmx": {
+            "expandedObjectLayers": [
+                3
+            ],
             "scale": 1.484375,
-            "selectedLayer": 0,
+            "selectedLayer": 2,
             "viewCenter": {
                 "x": 259.0315789473685,
-                "y": 158.65263157894736
+                "y": 157.97894736842105
             }
         },
         "tileset_exterior.tsx": {
@@ -44,13 +50,17 @@
     "map.tileWidth": 32,
     "map.width": 15,
     "openFiles": [
+        "overworld.tmx",
+        "pokecenter.tmx",
+        "tileset_interior.tsx",
+        "tileset_exterior.tsx"
     ],
     "project": "pokeclone.tiled-project",
     "recentFiles": [
-        "tileset_interior.tsx",
-        "pokecenter.tmx",
         "overworld.tmx",
-        "tileset_exterior.tsx"
+        "tileset_exterior.tsx",
+        "tileset_interior.tsx",
+        "pokecenter.tmx"
     ],
     "tileset.embedInMap": false,
     "tileset.lastUsedFormat": "tsx",

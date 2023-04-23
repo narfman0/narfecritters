@@ -55,7 +55,7 @@ class World:
             self.player.y = orig_y
             return MoveResult(collision=True)
 
-        destination_area = self.detect_area_door()
+        destination_area = self.detect_area_transition()
         if destination_area:
             return MoveResult(area_change=destination_area)
 
@@ -64,17 +64,22 @@ class World:
             return MoveResult(encounter=True)
         return MoveResult(moved=True)
 
-    def detect_area_door(self):
+    def detect_area_transition(self):
         px = int(self.player.x // TILE_SIZE)
         py = int(self.player.y // TILE_SIZE)
         for layer in range(0, 2):
             tile_props = self.tmxdata.get_tile_properties(px, py, layer) or {}
-            if tile_props.get("type") == "door":
+            if tile_props.get("type") == "heal":
+                for pokemon in self.player.pokemon:
+                    pokemon.current_hp = pokemon.max_hp
+                LOGGER.info("All pokemon healed!")
+            if tile_props.get("type") == "transition":
                 object = self.tmxdata.get_object_by_name(
-                    f"door,{self.area.name.lower()},{px},{py}"
+                    f"transition,{self.area.name.lower()},{px},{py}"
                 )
                 destination_area = Area[object.properties["Destination"].upper()]
                 dest_x, dest_y = map(int, object.properties["DestinationXY"].split(","))
+                LOGGER.info(f"Transitioning to {destination_area.name.lower()}")
                 self.player.x = TILE_SIZE * dest_x
                 self.player.y = TILE_SIZE * dest_y
                 return destination_area
@@ -104,8 +109,6 @@ class World:
         if win:
             self.grant_experience()
         self.encounter = None
-        # TODO do not heal after each battle
-        self.active_pokemon.current_hp = self.active_pokemon.max_hp
 
     def grant_experience(self):
         # xp gain formula described: https://bulbapedia.bulbagarden.net/wiki/Experience

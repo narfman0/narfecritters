@@ -50,10 +50,10 @@
 </data>
  </layer>
  <objectgroup id="4" name="objects">
-  <object id="1" name="door,overworld,18,13" type="areaPortal" x="590.667" y="433.333">
+  <object id="1" name="transition,overworld,18,13" type="areaPortal" x="590.667" y="433.333">
    <properties>
     <property name="Destination" value="pokecenter"/>
-    <property name="DestinationXY" value="6,6"/>
+    <property name="DestinationXY" value="7,8"/>
    </properties>
   </object>
  </objectgroup>

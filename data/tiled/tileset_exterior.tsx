@@ -181,11 +181,7 @@
    <object id="1" x="0.727273" y="0.727273" width="30.3636" height="27.2727"/>
   </objectgroup>
  </tile>
- <tile id="3995" type="door">
-  <properties>
-   <property name="Destination" value="pokecenter"/>
-  </properties>
- </tile>
+ <tile id="3995" type="transition"/>
  <tile id="3996">
   <objectgroup draworder="index" id="2">
    <object id="1" x="0.363636" y="0.363636" width="31.6364" height="27.0909"/>
