@@ -2,7 +2,7 @@ from random import Random
 import unittest
 
 from pokeclone.db.models import *
-from pokeclone.world import Encounter, World
+from pokeclone.game.world import Encounter, World
 
 
 class TestPokedex(unittest.TestCase):

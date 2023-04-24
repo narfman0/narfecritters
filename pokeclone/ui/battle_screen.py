@@ -6,7 +6,7 @@ from pygame_gui.elements import UIButton
 
 from pokeclone.ui.screen import Screen, ScreenManager
 from pokeclone.ui.settings import WINDOW_SIZE
-from pokeclone.world import World
+from pokeclone.game.world import World
 
 
 LOGGER = logging.getLogger(__name__)

@@ -4,7 +4,7 @@ import pygame
 import pytmx
 
 from pokeclone.db.models import Area
-from pokeclone.world import MOVE_SPEED, World
+from pokeclone.game.world import MOVE_SPEED, World
 from pokeclone.ui.battle_screen import BattleScreen
 from pokeclone.ui.screen import Screen, ScreenManager
 from pokeclone.ui.settings import TILE_SIZE, WINDOW_SIZE
