@@ -1,6 +1,6 @@
 import unittest
 
-from pokeclone import logging
+from pokeclone.util import logging
 
 
 class TestLogging(unittest.TestCase):

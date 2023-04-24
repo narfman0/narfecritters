@@ -3,7 +3,7 @@ import json
 import os
 
 from pokeclone.db.models import *
-from pokeclone.logging import initialize_logging
+from pokeclone.util.logging import initialize_logging
 
 LOGGER = logging.getLogger(__name__)
 

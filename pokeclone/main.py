@@ -3,7 +3,7 @@ import logging
 import pygame
 from pygame_gui import UIManager, UI_BUTTON_PRESSED
 
-from pokeclone.logging import initialize_logging
+from pokeclone.util.logging import initialize_logging
 from pokeclone.ui.start_screen import StartScreen
 from pokeclone.ui.screen import ScreenManager
 from pokeclone.ui.settings import WINDOW_SIZE
