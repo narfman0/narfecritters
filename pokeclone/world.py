@@ -80,8 +80,8 @@ class World:
                 destination_area = Area[object.properties["Destination"].upper()]
                 dest_x, dest_y = map(int, object.properties["DestinationXY"].split(","))
                 LOGGER.info(f"Transitioning to {destination_area.name.lower()}")
-                self.player.x = TILE_SIZE * dest_x
-                self.player.y = TILE_SIZE * dest_y
+                self.player.x = TILE_SIZE * dest_x + TILE_SIZE // 2
+                self.player.y = TILE_SIZE * dest_y + TILE_SIZE // 2
                 return destination_area
         return None
 
