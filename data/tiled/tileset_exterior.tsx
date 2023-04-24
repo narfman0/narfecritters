@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <tileset version="1.10" tiledversion="1.10.1" name="tileset_exterior" tilewidth="32" tileheight="32" tilecount="10376" columns="8">
  <image source="tileset_exterior.png" width="256" height="41504"/>
+ <tile id="47" type="tallgrass"/>
+ <tile id="54" type="tallgrass"/>
+ <tile id="55" type="tallgrass"/>
+ <tile id="62" type="tallgrass"/>
+ <tile id="63" type="tallgrass"/>
+ <tile id="70" type="tallgrass"/>
+ <tile id="71" type="tallgrass"/>
  <tile id="320">
   <objectgroup draworder="index" id="2">
    <object id="1" x="1.27273" y="1.27273" width="29.6364" height="29.6364"/>
@@ -21,6 +28,7 @@
    <object id="1" x="0.727273" y="0.727273" width="14.7273" height="30.5455"/>
   </objectgroup>
  </tile>
+ <tile id="329" type="water"/>
  <tile id="330">
   <objectgroup draworder="index" id="2">
    <object id="1" x="16.5455" y="0.363636" width="14.9091" height="30.3636"/>

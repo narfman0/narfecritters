@@ -49,8 +49,7 @@ class World:
         elif down:
             self.player.y += distance
 
-        collision_detected = self.detect_and_handle_collisions()
-        if collision_detected:
+        if self.detect_and_handle_collisions():
             self.player.x = orig_x
             self.player.y = orig_y
             return MoveResult(collision=True)
@@ -59,10 +58,35 @@ class World:
         if destination_area:
             return MoveResult(area_change=destination_area)
 
-        if self.random.random() < ENCOUNTER_PROBABILITY:
-            self.create_encounter()
+        if self.detect_and_handle_random_encounter():
             return MoveResult(encounter=True)
         return MoveResult(moved=True)
+
+    def detect_and_handle_random_encounter(self):
+        px = int(self.player.x // TILE_SIZE)
+        py = int(self.player.y // TILE_SIZE)
+        for layer in range(0, 2):
+            tile_props = self.tmxdata.get_tile_properties(px, py, layer) or {}
+            if (
+                tile_props.get("type") == "tallgrass"
+                and self.random.random() < ENCOUNTER_PROBABILITY
+            ):
+                self.encounter = Encounter(
+                    enemy=self.pokedex.create(
+                        self.random,
+                        name=self.random.choice(
+                            [
+                                "charmander",
+                                "bulbasaur",
+                                "squirtle",
+                                "eevee",
+                                "pikachu",
+                            ]
+                        ),
+                        level=round(self.random.random() * 3 + 1),
+                    )
+                )
+                return True
 
     def detect_area_transition(self):
         px = int(self.player.x // TILE_SIZE)
@@ -93,17 +117,6 @@ class World:
             if tile_props.get("colliders"):
                 return True
         return False
-
-    def create_encounter(self):
-        self.encounter = Encounter(
-            enemy=self.pokedex.create(
-                self.random,
-                name=self.random.choice(
-                    ["charmander", "bulbasaur", "squirtle", "eevee", "pikachu"]
-                ),
-                level=round(self.random.random() * 3 + 1),
-            )
-        )
 
     def end_encounter(self, win):
         if win:
