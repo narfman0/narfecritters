@@ -25,7 +25,7 @@ def main():
     is_running = True
 
     screen_manager = ScreenManager()
-    screen_manager.push(StartScreen(screen_manager))
+    screen_manager.push(StartScreen(manager, screen_manager))
 
     while is_running:
         dt = clock.tick(60) / 1000.0

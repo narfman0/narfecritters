@@ -1,7 +1,7 @@
 import logging
 
 import pygame
-from pygame_gui import UI_BUTTON_PRESSED
+from pygame_gui import UI_BUTTON_PRESSED, UIManager
 from pygame_gui.elements import UIButton
 
 from pokeclone.ui.screen import Screen, ScreenManager
@@ -13,8 +13,10 @@ LOGGER = logging.getLogger(__name__)
 
 
 class BattleScreen(Screen):
-    def __init__(self, screen_manager: ScreenManager, world: World):
-        super().__init__()
+    def __init__(
+        self, ui_manager: UIManager, screen_manager: ScreenManager, world: World
+    ):
+        super().__init__(ui_manager)
         self.screen_manager = screen_manager
         self.world = world
         self.fight_buttons = []

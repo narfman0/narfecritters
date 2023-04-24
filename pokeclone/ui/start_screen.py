@@ -1,7 +1,7 @@
 import logging
 
 import pygame
-from pygame_gui import UI_BUTTON_PRESSED
+from pygame_gui import UI_BUTTON_PRESSED, UIManager
 from pygame_gui.elements import UIButton
 
 from pokeclone.db.models import Area
@@ -17,8 +17,8 @@ GREETING_TEXT_2 = "Please select your pokemon from the below list to get started
 
 
 class StartScreen(Screen):
-    def __init__(self, screen_manager: ScreenManager):
-        super().__init__()
+    def __init__(self, ui_manager: UIManager, screen_manager: ScreenManager):
+        super().__init__(ui_manager)
         self.screen_manager = screen_manager
         self.world = World()
 
@@ -59,6 +59,7 @@ class StartScreen(Screen):
                 self.screen_manager.pop()
                 self.screen_manager.push(
                     AreaScreen(
+                        self.ui_manager,
                         self.screen_manager,
                         self.world,
                         Area.OVERWORLD,

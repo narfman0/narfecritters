@@ -2,6 +2,7 @@ import logging
 
 import pygame
 import pytmx
+from pygame_gui import UIManager
 
 from pokeclone.db.models import Area
 from pokeclone.game.world import MOVE_SPEED, World
@@ -14,8 +15,14 @@ TILE_VIEW_SPAN = 16  # how many tiles away shall we paint
 
 
 class AreaScreen(Screen):
-    def __init__(self, screen_manager: ScreenManager, world: World, area: Area):
-        super().__init__()
+    def __init__(
+        self,
+        ui_manager: UIManager,
+        screen_manager: ScreenManager,
+        world: World,
+        area: Area,
+    ):
+        super().__init__(ui_manager)
         self.screen_manager = screen_manager
         self.world = world
         self.load_player_image()
@@ -48,11 +55,16 @@ class AreaScreen(Screen):
         if move_kwargs:
             move_result = self.world.move(dt * MOVE_SPEED, **move_kwargs)
             if move_result.encounter:
-                self.screen_manager.push(BattleScreen(self.screen_manager, self.world))
+                self.screen_manager.push(
+                    BattleScreen(self.ui_manager, self.screen_manager, self.world)
+                )
             if move_result.area_change:
                 self.screen_manager.pop()
                 screen = AreaScreen(
-                    self.screen_manager, self.world, move_result.area_change
+                    self.ui_manager,
+                    self.screen_manager,
+                    self.world,
+                    move_result.area_change,
                 )
                 self.screen_manager.push(screen)
                 self.kill()

@@ -1,11 +1,13 @@
 from pygame.event import Event
 from pygame.surface import Surface
+from pygame_gui import UIManager
 
 from pokeclone.ui.settings import WINDOW_SIZE
 
 
 class Screen:
-    def __init__(self):
+    def __init__(self, ui_manager: UIManager):
+        self.ui_manager = ui_manager
         self.background = Surface(WINDOW_SIZE)
         self.background.fill("gray")
         self.to_kill = []
