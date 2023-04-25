@@ -10,8 +10,15 @@ from pokeclone.db.models import *
 
 LOGGER = logging.getLogger(__name__)
 ENCOUNTER_PROBABILITY = 0.01
-MOVE_SPEED = 200
+MOVE_SPEED = 150
 TYPES = Types.load()  # this is a trick for performance and usability in tests, refactor
+
+
+class Direction(Enum):
+    UP = 1
+    DOWN = 2
+    LEFT = 3
+    RIGHT = 4
 
 
 @dataclass
@@ -27,6 +34,13 @@ class MoveResult:
     moved: bool = False
 
 
+@dataclass
+class MoveAction:
+    direction: Direction
+    distance: int
+    running: bool
+
+
 class World:
     def __init__(self, pokedex=None, random=None):
         self.pokedex = pokedex if pokedex else Pokedex.load()
@@ -37,9 +51,19 @@ class World:
         self.area: Optional[Area] = None
         self.tmxdata: Optional[pytmx.TiledMap] = None
 
-    def move(self, distance: int, up=False, down=False, left=False, right=False):
+    def move(
+        self,
+        distance: int,
+        up=False,
+        down=False,
+        left=False,
+        right=False,
+        running=False,
+    ):
         orig_x = self.player.x
         orig_y = self.player.y
+        if running:
+            distance *= 2
         if left:
             self.player.x -= distance
         elif right:

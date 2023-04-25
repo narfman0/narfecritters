@@ -53,7 +53,13 @@ class AreaScreen(Screen):
         ):
             move_kwargs["down"] = True
         if move_kwargs:
-            move_result = self.world.move(dt * MOVE_SPEED, **move_kwargs)
+            running = (
+                pygame.key.get_pressed()[pygame.K_LSHIFT]
+                or pygame.key.get_pressed()[pygame.K_RSHIFT]
+            )
+            move_result = self.world.move(
+                dt * MOVE_SPEED, running=running, **move_kwargs
+            )
             if move_result.encounter:
                 self.screen_manager.push(
                     BattleScreen(self.ui_manager, self.screen_manager, self.world)
