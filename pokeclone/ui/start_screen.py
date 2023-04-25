@@ -24,8 +24,8 @@ class StartScreen(Screen):
 
         self.to_kill.extend(
             [
-                UIButton((0, 0), GREETING_TEXT_1),
-                UIButton((0, 32), GREETING_TEXT_2),
+                UIButton((0, 0), GREETING_TEXT_1, manager=self.ui_manager),
+                UIButton((0, 32), GREETING_TEXT_2, manager=self.ui_manager),
             ]
         )
 
@@ -42,6 +42,7 @@ class StartScreen(Screen):
                         y,
                     ),
                     candidate_starter_pokemon.name,
+                    manager=self.ui_manager,
                 )
             )
             y += 32

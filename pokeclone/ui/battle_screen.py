@@ -26,7 +26,11 @@ class BattleScreen(Screen):
                 LOGGER.warn(f"Pokemon has move than 4 moves!")
                 continue
             self.fight_buttons.append(
-                UIButton((WINDOW_SIZE[0] - 128, y), pokemon_move.name)
+                UIButton(
+                    (WINDOW_SIZE[0] - 128, y),
+                    pokemon_move.name,
+                    manager=self.ui_manager,
+                )
             )
             y += 32
         self.to_kill.extend(self.fight_buttons)
