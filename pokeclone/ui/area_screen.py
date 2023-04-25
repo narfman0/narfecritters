@@ -5,7 +5,7 @@ import pytmx
 from pygame_gui import UIManager
 
 from pokeclone.db.models import Area
-from pokeclone.game.world import MOVE_SPEED, World
+from pokeclone.game.world import World
 from pokeclone.ui.battle_screen import BattleScreen
 from pokeclone.ui.screen import Screen, ScreenManager
 from pokeclone.ui.settings import TILE_SIZE, WINDOW_SIZE
@@ -31,6 +31,25 @@ class AreaScreen(Screen):
         self.world.tmxdata = self.tmxdata
 
     def update(self, dt: float):
+        if not self.world.move_action:
+            self.handle_move()
+        result = self.world.update(dt)
+        if result.encounter:
+            self.screen_manager.push(
+                BattleScreen(self.ui_manager, self.screen_manager, self.world)
+            )
+        if result.area_change:
+            self.screen_manager.pop()
+            screen = AreaScreen(
+                self.ui_manager,
+                self.screen_manager,
+                self.world,
+                result.area_change,
+            )
+            self.screen_manager.push(screen)
+            self.kill()
+
+    def handle_move(self):
         move_kwargs = {}
         if (
             pygame.key.get_pressed()[pygame.K_LEFT]
@@ -57,23 +76,7 @@ class AreaScreen(Screen):
                 pygame.key.get_pressed()[pygame.K_LSHIFT]
                 or pygame.key.get_pressed()[pygame.K_RSHIFT]
             )
-            move_result = self.world.move(
-                dt * MOVE_SPEED, running=running, **move_kwargs
-            )
-            if move_result.encounter:
-                self.screen_manager.push(
-                    BattleScreen(self.ui_manager, self.screen_manager, self.world)
-                )
-            if move_result.area_change:
-                self.screen_manager.pop()
-                screen = AreaScreen(
-                    self.ui_manager,
-                    self.screen_manager,
-                    self.world,
-                    move_result.area_change,
-                )
-                self.screen_manager.push(screen)
-                self.kill()
+            self.world.move(running=running, **move_kwargs)
 
     def draw(self, surface: pygame.Surface):
         surface.blit(self.background, (0, 0))

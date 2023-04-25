@@ -3,22 +3,16 @@ import math
 from dataclasses import dataclass
 from random import Random
 
+from pygame.math import Vector2
 import pytmx
 
 from pokeclone.ui.settings import TILE_SIZE
 from pokeclone.db.models import *
 
 LOGGER = logging.getLogger(__name__)
-ENCOUNTER_PROBABILITY = 0.01
-MOVE_SPEED = 150
+ENCOUNTER_PROBABILITY = 0.1
+MOVE_SPEED = 200
 TYPES = Types.load()  # this is a trick for performance and usability in tests, refactor
-
-
-class Direction(Enum):
-    UP = 1
-    DOWN = 2
-    LEFT = 3
-    RIGHT = 4
 
 
 @dataclass
@@ -30,14 +24,12 @@ class Encounter:
 class MoveResult:
     encounter: bool = False
     area_change: Area = None
-    collision: bool = False
-    moved: bool = False
 
 
 @dataclass
 class MoveAction:
-    direction: Direction
-    distance: int
+    target_x: int
+    target_y: int
     running: bool
 
 
@@ -46,45 +38,63 @@ class World:
         self.pokedex = pokedex if pokedex else Pokedex.load()
         self.moves = Moves.load()
         self.random = random if random else Random()
-        self.player = NPC(x=TILE_SIZE * 10, y=TILE_SIZE * 10)
+        self.player = NPC(
+            x=TILE_SIZE * 10 + TILE_SIZE // 2, y=TILE_SIZE * 10 + TILE_SIZE // 2
+        )
         self.encounter = None
         self.area: Optional[Area] = None
         self.tmxdata: Optional[pytmx.TiledMap] = None
+        self.move_action = None
+
+    def update(self, dt: float):
+        if self.move_action:
+            direction = Vector2(
+                self.move_action.target_x - self.player.x,
+                self.move_action.target_y - self.player.y,
+            )
+            velocity = direction.normalize() * 2
+            if self.move_action.running:
+                velocity *= 2
+            self.player.x += int(velocity.x)
+            self.player.y += int(velocity.y)
+            if (
+                abs(self.player.x - self.move_action.target_x) == 0
+                and abs(self.player.y - self.move_action.target_y) == 0
+            ):
+                self.move_action = None
+                destination_area = self.detect_area_transition()
+                if destination_area:
+                    return MoveResult(area_change=destination_area)
+                if self.detect_and_handle_random_encounter():
+                    return MoveResult(encounter=True)
+        return MoveResult()
 
     def move(
         self,
-        distance: int,
         up=False,
         down=False,
         left=False,
         right=False,
         running=False,
     ):
-        orig_x = self.player.x
-        orig_y = self.player.y
-        if running:
-            distance *= 2
+        if self.move_action:
+            return
+        target_x = self.player.x
+        target_y = self.player.y
         if left:
-            self.player.x -= distance
+            target_x -= TILE_SIZE
         elif right:
-            self.player.x += distance
+            target_x += TILE_SIZE
         if up:
-            self.player.y -= distance
+            target_y -= TILE_SIZE
         elif down:
-            self.player.y += distance
+            target_y += TILE_SIZE
 
-        if self.detect_and_handle_collisions():
-            self.player.x = orig_x
-            self.player.y = orig_y
-            return MoveResult(collision=True)
-
-        destination_area = self.detect_area_transition()
-        if destination_area:
-            return MoveResult(area_change=destination_area)
-
-        if self.detect_and_handle_random_encounter():
-            return MoveResult(encounter=True)
-        return MoveResult(moved=True)
+        if self.detect_and_handle_collisions(target_x, target_y):
+            return
+        self.move_action = MoveAction(
+            running=running, target_x=target_x, target_y=target_y
+        )
 
     def detect_and_handle_random_encounter(self):
         px = int(self.player.x // TILE_SIZE)
@@ -133,9 +143,9 @@ class World:
                 return destination_area
         return None
 
-    def detect_and_handle_collisions(self):
-        px = self.player.x // TILE_SIZE
-        py = self.player.y // TILE_SIZE
+    def detect_and_handle_collisions(self, target_x, target_y):
+        px = target_x // TILE_SIZE
+        py = target_y // TILE_SIZE
         for layer in range(0, 2):
             tile_props = self.tmxdata.get_tile_properties(px, py, layer) or {}
             if tile_props.get("colliders"):
