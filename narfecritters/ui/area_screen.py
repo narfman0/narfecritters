@@ -47,7 +47,6 @@ class AreaScreen(Screen):
                 result.area_change,
             )
             self.screen_manager.push(screen)
-            self.kill()
 
     def handle_move(self):
         move_kwargs = {}

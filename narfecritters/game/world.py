@@ -36,6 +36,12 @@ class MoveAction:
 
 
 @dataclass
+class AttackResult:
+    damage: int
+    type_factor: float
+
+
+@dataclass
 class TurnResult:
     information: list[str]
 
@@ -165,12 +171,12 @@ class World:
                 return True
         return False
 
-    def end_encounter(self, win):
+    def end_encounter(self, win, information: list[str]):
         if win:
-            self.grant_experience()
+            self.grant_experience(information)
         self.encounter = None
 
-    def grant_experience(self):
+    def grant_experience(self, information: list[str]):
         # xp gain formula described: https://bulbapedia.bulbagarden.net/wiki/Experience
         xp_gain_level_scalar_numerator = int(
             round(math.sqrt(2 * self.enemy.level + 10))
@@ -191,9 +197,10 @@ class World:
         self.active_critters.experience += xp_gain
         LOGGER.info(f"{self.active_critters.name} gained {xp_gain} experience!")
         if current_level < self.active_critters.level:
-            LOGGER.info(
+            information.append(
                 f"{self.active_critters.name} leveled up to {self.active_critters.level}"
             )
+            LOGGER.info(information[-1])
 
     def turn(self, move_name) -> TurnResult:
         information: list[str] = []
@@ -211,30 +218,41 @@ class World:
 
     def turn_player(self, move_name, information: list[str]):
         move = self.moves.find_by_name(move_name)
-        enemy_damage = self.attack(self.active_critters, self.enemy, move)
+        attack_result = self.attack(self.active_critters, self.enemy, move)
+        enemy_damage = attack_result.damage
         self.enemy.take_damage(enemy_damage)
+
+        information_suffix = self.get_type_effectiveness_response_suffix(
+            attack_result.type_factor
+        )
         information.append(
-            f"Enemy {self.enemy.name} took {enemy_damage} dmg from {move_name}"
+            f"Enemy {self.enemy.name} took {enemy_damage} dmg from {move_name}."
+            + information_suffix
         )
         LOGGER.info(information[-1])
         if self.enemy.current_hp <= 0:
-            information.append(f"Enemy {self.active_critters.name} fainted!")
+            information.append(f"Enemy {self.enemy.name} fainted!")
             LOGGER.info(information[-1])
-            self.end_encounter(True)
+            self.end_encounter(True, information)
 
     def turn_enemy(self, information: list[str]):
         enemy_move = self.moves.find_by_id(self.random.choice(self.enemy.moves).id)
-        player_damage = self.attack(self.enemy, self.active_critters, enemy_move)
+        attack_result = self.attack(self.enemy, self.active_critters, enemy_move)
+        player_damage = attack_result.damage
         self.active_critters.take_damage(player_damage)
 
+        information_suffix = self.get_type_effectiveness_response_suffix(
+            attack_result.type_factor
+        )
         information.append(
-            f"{self.active_critters.name} took {player_damage} dmg from {enemy_move.name}"
+            f"{self.active_critters.name} took {player_damage} dmg from {enemy_move.name}. "
+            + information_suffix
         )
         LOGGER.info(information[-1])
         if self.active_critters.current_hp <= 0:
             information.append(f"Your {self.active_critters.name} fainted!")
             LOGGER.info(information[-1])
-            self.end_encounter(False)
+            self.end_encounter(False, information)
 
     def attack(self, attacker: Pokemon, defender: Pokemon, move: Move):
         """Follows gen5 dmg formula as defined: https://bulbapedia.bulbagarden.net/wiki/Damage#Generation_V_onward"""
@@ -263,21 +281,33 @@ class World:
                 type_factor /= 2
             if move.type_id in TYPES.find_by_id(type_id).no_damage_from:
                 type_factor *= 0
-        if type_factor > 1:
-            LOGGER.info(f"{move.name} was super effective!")
-        elif type_factor < 1:
-            LOGGER.info(f"{move.name} was not very effective.")
-        return round(
-            base_damage * critical_hit_scalar * random_factor * stab * type_factor
+        return AttackResult(
+            damage=round(
+                base_damage * critical_hit_scalar * random_factor * stab * type_factor
+            ),
+            type_factor=type_factor,
         )
 
     def set_tile_data(self, tmxdata: pytmx.TiledMap):
         self._tmxdata = tmxdata
         self.area_encounters = []
-        for encounter in tmxdata.properties.get("Encounters", []).split("\n"):
+        encounters_str = tmxdata.properties.get("Encounters")
+        if not encounters_str:
+            return
+        for encounter in encounters_str.split("\n"):
             name, probability = str(encounter).split(",")
             id = self.encyclopedia.name_to_id[name]
             self.area_encounters.append(AreaEncounter(id, float(probability)))
+
+    @classmethod
+    def get_type_effectiveness_response_suffix(cls, type_factor: float):
+        if type_factor == 0:
+            return " It had no effect."
+        elif type_factor < 1:
+            return " It wasn't very effective."
+        elif type_factor > 1:
+            return " It was super effective!"
+        return ""
 
     @property
     def active_critters(self) -> Pokemon:
