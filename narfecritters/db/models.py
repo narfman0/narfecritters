@@ -131,12 +131,12 @@ class Pokemon(YAMLWizard):
 class NPC:
     x: int
     y: int
-    pokemon: list[Pokemon] = field(default_factory=list)
-    active_pokemon_index: int = 0
+    critters: list[Pokemon] = field(default_factory=list)
+    active_critters_index: int = 0
 
     @property
-    def active_pokemon(self):
-        return self.pokemon[self.active_pokemon_index]
+    def active_critters(self):
+        return self.critters[self.active_critters_index]
 
 
 @dataclass
@@ -197,12 +197,12 @@ class Encyclopedia(YAMLWizard):
         return self.find_by_id(self.name_to_id[name])
 
     def create(self, random: Random, name=None, id=None, level=0) -> Pokemon:
-        pokemon = None
+        critters = None
         if id is not None:
-            pokemon = self.find_by_id(id)
+            critters = self.find_by_id(id)
         elif name is not None:
-            pokemon = self.find_by_name(name)
-        if pokemon is None:
+            critters = self.find_by_name(name)
+        if critters is None:
             raise Exception(f"Pokemon name {name} or id {id} not found")
         instance = copy.copy(self.find_by_name(name))
         instance.evs = Stats()

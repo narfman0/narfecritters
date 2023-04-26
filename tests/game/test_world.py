@@ -24,7 +24,7 @@ class TestWorld(unittest.TestCase):
         charmander = encyclopedia.create(random, name="charmander", level=5)
         bulbasaur = encyclopedia.create(random, name="bulbasaur", level=5)
         world = World(encyclopedia=encyclopedia, random=random)
-        world.player.pokemon.append(charmander)
+        world.player.critters.append(charmander)
         world.encounter = Encounter(bulbasaur)
 
         player_move = world.moves.find_by_id(charmander.moves[0].id)

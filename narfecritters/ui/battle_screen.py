@@ -21,22 +21,22 @@ class BattleScreen(Screen):
         self.world = world
         self.fight_buttons = []
         y = WINDOW_SIZE[1] - 156
-        for pokemon_move in self.world.active_pokemon.moves:
+        for critters_move in self.world.active_critters.moves:
             if len(self.fight_buttons) >= 4:
                 LOGGER.warn(f"Pokemon has move than 4 moves!")
                 continue
             self.fight_buttons.append(
                 UIButton(
                     (WINDOW_SIZE[0] - 128, y),
-                    pokemon_move.name,
+                    critters_move.name,
                     manager=self.ui_manager,
                 )
             )
             y += 32
         self.to_kill.extend(self.fight_buttons)
-        self.enemy_pokemon_image = self.load_scaled_pokemon_image(world.enemy.id, 4)
-        self.self_pokemon_image = self.load_scaled_pokemon_image(
-            world.active_pokemon.id, 5, back=True
+        self.enemy_critters_image = self.load_scaled_critters_image(world.enemy.id, 4)
+        self.self_critters_image = self.load_scaled_critters_image(
+            world.active_critters.id, 5, back=True
         )
         LOGGER.info(
             f"You are fighting a level {self.world.enemy.level} {self.world.enemy.name}"
@@ -54,20 +54,20 @@ class BattleScreen(Screen):
     def draw(self, surface: pygame.Surface):
         surface.blit(self.background, (0, 0))
         surface.blit(
-            self.enemy_pokemon_image,
+            self.enemy_critters_image,
             (
-                WINDOW_SIZE[0] - self.enemy_pokemon_image.get_width(),
+                WINDOW_SIZE[0] - self.enemy_critters_image.get_width(),
                 0,
             ),
         )
-        trainer_pokemon_img_pos = (
+        trainer_critters_img_pos = (
             0,
-            WINDOW_SIZE[1] - self.self_pokemon_image.get_height(),
+            WINDOW_SIZE[1] - self.self_critters_image.get_height(),
         )
-        surface.blit(self.self_pokemon_image, trainer_pokemon_img_pos)
+        surface.blit(self.self_critters_image, trainer_critters_img_pos)
 
     @classmethod
-    def load_scaled_pokemon_image(cls, id, scale, back=False):
+    def load_scaled_critters_image(cls, id, scale, back=False):
         back_str = "back" if back else "front"
         image = pygame.image.load(
             f"data/sprites/critters/{back_str}/{id}.png"

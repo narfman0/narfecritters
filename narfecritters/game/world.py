@@ -128,9 +128,9 @@ class World:
         for layer in range(0, 2):
             tile_props = self.tmxdata.get_tile_properties(px, py, layer) or {}
             if tile_props.get("type") == "heal":
-                for pokemon in self.player.pokemon:
-                    pokemon.current_hp = pokemon.max_hp
-                LOGGER.info("All pokemon healed!")
+                for critters in self.player.critters:
+                    critters.current_hp = critters.max_hp
+                LOGGER.info("Healed!")
             if tile_props.get("type") == "transition":
                 object = self.tmxdata.get_object_by_name(
                     f"transition,{self.area.name.lower()},{px},{py}"
@@ -164,8 +164,8 @@ class World:
             * (2 * self.enemy.level + 10) ** 2
         )
         xp_gain_level_scalar_denominator = int(
-            round(math.sqrt(self.enemy.level + self.active_pokemon.level + 10))
-            * (self.enemy.level + self.active_pokemon.level + 10) ** 2
+            round(math.sqrt(self.enemy.level + self.active_critters.level + 10))
+            * (self.enemy.level + self.active_critters.level + 10) ** 2
         )
         xp_gain = (
             round(
@@ -174,12 +174,12 @@ class World:
             )
             + 1
         )
-        current_level = self.active_pokemon.level
-        self.active_pokemon.experience += xp_gain
-        LOGGER.info(f"{self.active_pokemon.name} gained {xp_gain} experience!")
-        if current_level < self.active_pokemon.level:
+        current_level = self.active_critters.level
+        self.active_critters.experience += xp_gain
+        LOGGER.info(f"{self.active_critters.name} gained {xp_gain} experience!")
+        if current_level < self.active_critters.level:
             LOGGER.info(
-                f"{self.active_pokemon.name} leveled up to {self.active_pokemon.level}"
+                f"{self.active_critters.name} leveled up to {self.active_critters.level}"
             )
 
     def turn(self, move_name):
@@ -189,23 +189,23 @@ class World:
 
     def turn_player(self, move_name):
         move = self.moves.find_by_name(move_name)
-        enemy_damage = self.attack(self.active_pokemon, self.enemy, move)
+        enemy_damage = self.attack(self.active_critters, self.enemy, move)
         self.enemy.take_damage(enemy_damage)
         LOGGER.info(f"Enemy {self.enemy.name} took {enemy_damage} dmg from {move_name}")
         if self.enemy.current_hp <= 0:
-            LOGGER.info(f"Enemy {self.active_pokemon.name} fainted!")
+            LOGGER.info(f"Enemy {self.active_critters.name} fainted!")
             self.end_encounter(True)
 
     def turn_enemy(self):
         enemy_move = self.moves.find_by_id(self.random.choice(self.enemy.moves).id)
-        player_damage = self.attack(self.enemy, self.active_pokemon, enemy_move)
-        self.active_pokemon.take_damage(player_damage)
+        player_damage = self.attack(self.enemy, self.active_critters, enemy_move)
+        self.active_critters.take_damage(player_damage)
 
         LOGGER.info(
-            f"{self.active_pokemon.name} took {player_damage} dmg from {enemy_move.name}"
+            f"{self.active_critters.name} took {player_damage} dmg from {enemy_move.name}"
         )
-        if self.active_pokemon.current_hp <= 0:
-            LOGGER.info(f"Your {self.active_pokemon.name} fainted!")
+        if self.active_critters.current_hp <= 0:
+            LOGGER.info(f"Your {self.active_critters.name} fainted!")
             self.end_encounter(False)
 
     def attack(self, attacker: Pokemon, defender: Pokemon, move: Move):
@@ -244,8 +244,8 @@ class World:
         )
 
     @property
-    def active_pokemon(self) -> Pokemon:
-        return self.player.active_pokemon
+    def active_critters(self) -> Pokemon:
+        return self.player.active_critters
 
     @property
     def enemy(self) -> Pokemon:
