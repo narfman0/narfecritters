@@ -2,6 +2,7 @@ import logging
 import math
 from dataclasses import dataclass
 from random import Random
+from xml.etree import ElementTree
 
 from pygame.math import Vector2
 import pytmx
@@ -33,6 +34,12 @@ class MoveAction:
     running: bool
 
 
+@dataclass
+class AreaEncounter:
+    id: int
+    probability: float
+
+
 class World:
     def __init__(self, encyclopedia=None, random=None):
         self.encyclopedia = encyclopedia if encyclopedia else Encyclopedia.load()
@@ -43,7 +50,8 @@ class World:
         )
         self.encounter = None
         self.area: Optional[Area] = None
-        self.tmxdata: Optional[pytmx.TiledMap] = None
+        self._tmxdata: Optional[pytmx.TiledMap] = None
+        self.area_encounters: list[AreaEncounter] = []
         self.move_action = None
 
     def update(self, dt: float):
@@ -100,23 +108,18 @@ class World:
         px = int(self.player.x // TILE_SIZE)
         py = int(self.player.y // TILE_SIZE)
         for layer in range(0, 2):
-            tile_props = self.tmxdata.get_tile_properties(px, py, layer) or {}
+            tile_props = self._tmxdata.get_tile_properties(px, py, layer) or {}
             if (
                 tile_props.get("type") == "tallgrass"
                 and self.random.random() < ENCOUNTER_PROBABILITY
             ):
+                id = self.random.choice(
+                    [area_encounter.id for area_encounter in self.area_encounters]
+                )
                 self.encounter = Encounter(
                     enemy=self.encyclopedia.create(
                         self.random,
-                        name=self.random.choice(
-                            [
-                                "charmander",
-                                "bulbasaur",
-                                "squirtle",
-                                "eevee",
-                                "pikachu",
-                            ]
-                        ),
+                        id=id,
                         level=round(self.random.random() * 3 + 1),
                     )
                 )
@@ -126,13 +129,13 @@ class World:
         px = int(self.player.x // TILE_SIZE)
         py = int(self.player.y // TILE_SIZE)
         for layer in range(0, 2):
-            tile_props = self.tmxdata.get_tile_properties(px, py, layer) or {}
+            tile_props = self._tmxdata.get_tile_properties(px, py, layer) or {}
             if tile_props.get("type") == "heal":
                 for critters in self.player.critters:
                     critters.current_hp = critters.max_hp
                 LOGGER.info("Healed!")
             if tile_props.get("type") == "transition":
-                object = self.tmxdata.get_object_by_name(
+                object = self._tmxdata.get_object_by_name(
                     f"transition,{self.area.name.lower()},{px},{py}"
                 )
                 destination_area = Area[object.properties["Destination"].upper()]
@@ -147,7 +150,7 @@ class World:
         px = target_x // TILE_SIZE
         py = target_y // TILE_SIZE
         for layer in range(0, 2):
-            tile_props = self.tmxdata.get_tile_properties(px, py, layer) or {}
+            tile_props = self._tmxdata.get_tile_properties(px, py, layer) or {}
             if tile_props.get("colliders"):
                 return True
         return False
@@ -242,6 +245,14 @@ class World:
         return round(
             base_damage * critical_hit_scalar * random_factor * stab * type_factor
         )
+
+    def set_tile_data(self, tmxdata: pytmx.TiledMap):
+        self._tmxdata = tmxdata
+        self.area_encounters = []
+        for encounter in tmxdata.properties.get("Encounters", []).split("\n"):
+            name, probability = str(encounter).split(",")
+            id = self.encyclopedia.name_to_id[name]
+            self.area_encounters.append(AreaEncounter(id, float(probability)))
 
     @property
     def active_critters(self) -> Pokemon:

@@ -28,7 +28,7 @@ class AreaScreen(Screen):
         self.load_player_image()
         self.tmxdata = pytmx.load_pygame(f"data/tiled/{area.name.lower()}.tmx")
         self.world.area = area
-        self.world.tmxdata = self.tmxdata
+        self.world.set_tile_data(self.tmxdata)
 
     def update(self, dt: float):
         if not self.world.move_action:

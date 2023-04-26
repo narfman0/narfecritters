@@ -11,11 +11,11 @@ class TestModels(unittest.TestCase):
     def test_level_up(self):
         random = Random(x=12345)
         encyclopedia = Encyclopedia.load()
-        charmander = encyclopedia.create(random, name="charmander", level=5)
-        self.assertEqual(5, charmander.level)
-        self.assertEqual(10, charmander.attack)
-        self.assertEqual(20, charmander.max_hp)
-        charmander.experience += 92
-        self.assertEqual(6, charmander.level)
-        self.assertEqual(11, charmander.attack)
-        self.assertEqual(22, charmander.max_hp)
+        critter = encyclopedia.create(random, id=4, level=5)
+        self.assertEqual(5, critter.level)
+        self.assertEqual(10, critter.attack)
+        self.assertEqual(20, critter.max_hp)
+        critter.experience += 92
+        self.assertEqual(6, critter.level)
+        self.assertEqual(11, critter.attack)
+        self.assertEqual(22, critter.max_hp)

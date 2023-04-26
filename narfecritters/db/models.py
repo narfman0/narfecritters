@@ -197,14 +197,14 @@ class Encyclopedia(YAMLWizard):
         return self.find_by_id(self.name_to_id[name])
 
     def create(self, random: Random, name=None, id=None, level=0) -> Pokemon:
-        critters = None
-        if id is not None:
-            critters = self.find_by_id(id)
-        elif name is not None:
-            critters = self.find_by_name(name)
-        if critters is None:
+        critter = None
+        if id:
+            critter = self.find_by_id(id)
+        elif name:
+            critter = self.find_by_name(name)
+        if critter is None:
             raise Exception(f"Pokemon name {name} or id {id} not found")
-        instance = copy.copy(self.find_by_name(name))
+        instance = copy.copy(critter)
         instance.evs = Stats()
         instance.ivs = Stats.create_random_ivs(random)
         # only modeling medium-fast xp group
