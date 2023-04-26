@@ -22,14 +22,12 @@ class StartScreen(Screen):
         self.screen_manager = screen_manager
         self.world = World()
 
-        self.to_kill.extend(
-            [
-                UIButton((0, 0), GREETING_TEXT_1, manager=self.ui_manager),
-                UIButton((0, 32), GREETING_TEXT_2, manager=self.ui_manager),
-            ]
-        )
+        self.greeting_elements = [
+            UIButton((0, 0), GREETING_TEXT_1, manager=self.ui_manager),
+            UIButton((0, 32), GREETING_TEXT_2, manager=self.ui_manager),
+        ]
 
-        self.buttons = []
+        self.buttons: list[UIButton] = []
         y = WINDOW_SIZE[1] // 2
         candidate_starters = [
             self.world.encyclopedia.find_by_id(id) for id in [1, 4, 7, 25, 133]
@@ -46,7 +44,6 @@ class StartScreen(Screen):
                 )
             )
             y += 32
-        self.to_kill.extend(self.buttons)
 
     def process_event(self, event):
         if event.type == UI_BUTTON_PRESSED:
@@ -66,7 +63,8 @@ class StartScreen(Screen):
                         Area.OVERWORLD,
                     )
                 )
-                self.kill()
+                for element in self.buttons + self.greeting_elements:
+                    element.kill()
 
     def draw(self, surface: pygame.Surface):
         surface.blit(self.background, (0, 0))
