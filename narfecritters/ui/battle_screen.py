@@ -36,7 +36,7 @@ class BattleScreen(Screen):
         self.fight_buttons: list[UIButton] = []
         self.enemy_critters_image = self.load_scaled_critters_image(world.enemy.id, 4)
         self.self_critters_image = self.load_scaled_critters_image(
-            world.active_critters.id, 5, back=True
+            world.active_critter.id, 5, back=True
         )
         self.initialize_information_elements()
 
@@ -91,7 +91,7 @@ class BattleScreen(Screen):
 
     def initialize_fight_buttons(self):
         y = WINDOW_SIZE[1] - 156
-        for critters_move in self.world.active_critters.moves:
+        for critters_move in self.world.active_critter.moves:
             if len(self.fight_buttons) >= 4:
                 LOGGER.warn(f"Pokemon has move than 4 moves!")
                 continue

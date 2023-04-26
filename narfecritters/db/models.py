@@ -135,7 +135,7 @@ class NPC:
     active_critters_index: int = 0
 
     @property
-    def active_critters(self):
+    def active_critter(self):
         return self.critters[self.active_critters_index]
 
 

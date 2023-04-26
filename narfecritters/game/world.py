@@ -133,8 +133,8 @@ class World:
                     id=enemy_id,
                     level=round(self.random.random() * 3 + 1),
                 )
-                order_player_first = enemy.speed < self.active_critters.speed
-                if enemy.speed == self.active_critters.speed:
+                order_player_first = enemy.speed < self.active_critter.speed
+                if enemy.speed == self.active_critter.speed:
                     order_player_first = self.random.choice([False, True])
                 self.encounter = Encounter(
                     enemy=enemy, order_player_first=order_player_first
@@ -183,8 +183,8 @@ class World:
             * (2 * self.enemy.level + 10) ** 2
         )
         xp_gain_level_scalar_denominator = int(
-            round(math.sqrt(self.enemy.level + self.active_critters.level + 10))
-            * (self.enemy.level + self.active_critters.level + 10) ** 2
+            round(math.sqrt(self.enemy.level + self.active_critter.level + 10))
+            * (self.enemy.level + self.active_critter.level + 10) ** 2
         )
         xp_gain = (
             round(
@@ -193,12 +193,12 @@ class World:
             )
             + 1
         )
-        current_level = self.active_critters.level
-        self.active_critters.experience += xp_gain
-        LOGGER.info(f"{self.active_critters.name} gained {xp_gain} experience!")
-        if current_level < self.active_critters.level:
+        current_level = self.active_critter.level
+        self.active_critter.experience += xp_gain
+        LOGGER.info(f"{self.active_critter.name} gained {xp_gain} experience!")
+        if current_level < self.active_critter.level:
             information.append(
-                f"{self.active_critters.name} leveled up to {self.active_critters.level}"
+                f"{self.active_critter.name} leveled up to {self.active_critter.level}"
             )
             LOGGER.info(information[-1])
 
@@ -218,7 +218,7 @@ class World:
 
     def turn_player(self, move_name, information: list[str]):
         move = self.moves.find_by_name(move_name)
-        attack_result = self.attack(self.active_critters, self.enemy, move)
+        attack_result = self.attack(self.active_critter, self.enemy, move)
         enemy_damage = attack_result.damage
         self.enemy.take_damage(enemy_damage)
 
@@ -237,20 +237,20 @@ class World:
 
     def turn_enemy(self, information: list[str]):
         enemy_move = self.moves.find_by_id(self.random.choice(self.enemy.moves).id)
-        attack_result = self.attack(self.enemy, self.active_critters, enemy_move)
+        attack_result = self.attack(self.enemy, self.active_critter, enemy_move)
         player_damage = attack_result.damage
-        self.active_critters.take_damage(player_damage)
+        self.active_critter.take_damage(player_damage)
 
         information_suffix = self.get_type_effectiveness_response_suffix(
             attack_result.type_factor
         )
         information.append(
-            f"{self.active_critters.name} took {player_damage} dmg from {enemy_move.name}. "
+            f"{self.active_critter.name} took {player_damage} dmg from {enemy_move.name}. "
             + information_suffix
         )
         LOGGER.info(information[-1])
-        if self.active_critters.current_hp <= 0:
-            information.append(f"Your {self.active_critters.name} fainted!")
+        if self.active_critter.current_hp <= 0:
+            information.append(f"Your {self.active_critter.name} fainted!")
             LOGGER.info(information[-1])
             self.end_encounter(False, information)
 
@@ -310,8 +310,8 @@ class World:
         return ""
 
     @property
-    def active_critters(self) -> Pokemon:
-        return self.player.active_critters
+    def active_critter(self) -> Pokemon:
+        return self.player.active_critter
 
     @property
     def enemy(self) -> Pokemon:
