@@ -36,9 +36,6 @@ pyinstaller: clean
 	7z a narfecritters.zip dist/*
 	7z rn narfecritters.zip dist narfecritters
 
-run-db-generate:
-	python -m narfecritters.db.generate
-
 run-main:
 	python -m narfecritters.main
 
@@ -55,7 +52,6 @@ release-prod: clean
 
 release: run-test release-test release-prod clean
 
-dbg: run-db-generate
 m: run-main
 main: init m
 t: run-test

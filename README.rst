@@ -7,6 +7,12 @@ narfecritters
 .. image:: https://ci.appveyor.com/api/projects/status/github/narfman0/narfecritters?branch=main
     :target: https://ci.appveyor.com/project/narfman0/narfecritters
 
+Quick Start
+-----------
+
+Clone the code
+
+You'll need to generate the data/ yourself. glhf :\
 
 Installation
 ------------
