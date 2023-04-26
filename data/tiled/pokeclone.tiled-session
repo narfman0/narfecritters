@@ -40,7 +40,7 @@
         }
     },
     "last.exportedFilePath": "C:/Users/narfm/Desktop",
-    "last.imagePath": "C:/Users/narfm/workspace/pokeclone/data/tiled",
+    "last.imagePath": "C:/Users/narfm/workspace/narfecritters/data/tiled",
     "map.fixedSize": true,
     "map.height": 10,
     "map.lastUsedExportFilter": "CSV files (*.csv)",
@@ -52,7 +52,7 @@
     "openFiles": [
         "overworld.tmx"
     ],
-    "project": "pokeclone.tiled-project",
+    "project": "narfecritters.tiled-project",
     "recentFiles": [
         "overworld.tmx",
         "tileset_exterior.tsx",

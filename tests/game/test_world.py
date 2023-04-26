@@ -1,11 +1,11 @@
 from random import Random
 import unittest
 
-from pokeclone.db.models import *
-from pokeclone.game.world import Encounter, World
+from narfecritters.db.models import *
+from narfecritters.game.world import Encounter, World
 
 
-class TestPokedex(unittest.TestCase):
+class TestWorld(unittest.TestCase):
     def test_attack(self):
         pokedex = Pokedex.load()
         random = Random(x=12345)

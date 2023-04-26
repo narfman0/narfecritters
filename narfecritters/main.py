@@ -3,10 +3,10 @@ import logging
 import pygame
 from pygame_gui import UIManager, UI_BUTTON_PRESSED
 
-from pokeclone.util.logging import initialize_logging
-from pokeclone.ui.start_screen import StartScreen
-from pokeclone.ui.screen import ScreenManager
-from pokeclone.ui.settings import WINDOW_SIZE
+from narfecritters.util.logging import initialize_logging
+from narfecritters.ui.start_screen import StartScreen
+from narfecritters.ui.screen import ScreenManager
+from narfecritters.ui.settings import WINDOW_SIZE
 
 
 LOGGER = logging.getLogger(__name__)
@@ -15,7 +15,7 @@ LOGGER = logging.getLogger(__name__)
 def main():
     initialize_logging()
     pygame.init()
-    pygame.display.set_caption("pokeclone")
+    pygame.display.set_caption("narfecritters")
     window_surface = pygame.display.set_mode(WINDOW_SIZE)
     manager = UIManager(WINDOW_SIZE, "data/theme.json")
     background = pygame.Surface(WINDOW_SIZE)

@@ -13,8 +13,8 @@ clean-build: ## remove build artifacts
 clean-installer:
 	rm -fr output/
 	rm -fr app.spec
-	rm -f pokeclone.spec
-	rm -f pokeclone.zip
+	rm -f narfecritters.spec
+	rm -f narfecritters.zip
 
 clean-pyc: ## remove Python file artifacts
 	find . -name '__pycache__' -exec rm -rf {} +
@@ -28,22 +28,22 @@ init-dev:
 
 pyinstaller: clean
 	pyinstaller --noconfirm --onefile --console \
-		-n pokeclone --uac-admin \
+		-n narfecritters --uac-admin \
 		app.py
 	cp -r data/ dist/
 	cp config.ini.sample dist/config.ini
 	cp README.* dist/
-	7z a pokeclone.zip dist/*
-	7z rn pokeclone.zip dist pokeclone
+	7z a narfecritters.zip dist/*
+	7z rn narfecritters.zip dist narfecritters
 
 run-db-generate:
-	python -m pokeclone.db.generate
+	python -m narfecritters.db.generate
 
 run-main:
-	python -m pokeclone.main
+	python -m narfecritters.main
 
 run-test:
-	pytest --cov=pokeclone --cov-report term-missing tests/
+	pytest --cov=narfecritters --cov-report term-missing tests/
 
 release-test: clean
 	python setup.py sdist bdist_wheel

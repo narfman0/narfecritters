@@ -2,7 +2,7 @@ from pygame.event import Event
 from pygame.surface import Surface
 from pygame_gui import UIManager
 
-from pokeclone.ui.settings import WINDOW_SIZE
+from narfecritters.ui.settings import WINDOW_SIZE
 
 
 class Screen:

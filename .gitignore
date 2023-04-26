@@ -94,6 +94,6 @@ ENV/
 config.ini
 output/
 .vscode/
-pokeclone.zip
+*.zip
 taspart.fm2
 bin/

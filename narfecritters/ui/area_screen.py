@@ -4,11 +4,11 @@ import pygame
 import pytmx
 from pygame_gui import UIManager
 
-from pokeclone.db.models import Area
-from pokeclone.game.world import World
-from pokeclone.ui.battle_screen import BattleScreen
-from pokeclone.ui.screen import Screen, ScreenManager
-from pokeclone.ui.settings import TILE_SIZE, WINDOW_SIZE
+from narfecritters.db.models import Area
+from narfecritters.game.world import World
+from narfecritters.ui.battle_screen import BattleScreen
+from narfecritters.ui.screen import Screen, ScreenManager
+from narfecritters.ui.settings import TILE_SIZE, WINDOW_SIZE
 
 LOGGER = logging.getLogger(__name__)
 TILE_VIEW_SPAN = 16  # how many tiles away shall we paint

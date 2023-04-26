@@ -1,6 +1,6 @@
 import unittest
 
-from pokeclone.db.models import *
+from narfecritters.db.models import *
 
 
 class TestModels(unittest.TestCase):

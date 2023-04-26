@@ -1,1 +1,1 @@
-python -m pokeclone.main
+python -m narfecritters.main

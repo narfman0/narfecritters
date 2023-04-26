@@ -4,15 +4,15 @@ import pygame
 from pygame_gui import UI_BUTTON_PRESSED, UIManager
 from pygame_gui.elements import UIButton
 
-from pokeclone.db.models import Area
-from pokeclone.ui.area_screen import AreaScreen
-from pokeclone.ui.screen import Screen, ScreenManager
-from pokeclone.ui.settings import WINDOW_SIZE
-from pokeclone.game.world import World
+from narfecritters.db.models import Area
+from narfecritters.ui.area_screen import AreaScreen
+from narfecritters.ui.screen import Screen, ScreenManager
+from narfecritters.ui.settings import WINDOW_SIZE
+from narfecritters.game.world import World
 
 
 LOGGER = logging.getLogger(__name__)
-GREETING_TEXT_1 = "Hello and welcome to pokeclone, a fan-made version of pokemon!"
+GREETING_TEXT_1 = "Hello and welcome to narfecritters, a fan-made version of pokemon!"
 GREETING_TEXT_2 = "Please select your pokemon from the below list to get started."
 
 

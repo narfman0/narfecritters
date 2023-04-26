@@ -1,6 +1,6 @@
 import unittest
 
-from pokeclone.util import logging
+from narfecritters.util import logging
 
 
 class TestLogging(unittest.TestCase):

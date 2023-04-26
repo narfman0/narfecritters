@@ -11,19 +11,19 @@ install:
 build: off
 
 test_script:
-  - pytest --cov=pokeclone --cov-report term-missing tests/
+  - pytest --cov=narfecritters --cov-report term-missing tests/
 
 after_test:
-  - pyinstaller --noconfirm --onefile --console -n pokeclone --uac-admin app.py
+  - pyinstaller --noconfirm --onefile --console -n narfecritters --uac-admin app.py
   - cp -r data/ dist/
   - cp config.ini.sample dist/config.ini
   - cp README.* dist/
-  - 7z a pokeclone.zip dist/*
-  - 7z rn pokeclone.zip dist pokeclone
+  - 7z a narfecritters.zip dist/*
+  - 7z rn narfecritters.zip dist narfecritters
 
 artifacts:
-  - path: pokeclone.zip
-    name: pokeclone
+  - path: narfecritters.zip
+    name: narfecritters
 
 deploy:
   - provider: GitHub
@@ -31,7 +31,7 @@ deploy:
     release: dev
     auth_token:
       secure: 32wi9EYebbPOK8c8u2acHuSm2Gs/Mhm9nhnUOKmkuh10ftCGcdGu3yTo2PRiuuN/
-    artifact: pokeclone.zip
+    artifact: narfecritters.zip
     prerelease: true
     on:
       branch: main
@@ -40,7 +40,7 @@ deploy:
     release: $(APPVEYOR_REPO_TAG_NAME)
     auth_token:
       secure: 32wi9EYebbPOK8c8u2acHuSm2Gs/Mhm9nhnUOKmkuh10ftCGcdGu3yTo2PRiuuN/
-    artifact: pokeclone.zip
+    artifact: narfecritters.zip
     prerelease: true
     on:
       APPVEYOR_REPO_TAG: true

@@ -6,8 +6,8 @@ from random import Random
 from pygame.math import Vector2
 import pytmx
 
-from pokeclone.ui.settings import TILE_SIZE
-from pokeclone.db.models import *
+from narfecritters.ui.settings import TILE_SIZE
+from narfecritters.db.models import *
 
 LOGGER = logging.getLogger(__name__)
 ENCOUNTER_PROBABILITY = 0.1

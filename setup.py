@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 
 setup(
-    name="pokeclone",
+    name="narfecritters",
     version="0.0.1",
     description=("Ingest video data to render smb3 eh manip stimuli"),
     classifiers=[
@@ -11,7 +11,7 @@ setup(
         "Programming Language :: Python",
         "Topic :: Software Development :: Libraries :: Python Modules",
     ],
-    keywords="pokeclone",
+    keywords="narfecritters",
     author="Jon Robison",
     author_email="narfman0@blastedstudios.com",
     license="LICENSE",

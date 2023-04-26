@@ -2,8 +2,8 @@ import logging
 import json
 import os
 
-from pokeclone.db.models import *
-from pokeclone.util.logging import initialize_logging
+from narfecritters.db.models import *
+from narfecritters.util.logging import initialize_logging
 
 LOGGER = logging.getLogger(__name__)
 

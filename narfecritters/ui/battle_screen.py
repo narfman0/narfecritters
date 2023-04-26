@@ -4,9 +4,9 @@ import pygame
 from pygame_gui import UI_BUTTON_PRESSED, UIManager
 from pygame_gui.elements import UIButton
 
-from pokeclone.ui.screen import Screen, ScreenManager
-from pokeclone.ui.settings import WINDOW_SIZE
-from pokeclone.game.world import World
+from narfecritters.ui.screen import Screen, ScreenManager
+from narfecritters.ui.settings import WINDOW_SIZE
+from narfecritters.game.world import World
 
 
 LOGGER = logging.getLogger(__name__)

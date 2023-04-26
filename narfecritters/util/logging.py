@@ -6,7 +6,7 @@ FILE_FORMAT = "[%(asctime)s] {%(pathname)s:%(lineno)d} %(levelname)s - %(message
 def initialize_logging(
     file_log_level="INFO",
     console_log_level="INFO",
-    filename="pokeclone.log",
+    filename="narfecritters.log",
 ):
     # set up logging to file
     logging.basicConfig(
