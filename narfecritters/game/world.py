@@ -19,6 +19,7 @@ TYPES = Types.load()  # this is a trick for performance and usability in tests, 
 @dataclass
 class Encounter:
     enemy: Pokemon
+    order_player_first: bool = True
 
 
 @dataclass
@@ -32,6 +33,11 @@ class MoveAction:
     target_x: int
     target_y: int
     running: bool
+
+
+@dataclass
+class TurnResult:
+    information: list[str]
 
 
 @dataclass
@@ -113,15 +119,19 @@ class World:
                 tile_props.get("type") == "tallgrass"
                 and self.random.random() < ENCOUNTER_PROBABILITY
             ):
-                id = self.random.choice(
+                enemy_id = self.random.choice(
                     [area_encounter.id for area_encounter in self.area_encounters]
                 )
+                enemy = self.encyclopedia.create(
+                    self.random,
+                    id=enemy_id,
+                    level=round(self.random.random() * 3 + 1),
+                )
+                order_player_first = enemy.speed < self.active_critters.speed
+                if enemy.speed == self.active_critters.speed:
+                    order_player_first = self.random.choice([False, True])
                 self.encounter = Encounter(
-                    enemy=self.encyclopedia.create(
-                        self.random,
-                        id=id,
-                        level=round(self.random.random() * 3 + 1),
-                    )
+                    enemy=enemy, order_player_first=order_player_first
                 )
                 return True
 
@@ -185,30 +195,45 @@ class World:
                 f"{self.active_critters.name} leveled up to {self.active_critters.level}"
             )
 
-    def turn(self, move_name):
-        self.turn_player(move_name)
-        if self.encounter:
-            self.turn_enemy()
+    def turn(self, move_name) -> TurnResult:
+        information: list[str] = []
+        if self.encounter.order_player_first:
+            self.turn_player(move_name, information)
+        else:
+            self.turn_enemy(information)
 
-    def turn_player(self, move_name):
+        if self.encounter:
+            if self.encounter.order_player_first:
+                self.turn_enemy(information)
+            else:
+                self.turn_player(move_name, information)
+        return TurnResult(information)
+
+    def turn_player(self, move_name, information: list[str]):
         move = self.moves.find_by_name(move_name)
         enemy_damage = self.attack(self.active_critters, self.enemy, move)
         self.enemy.take_damage(enemy_damage)
-        LOGGER.info(f"Enemy {self.enemy.name} took {enemy_damage} dmg from {move_name}")
+        information.append(
+            f"Enemy {self.enemy.name} took {enemy_damage} dmg from {move_name}"
+        )
+        LOGGER.info(information[-1])
         if self.enemy.current_hp <= 0:
-            LOGGER.info(f"Enemy {self.active_critters.name} fainted!")
+            information.append(f"Enemy {self.active_critters.name} fainted!")
+            LOGGER.info(information[-1])
             self.end_encounter(True)
 
-    def turn_enemy(self):
+    def turn_enemy(self, information: list[str]):
         enemy_move = self.moves.find_by_id(self.random.choice(self.enemy.moves).id)
         player_damage = self.attack(self.enemy, self.active_critters, enemy_move)
         self.active_critters.take_damage(player_damage)
 
-        LOGGER.info(
+        information.append(
             f"{self.active_critters.name} took {player_damage} dmg from {enemy_move.name}"
         )
+        LOGGER.info(information[-1])
         if self.active_critters.current_hp <= 0:
-            LOGGER.info(f"Your {self.active_critters.name} fainted!")
+            information.append(f"Your {self.active_critters.name} fainted!")
+            LOGGER.info(information[-1])
             self.end_encounter(False)
 
     def attack(self, attacker: Pokemon, defender: Pokemon, move: Move):
