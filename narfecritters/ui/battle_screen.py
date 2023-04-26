@@ -1,4 +1,5 @@
 import logging
+from enum import Enum
 
 import pygame
 from pygame_gui import UI_BUTTON_PRESSED, UIManager
@@ -12,6 +13,13 @@ from narfecritters.game.world import World
 LOGGER = logging.getLogger(__name__)
 
 
+class MenuOptions(Enum):
+    FIGHT = 1
+    CATCH = 2
+    CRITTERS = 3
+    RUN = 4
+
+
 class BattleScreen(Screen):
     def __init__(
         self, ui_manager: UIManager, screen_manager: ScreenManager, world: World
@@ -19,7 +27,28 @@ class BattleScreen(Screen):
         super().__init__(ui_manager)
         self.screen_manager = screen_manager
         self.world = world
+        self.menu_buttons = []
         self.fight_buttons = []
+        self.initialize_menu_buttons()
+        self.enemy_critters_image = self.load_scaled_critters_image(world.enemy.id, 4)
+        self.self_critters_image = self.load_scaled_critters_image(
+            world.active_critters.id, 5, back=True
+        )
+        LOGGER.info(
+            f"You are fighting a level {self.world.enemy.level} {self.world.enemy.name}"
+        )
+
+    def initialize_menu_buttons(self):
+        y = WINDOW_SIZE[1] - 156
+        for menu_option in MenuOptions:
+            menu_button = UIButton(
+                (WINDOW_SIZE[0] - 128, y), menu_option.name, manager=self.ui_manager
+            )
+            self.menu_buttons.append(menu_button)
+            y += 32
+        self.to_kill.extend(self.menu_buttons)
+
+    def initialize_fight_buttons(self):
         y = WINDOW_SIZE[1] - 156
         for critters_move in self.world.active_critters.moves:
             if len(self.fight_buttons) >= 4:
@@ -34,22 +63,22 @@ class BattleScreen(Screen):
             )
             y += 32
         self.to_kill.extend(self.fight_buttons)
-        self.enemy_critters_image = self.load_scaled_critters_image(world.enemy.id, 4)
-        self.self_critters_image = self.load_scaled_critters_image(
-            world.active_critters.id, 5, back=True
-        )
-        LOGGER.info(
-            f"You are fighting a level {self.world.enemy.level} {self.world.enemy.name}"
-        )
 
     def process_event(self, event):
         if event.type == UI_BUTTON_PRESSED:
-            if event.ui_element in self.fight_buttons:
+            if event.ui_element in self.menu_buttons:
+                if event.ui_element.text == MenuOptions.FIGHT.name:
+                    self.kill_menu_buttons()
+                    self.initialize_fight_buttons()
+            elif event.ui_element in self.fight_buttons:
+                self.kill_fight_buttons()
                 move_name = event.ui_element.text
                 self.world.turn(move_name)
                 if self.world.encounter is None:
                     self.screen_manager.pop()
                     self.kill()
+                else:
+                    self.initialize_menu_buttons()
 
     def draw(self, surface: pygame.Surface):
         surface.blit(self.background, (0, 0))
@@ -65,6 +94,16 @@ class BattleScreen(Screen):
             WINDOW_SIZE[1] - self.self_critters_image.get_height(),
         )
         surface.blit(self.self_critters_image, trainer_critters_img_pos)
+
+    def kill_menu_buttons(self):
+        for button in self.menu_buttons:
+            button.kill()
+        self.menu_buttons = []
+
+    def kill_fight_buttons(self):
+        for button in self.fight_buttons:
+            button.kill()
+        self.fight_buttons = []
 
     @classmethod
     def load_scaled_critters_image(cls, id, scale, back=False):
