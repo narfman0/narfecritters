@@ -69,7 +69,9 @@ class BattleScreen(Screen):
     @classmethod
     def load_scaled_pokemon_image(cls, id, scale, back=False):
         back_str = "back" if back else "front"
-        image = pygame.image.load(f"data/sprites/pokemon/{back_str}/{id}.png").convert()
+        image = pygame.image.load(
+            f"data/sprites/critters/{back_str}/{id}.png"
+        ).convert()
         size = image.get_size()
         return pygame.transform.scale(
             image, (int(size[0] * scale), int(size[1] * scale))
