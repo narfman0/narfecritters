@@ -85,7 +85,7 @@ class World:
             target_x -= TILE_SIZE
         elif right:
             target_x += TILE_SIZE
-        if up:
+        elif up:
             target_y -= TILE_SIZE
         elif down:
             target_y += TILE_SIZE
