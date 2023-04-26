@@ -7,11 +7,11 @@ from narfecritters.game.world import Encounter, World
 
 class TestWorld(unittest.TestCase):
     def test_attack(self):
-        pokedex = Pokedex.load()
+        encyclopedia = Encyclopedia.load()
         random = Random(x=12345)
-        world = World(pokedex=pokedex, random=random)
-        bulbasaur = pokedex.create(random, name="bulbasaur", level=5)
-        charmander = pokedex.create(random, name="charmander", level=5)
+        world = World(encyclopedia=encyclopedia, random=random)
+        bulbasaur = encyclopedia.create(random, name="bulbasaur", level=5)
+        charmander = encyclopedia.create(random, name="charmander", level=5)
 
         scratch = Move(id=1, name="scratch", power=35, type_id=1)
         self.assertEqual(4, world.attack(charmander, bulbasaur, scratch))
@@ -20,10 +20,10 @@ class TestWorld(unittest.TestCase):
 
     def test_turn(self):
         random = Random(x=12345)
-        pokedex = Pokedex.load()
-        charmander = pokedex.create(random, name="charmander", level=5)
-        bulbasaur = pokedex.create(random, name="bulbasaur", level=5)
-        world = World(pokedex=pokedex, random=random)
+        encyclopedia = Encyclopedia.load()
+        charmander = encyclopedia.create(random, name="charmander", level=5)
+        bulbasaur = encyclopedia.create(random, name="bulbasaur", level=5)
+        world = World(encyclopedia=encyclopedia, random=random)
         world.player.pokemon.append(charmander)
         world.encounter = Encounter(bulbasaur)
 

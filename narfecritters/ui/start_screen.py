@@ -32,7 +32,7 @@ class StartScreen(Screen):
         self.buttons = []
         y = WINDOW_SIZE[1] // 2
         candidate_starters = [
-            self.world.pokedex.find_by_id(id) for id in [1, 4, 7, 25, 133]
+            self.world.encyclopedia.find_by_id(id) for id in [1, 4, 7, 25, 133]
         ]
         for candidate_starter_pokemon in candidate_starters:
             self.buttons.append(
@@ -53,7 +53,7 @@ class StartScreen(Screen):
             if event.ui_element in self.buttons:
                 pokemon_name = event.ui_element.text
                 LOGGER.info(f"{pokemon_name} chosen! Congratulations!")
-                pokemon = self.world.pokedex.create(
+                pokemon = self.world.encyclopedia.create(
                     self.world.random, pokemon_name, level=5
                 )
                 self.world.player.pokemon.append(pokemon)

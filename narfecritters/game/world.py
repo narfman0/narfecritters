@@ -34,8 +34,8 @@ class MoveAction:
 
 
 class World:
-    def __init__(self, pokedex=None, random=None):
-        self.pokedex = pokedex if pokedex else Pokedex.load()
+    def __init__(self, encyclopedia=None, random=None):
+        self.encyclopedia = encyclopedia if encyclopedia else Encyclopedia.load()
         self.moves = Moves.load()
         self.random = random if random else Random()
         self.player = NPC(
@@ -106,7 +106,7 @@ class World:
                 and self.random.random() < ENCOUNTER_PROBABILITY
             ):
                 self.encounter = Encounter(
-                    enemy=self.pokedex.create(
+                    enemy=self.encyclopedia.create(
                         self.random,
                         name=self.random.choice(
                             [

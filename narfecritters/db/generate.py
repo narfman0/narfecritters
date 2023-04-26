@@ -20,8 +20,8 @@ def main():
 
     critters = list(generate_critters(os.path.join(api_data_path, "critters")))
     LOGGER.info(f"Writing {len(critters)} critters to file")
-    Pokedex(name_to_id={item.name: item.id for item in critters}).to_yaml_file(
-        os.path.join("data", "db", "pokedex.yml")
+    Encyclopedia(name_to_id={item.name: item.id for item in critters}).to_yaml_file(
+        os.path.join("data", "db", "encyclopedia.yml")
     )
     for item in critters:
         item.to_yaml_file(os.path.join("data", "db", "critters", f"{item.id}.yml"))

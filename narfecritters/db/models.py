@@ -178,13 +178,13 @@ class Moves(YAMLWizard):
 
 
 @dataclass
-class Pokedex(YAMLWizard):
+class Encyclopedia(YAMLWizard):
     name_to_id: dict[str, int]
     id_to_critter: dict[int, Pokemon] = field(default_factory=dict)
 
     @classmethod
     def load(cls):
-        return Pokedex.from_yaml_file("data/db/pokedex.yml")
+        return Encyclopedia.from_yaml_file("data/db/encyclopedia.yml")
 
     def find_by_id(self, id: int):
         if id not in self.id_to_critter:
