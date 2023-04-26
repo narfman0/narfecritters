@@ -97,3 +97,7 @@ output/
 *.zip
 taspart.fm2
 bin/
+
+data/db/
+data/sprites/
+data/tiled/
