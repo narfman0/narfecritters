@@ -1,4 +1,4 @@
-id-to-pokemon: {}
+id-to-critter: {}
 name-to-id:
   abomasnow: 460
   abomasnow-mega: 10060

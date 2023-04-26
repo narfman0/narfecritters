@@ -18,13 +18,13 @@ def main():
     LOGGER.info(f"Writing {len(types)} types to file")
     Types(types).to_yaml_file(os.path.join("data", "db", "types.yml"))
 
-    pokemon = list(generate_pokemon(os.path.join(api_data_path, "pokemon")))
-    LOGGER.info(f"Writing {len(pokemon)} pokemon to file")
-    Pokedex(name_to_id={item.name: item.id for item in pokemon}).to_yaml_file(
+    critters = list(generate_critters(os.path.join(api_data_path, "critters")))
+    LOGGER.info(f"Writing {len(critters)} critters to file")
+    Pokedex(name_to_id={item.name: item.id for item in critters}).to_yaml_file(
         os.path.join("data", "db", "pokedex.yml")
     )
-    for item in pokemon:
-        item.to_yaml_file(os.path.join("data", "db", "pokemon", f"{item.id}.yml"))
+    for item in critters:
+        item.to_yaml_file(os.path.join("data", "db", "critters", f"{item.id}.yml"))
 
     moves = list(generate_moves(os.path.join(api_data_path, "move")))
     LOGGER.info(f"Writing {len(moves)} moves to file")
@@ -100,44 +100,44 @@ def generate_moves(api_moves_path):
                 LOGGER.error(f"Error parsing {dir}: {e}")
 
 
-def generate_pokemon(api_pokemon_path):
-    for root, dirs, files in os.walk(api_pokemon_path):
+def generate_critters(api_critters_path):
+    for root, dirs, files in os.walk(api_critters_path):
         for dir in sorted([int(x) for x in filter(str.isdecimal, dirs)]):
             try:
-                pokemon_json_path = os.path.join(
-                    api_pokemon_path, str(dir), "index.json"
+                critters_json_path = os.path.join(
+                    api_critters_path, str(dir), "index.json"
                 )
-                with open(pokemon_json_path, "r") as pokemon_json_file:
-                    pokemon_json = json.load(pokemon_json_file)
-                    yield parse_pokemon_from_json(pokemon_json)
+                with open(critters_json_path, "r") as critters_json_file:
+                    critters_json = json.load(critters_json_file)
+                    yield parse_critters_from_json(critters_json)
             except Exception as e:
                 LOGGER.error(f"Error parsing {dir}: {e}")
 
 
-def parse_pokemon_from_json(pokemon_json):
-    pokemon_stats = Stats(
-        pokemon_json["stats"][0]["base_stat"],
-        pokemon_json["stats"][1]["base_stat"],
-        pokemon_json["stats"][2]["base_stat"],
-        pokemon_json["stats"][3]["base_stat"],
-        pokemon_json["stats"][4]["base_stat"],
-        pokemon_json["stats"][5]["base_stat"],
+def parse_critters_from_json(critters_json):
+    critters_stats = Stats(
+        critters_json["stats"][0]["base_stat"],
+        critters_json["stats"][1]["base_stat"],
+        critters_json["stats"][2]["base_stat"],
+        critters_json["stats"][3]["base_stat"],
+        critters_json["stats"][4]["base_stat"],
+        critters_json["stats"][5]["base_stat"],
     )
     type_ids = []
-    for json_type in pokemon_json["types"]:
+    for json_type in critters_json["types"]:
         type_ids.append(int(json_type["type"]["url"].split("/")[-2]))
     return Pokemon(
-        id=pokemon_json["id"],
-        name=pokemon_json["name"],
-        base_stats=pokemon_stats,
+        id=critters_json["id"],
+        name=critters_json["name"],
+        base_stats=critters_stats,
         type_ids=type_ids,
-        moves=list(parse_pokemon_moves_from_json(pokemon_json)),
-        base_experience=pokemon_json["base_experience"],
+        moves=list(parse_critters_moves_from_json(critters_json)),
+        base_experience=critters_json["base_experience"],
     )
 
 
-def parse_pokemon_moves_from_json(pokemon_json):
-    for move in pokemon_json["moves"]:
+def parse_critters_moves_from_json(critters_json):
+    for move in critters_json["moves"]:
         id = int(move["move"]["url"].split("/")[-2])
         name = move["move"]["name"]
         level_learned_at = None

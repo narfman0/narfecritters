@@ -180,16 +180,18 @@ class Moves(YAMLWizard):
 @dataclass
 class Pokedex(YAMLWizard):
     name_to_id: dict[str, int]
-    id_to_pokemon: dict[int, Pokemon] = field(default_factory=dict)
+    id_to_critter: dict[int, Pokemon] = field(default_factory=dict)
 
     @classmethod
     def load(cls):
         return Pokedex.from_yaml_file("data/db/pokedex.yml")
 
     def find_by_id(self, id: int):
-        if id not in self.id_to_pokemon:
-            self.id_to_pokemon[id] = Pokemon.from_yaml_file(f"data/db/pokemon/{id}.yml")
-        return self.id_to_pokemon[id]
+        if id not in self.id_to_critter:
+            self.id_to_critter[id] = Pokemon.from_yaml_file(
+                f"data/db/critters/{id}.yml"
+            )
+        return self.id_to_critter[id]
 
     def find_by_name(self, name):
         return self.find_by_id(self.name_to_id[name])
