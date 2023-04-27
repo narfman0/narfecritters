@@ -55,7 +55,7 @@ class Stats:
 
 
 @dataclass
-class PokemonMove:
+class CritterMove:
     id: int
     name: str
     learn_method: str
@@ -63,13 +63,13 @@ class PokemonMove:
 
 
 @dataclass
-class Pokemon(YAMLWizard):
+class Critter(YAMLWizard):
     id: int
     name: str
     base_experience: int
     base_stats: Stats
     type_ids: list[int]
-    moves: list[PokemonMove]
+    moves: list[CritterMove]
     capture_rate: Optional[int]
     flavor_text: Optional[str]
     ivs: Optional[Stats] = field(default=False, init=False)
@@ -133,7 +133,7 @@ class Pokemon(YAMLWizard):
 class NPC:
     x: int
     y: int
-    critters: list[Pokemon] = field(default_factory=list)
+    critters: list[Critter] = field(default_factory=list)
     active_critters_index: int = 0
 
     @property
@@ -182,7 +182,7 @@ class Moves(YAMLWizard):
 @dataclass
 class Encyclopedia(YAMLWizard):
     name_to_id: dict[str, int]
-    id_to_critter: dict[int, Pokemon] = field(default_factory=dict)
+    id_to_critter: dict[int, Critter] = field(default_factory=dict)
 
     @classmethod
     def load(cls):
@@ -190,7 +190,7 @@ class Encyclopedia(YAMLWizard):
 
     def find_by_id(self, id: int):
         if id not in self.id_to_critter:
-            self.id_to_critter[id] = Pokemon.from_yaml_file(
+            self.id_to_critter[id] = Critter.from_yaml_file(
                 f"data/db/critters/{id}.yml"
             )
         return self.id_to_critter[id]
@@ -198,14 +198,14 @@ class Encyclopedia(YAMLWizard):
     def find_by_name(self, name):
         return self.find_by_id(self.name_to_id[name])
 
-    def create(self, random: Random, name=None, id=None, level=0) -> Pokemon:
+    def create(self, random: Random, name=None, id=None, level=0) -> Critter:
         critter = None
         if id:
             critter = self.find_by_id(id)
         elif name:
             critter = self.find_by_name(name)
         if critter is None:
-            raise Exception(f"Pokemon name {name} or id {id} not found")
+            raise Exception(f"Critter name {name} or id {id} not found")
         instance = copy.copy(critter)
         instance.evs = Stats()
         instance.ivs = Stats.create_random_ivs(random)

@@ -18,7 +18,7 @@ TYPES = Types.load()  # this is a trick for performance and usability in tests, 
 
 @dataclass
 class Encounter:
-    enemy: Pokemon
+    enemy: Critter
     order_player_first: bool = True
     run_attempts: int = 0
 
@@ -308,7 +308,7 @@ class World:
             LOGGER.info(information[-1])
             self.end_encounter(False, information)
 
-    def attack(self, attacker: Pokemon, defender: Pokemon, move: Move):
+    def attack(self, attacker: Critter, defender: Critter, move: Move):
         """Follows gen5 dmg formula as defined: https://bulbapedia.bulbagarden.net/wiki/Damage#Generation_V_onward"""
         base_damage = (
             round(
@@ -364,9 +364,9 @@ class World:
         return ""
 
     @property
-    def active_critter(self) -> Pokemon:
+    def active_critter(self) -> Critter:
         return self.player.active_critter
 
     @property
-    def enemy(self) -> Pokemon:
+    def enemy(self) -> Critter:
         return self.encounter.enemy

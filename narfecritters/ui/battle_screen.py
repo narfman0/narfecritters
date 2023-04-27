@@ -100,7 +100,7 @@ class BattleScreen(Screen):
         y = WINDOW_SIZE[1] - 156
         for critters_move in self.world.active_critter.moves:
             if len(self.fight_buttons) >= 4:
-                LOGGER.warn(f"Pokemon has move than 4 moves!")
+                LOGGER.warn(f"Critter has move than 4 moves!")
                 continue
             self.fight_buttons.append(
                 UIButton(
