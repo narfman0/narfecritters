@@ -33,26 +33,26 @@ class StartScreen(Screen):
             self.world.encyclopedia.find_by_id(id) for id in [1, 4, 7, 25, 133]
         ]
         for candidate_starter_critters in candidate_starters:
-            self.buttons.append(
-                UIButton(
-                    (
-                        WINDOW_SIZE[0] / 2,
-                        y,
-                    ),
-                    candidate_starter_critters.name,
-                    manager=self.ui_manager,
-                )
+            button = UIButton(
+                (
+                    WINDOW_SIZE[0] / 2,
+                    y,
+                ),
+                candidate_starter_critters.name_pretty,
+                manager=self.ui_manager,
             )
+            button.critter_id = candidate_starter_critters.id
+            self.buttons.append(button)
             y += 32
 
     def process_event(self, event):
         if event.type == UI_BUTTON_PRESSED:
             if event.ui_element in self.buttons:
-                critter_name = event.ui_element.text
-                LOGGER.info(f"{critter_name} chosen! Congratulations!")
+                critter_id = event.ui_element.critter_id
                 critter = self.world.encyclopedia.create(
-                    self.world.random, critter_name, level=5
+                    self.world.random, id=critter_id, level=5
                 )
+                LOGGER.info(f"{critter.name} chosen! Congratulations!")
                 self.world.player.add_critter(critter)
                 self.screen_manager.pop()
                 self.screen_manager.push(

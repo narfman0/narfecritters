@@ -58,7 +58,7 @@ class BattleScreen(Screen):
                     self.initialize_information_elements()
             elif event.ui_element in self.fight_buttons:
                 self.kill_fight_buttons()
-                move_name = event.ui_element.text
+                move_name = event.ui_element.move_name
                 result = self.world.turn(move_name)
                 self.information_queue.extend(result.information)
                 if result.fainted:
@@ -120,7 +120,7 @@ class BattleScreen(Screen):
             self.critter_buttons.append(
                 UIButton(
                     (WINDOW_SIZE[0] - 128, y),
-                    critter.name,
+                    critter.name_pretty,
                     manager=self.ui_manager,
                 )
             )
@@ -136,10 +136,11 @@ class BattleScreen(Screen):
             self.fight_buttons.append(
                 UIButton(
                     (WINDOW_SIZE[0] - 128, y),
-                    critters_move.name,
+                    critters_move.name_pretty,
                     manager=self.ui_manager,
                 )
             )
+            self.fight_buttons[-1].move_name = critters_move.name
             y += 32
 
     def kill_menu_buttons(self):

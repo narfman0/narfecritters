@@ -35,6 +35,10 @@ class Move:
     power: int
     type_id: int
 
+    @property
+    def name_pretty(self):
+        return self.name.replace("-", " ").capitalize()
+
 
 @dataclass
 class Stats:
@@ -64,6 +68,10 @@ class CritterMove:
     learn_method: str
     level_learned_at: int
 
+    @property
+    def name_pretty(self):
+        return self.name.replace("-", " ").capitalize()
+
 
 @dataclass
 class Critter(YAMLWizard):
@@ -82,6 +90,10 @@ class Critter(YAMLWizard):
 
     def take_damage(self, damage: int):
         self.current_hp = max(0, self.current_hp - damage)
+
+    @property
+    def name_pretty(self):
+        return self.name.replace("-", " ").capitalize()
 
     @property
     def level(self):
