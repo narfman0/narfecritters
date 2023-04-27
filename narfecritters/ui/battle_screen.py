@@ -34,6 +34,7 @@ class BattleScreen(Screen):
             f"You are fighting a level {self.world.enemy.level} {self.world.enemy.name}"
         ]
         self.fight_buttons: list[UIButton] = []
+        self.critter_buttons: list[UIButton] = []
         self.enemy_critters_image = self.load_scaled_critters_image(world.enemy.id, 4)
         self.self_critters_image = self.load_scaled_critters_image(
             world.active_critter.id, 5, back=True
@@ -50,6 +51,9 @@ class BattleScreen(Screen):
                     self.kill_menu_buttons()
                     self.information_queue.extend(self.world.run().information)
                     self.initialize_information_elements()
+                if event.ui_element.text == MenuOptions.CRITTERS.name:
+                    self.kill_menu_buttons()
+                    self.initialize_critter_buttons()
                 if event.ui_element.text == MenuOptions.CATCH.name:
                     self.kill_menu_buttons()
                     self.information_queue.extend(self.world.catch().information)
@@ -58,6 +62,22 @@ class BattleScreen(Screen):
                 self.kill_fight_buttons()
                 move_name = event.ui_element.text
                 self.information_queue.extend(self.world.turn(move_name).information)
+                self.initialize_information_elements()
+            elif event.ui_element in self.critter_buttons:
+                self.kill_critter_buttons()
+                critter_idx = None
+                critter_name = event.ui_element.text
+                for active_critter_idx in self.world.player.active_critters:
+                    candidate_critter = self.world.player.critters[active_critter_idx]
+                    if candidate_critter.name == critter_name:
+                        critter_idx = active_critter_idx
+                self.world.encounter.active_critter_index = critter_idx
+                self.self_critters_image = self.load_scaled_critters_image(
+                    self.world.active_critter.id, 5, back=True
+                )
+                information: list[str] = []
+                self.world.turn_enemy(information)
+                self.information_queue.extend(information)
                 self.initialize_information_elements()
             elif event.ui_element in self.information_elements:
                 self.information_queue.pop(0)
@@ -96,6 +116,19 @@ class BattleScreen(Screen):
             self.menu_buttons.append(menu_button)
             y += 32
 
+    def initialize_critter_buttons(self):
+        y = WINDOW_SIZE[1] - 220
+        for critter_idx in self.world.player.active_critters:
+            critter = self.world.player.critters[critter_idx]
+            self.critter_buttons.append(
+                UIButton(
+                    (WINDOW_SIZE[0] - 128, y),
+                    critter.name,
+                    manager=self.ui_manager,
+                )
+            )
+            y += 32
+
     def initialize_fight_buttons(self):
         y = WINDOW_SIZE[1] - 156
         for critters_move in self.world.active_critter.moves:
@@ -120,6 +153,11 @@ class BattleScreen(Screen):
         for button in self.fight_buttons:
             button.kill()
         self.fight_buttons = []
+
+    def kill_critter_buttons(self):
+        for button in self.critter_buttons:
+            button.kill()
+        self.critter_buttons = []
 
     def kill_information_elements(self):
         for element in self.information_elements:

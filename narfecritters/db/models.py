@@ -134,11 +134,16 @@ class NPC:
     x: int
     y: int
     critters: list[Critter] = field(default_factory=list)
-    active_critters_index: int = 0
+    active_critters: list[int] = field(default_factory=list)
 
     @property
     def active_critter(self):
-        return self.critters[self.active_critters_index]
+        return self.critters[self.active_critters[0]]
+    
+    def add_critter(self, critter):
+        self.critters.append(critter)
+        if len(self.active_critters) < 6:
+            self.active_critters.append(len(self.critters)-1)
 
 
 @dataclass

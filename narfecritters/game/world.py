@@ -21,6 +21,7 @@ class Encounter:
     enemy: Critter
     order_player_first: bool = True
     run_attempts: int = 0
+    active_critter_index: int = 0
 
 
 @dataclass
@@ -221,7 +222,7 @@ class World:
         a = math.floor(numerator / 3 * self.enemy.max_hp) * status_bonus
         if a >= self.random.randint(0, 1044480) or self.shake_check(a):
             information.append(f"{self.enemy.name} caught successfully!")
-            self.player.critters.append(self.enemy)
+            self.player.add_critter(self.enemy)
             self.end_encounter(True, information)
         else:
             information.append(f"Failed to catch {self.enemy.name}.")
@@ -365,6 +366,10 @@ class World:
 
     @property
     def active_critter(self) -> Critter:
+        if self.encounter:
+            return self.player.critters[
+                self.player.active_critters[self.encounter.active_critter_index]
+            ]
         return self.player.active_critter
 
     @property

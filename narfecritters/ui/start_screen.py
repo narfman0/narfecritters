@@ -50,10 +50,10 @@ class StartScreen(Screen):
             if event.ui_element in self.buttons:
                 critter_name = event.ui_element.text
                 LOGGER.info(f"{critter_name} chosen! Congratulations!")
-                critters = self.world.encyclopedia.create(
+                critter = self.world.encyclopedia.create(
                     self.world.random, critter_name, level=5
                 )
-                self.world.player.critters.append(critters)
+                self.world.player.add_critter(critter)
                 self.screen_manager.pop()
                 self.screen_manager.push(
                     AreaScreen(
