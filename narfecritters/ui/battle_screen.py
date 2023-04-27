@@ -36,9 +36,7 @@ class BattleScreen(Screen):
         self.fight_buttons: list[UIButton] = []
         self.critter_buttons: list[UIButton] = []
         self.enemy_critters_image = self.load_scaled_critters_image(world.enemy.id, 4)
-        self.self_critters_image = self.load_scaled_critters_image(
-            world.active_critter.id, 5, back=True
-        )
+        self.reload_self_critter_image()
         self.initialize_information_elements()
 
     def process_event(self, event):
@@ -61,7 +59,10 @@ class BattleScreen(Screen):
             elif event.ui_element in self.fight_buttons:
                 self.kill_fight_buttons()
                 move_name = event.ui_element.text
-                self.information_queue.extend(self.world.turn(move_name).information)
+                result = self.world.turn(move_name)
+                self.information_queue.extend(result.information)
+                if result.fainted:
+                    self.reload_self_critter_image()
                 self.initialize_information_elements()
             elif event.ui_element in self.critter_buttons:
                 self.kill_critter_buttons()
@@ -72,11 +73,12 @@ class BattleScreen(Screen):
                     if candidate_critter.name == critter_name:
                         critter_idx = active_critter_idx
                 self.world.encounter.active_critter_index = critter_idx
-                self.self_critters_image = self.load_scaled_critters_image(
-                    self.world.active_critter.id, 5, back=True
-                )
+                self.reload_self_critter_image()
                 information: list[str] = []
-                self.world.turn_enemy(information)
+                fainted = self.world.turn_enemy(information)
+                if fainted:
+                    # TODO itd be nice to do this after the information elements catch up
+                    self.reload_self_critter_image()
                 self.information_queue.extend(information)
                 self.initialize_information_elements()
             elif event.ui_element in self.information_elements:
@@ -178,6 +180,11 @@ class BattleScreen(Screen):
             WINDOW_SIZE[1] - self.self_critters_image.get_height(),
         )
         surface.blit(self.self_critters_image, trainer_critters_img_pos)
+
+    def reload_self_critter_image(self):
+        self.self_critters_image = self.load_scaled_critters_image(
+            self.world.active_critter.id, 5, back=True
+        )
 
     @classmethod
     def load_scaled_critters_image(cls, id, scale, back=False):

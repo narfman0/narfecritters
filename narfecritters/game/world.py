@@ -46,6 +46,7 @@ class AttackResult:
 @dataclass
 class TurnResult:
     information: list[str]
+    fainted: bool
 
 
 @dataclass
@@ -139,7 +140,9 @@ class World:
                 if enemy.speed == self.active_critter.speed:
                     order_player_first = self.random.choice([False, True])
                 self.encounter = Encounter(
-                    enemy=enemy, order_player_first=order_player_first
+                    enemy=enemy,
+                    order_player_first=order_player_first,
+                    active_critter_index=self.player.active_critter_index,
                 )
                 return True
 
@@ -210,6 +213,7 @@ class World:
         https://bulbapedia.bulbagarden.net/wiki/Catch_rate#Capture_method_.28Generation_V.2B.29
         """
         information: list[str] = []
+        fainted = False
 
         bonus_ball = 1
         status_bonus = 1  # TODO
@@ -226,8 +230,8 @@ class World:
             self.end_encounter(True, information)
         else:
             information.append(f"Failed to catch {self.enemy.name}.")
-            self.turn_enemy(information)
-        return TurnResult(information)
+            fainted = self.turn_enemy(information)
+        return TurnResult(information, fainted)
 
     def shake_check(self, a) -> bool:
         """Perform 3 shake checkes as described:
@@ -242,6 +246,7 @@ class World:
     def run(self) -> TurnResult:
         """Attempt to flee the attacking critter"""
         information: list[str] = []
+        fainted = False
 
         odds_escape = (
             int((self.active_critter.speed * 128) / self.enemy.speed)
@@ -253,23 +258,24 @@ class World:
         else:
             information.append(f"{self.active_critter.name} failed to run away.")
             self.encounter.run_attempts += 1
-            self.turn_enemy(information)
-        return TurnResult(information)
+            fainted = self.turn_enemy(information)
+        return TurnResult(information, fainted)
 
     def turn(self, move_name) -> TurnResult:
         """Take each critters turn. Observes speeds for priority order."""
         information: list[str] = []
+        fainted = False
         if self.encounter.order_player_first:
             self.turn_player(move_name, information)
         else:
-            self.turn_enemy(information)
+            fainted = self.turn_enemy(information)
 
         if self.encounter:
             if self.encounter.order_player_first:
-                self.turn_enemy(information)
+                fainted = self.turn_enemy(information)
             else:
                 self.turn_player(move_name, information)
-        return TurnResult(information)
+        return TurnResult(information, fainted)
 
     def turn_player(self, move_name, information: list[str]):
         move = self.moves.find_by_name(move_name)
@@ -290,7 +296,7 @@ class World:
             LOGGER.info(information[-1])
             self.end_encounter(True, information)
 
-    def turn_enemy(self, information: list[str]):
+    def turn_enemy(self, information: list[str]) -> bool:
         enemy_move = self.moves.find_by_id(self.random.choice(self.enemy.moves).id)
         attack_result = self.attack(self.enemy, self.active_critter, enemy_move)
         player_damage = attack_result.damage
@@ -307,7 +313,16 @@ class World:
         if self.active_critter.current_hp <= 0:
             information.append(f"Your {self.active_critter.name} fainted!")
             LOGGER.info(information[-1])
-            self.end_encounter(False, information)
+            next_nonfainted_active_critter_idx = None
+            for active_critter_idx in self.player.active_critters:
+                if self.player.critters[active_critter_idx].current_hp > 0:
+                    next_nonfainted_active_critter_idx = active_critter_idx
+            if next_nonfainted_active_critter_idx:
+                self.encounter.active_critter_index = next_nonfainted_active_critter_idx
+            else:
+                self.end_encounter(False, information)
+            return True
+        return False
 
     def attack(self, attacker: Critter, defender: Critter, move: Move):
         """Follows gen5 dmg formula as defined: https://bulbapedia.bulbagarden.net/wiki/Damage#Generation_V_onward"""

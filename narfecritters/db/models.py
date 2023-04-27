@@ -138,12 +138,22 @@ class NPC:
 
     @property
     def active_critter(self):
-        return self.critters[self.active_critters[0]]
-    
+        active_idx = self.active_critter_index
+        if active_idx is not None:
+            return self.critters[active_idx]
+        return None
+
+    @property
+    def active_critter_index(self):
+        for active_critter_idx in self.active_critters:
+            if self.critters[active_critter_idx].current_hp > 0:
+                return active_critter_idx
+        return None
+
     def add_critter(self, critter):
         self.critters.append(critter)
         if len(self.active_critters) < 6:
-            self.active_critters.append(len(self.critters)-1)
+            self.active_critters.append(len(self.critters) - 1)
 
 
 @dataclass
