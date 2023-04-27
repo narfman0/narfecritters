@@ -70,6 +70,8 @@ class Pokemon(YAMLWizard):
     base_stats: Stats
     type_ids: list[int]
     moves: list[PokemonMove]
+    capture_rate: Optional[int]
+    flavor_text: Optional[str]
     ivs: Optional[Stats] = field(default=False, init=False)
     evs: Optional[Stats] = field(default=False, init=False)
     current_hp: Optional[int] = field(default=False, init=False)

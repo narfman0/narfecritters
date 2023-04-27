@@ -203,6 +203,41 @@ class World:
             )
             LOGGER.info(information[-1])
 
+    def catch(self) -> TurnResult:
+        """
+        Attempt to catch the attacking critter. See:
+        https://bulbapedia.bulbagarden.net/wiki/Catch_rate#Capture_method_.28Generation_V.2B.29
+        """
+        information: list[str] = []
+
+        bonus_ball = 1
+        status_bonus = 1  # TODO
+        numerator = (
+            (3 * self.enemy.max_hp - 2 * self.enemy.current_hp)
+            * 4096
+            * self.enemy.capture_rate
+            * bonus_ball
+        )
+        a = math.floor(numerator / 3 * self.enemy.max_hp) * status_bonus
+        if a >= self.random.randint(0, 1044480) or self.shake_check(a):
+            information.append(f"{self.enemy.name} caught successfully!")
+            self.player.critters.append(self.enemy)
+            self.end_encounter(True, information)
+        else:
+            information.append(f"Failed to catch {self.enemy.name}.")
+            self.turn_enemy(information)
+        return TurnResult(information)
+
+    def shake_check(self, a) -> bool:
+        """Perform 3 shake checkes as described:
+        https://bulbapedia.bulbagarden.net/wiki/Catch_rate#Shake_probability_4
+        """
+        for _x in range(3):
+            b = math.floor(65536 / math.sqrt(math.sqrt(1044480 / a)))
+            if self.random.randint(0, 65535) >= b:
+                return False
+        return True
+
     def run(self) -> TurnResult:
         """Attempt to flee the attacking critter"""
         information: list[str] = []

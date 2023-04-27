@@ -50,6 +50,10 @@ class BattleScreen(Screen):
                     self.kill_menu_buttons()
                     self.information_queue.extend(self.world.run().information)
                     self.initialize_information_elements()
+                if event.ui_element.text == MenuOptions.CATCH.name:
+                    self.kill_menu_buttons()
+                    self.information_queue.extend(self.world.catch().information)
+                    self.initialize_information_elements()
             elif event.ui_element in self.fight_buttons:
                 self.kill_fight_buttons()
                 move_name = event.ui_element.text
