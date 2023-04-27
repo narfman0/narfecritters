@@ -66,12 +66,7 @@ class BattleScreen(Screen):
                 self.initialize_information_elements()
             elif event.ui_element in self.critter_buttons:
                 self.kill_critter_buttons()
-                critter_idx = None
-                critter_name = event.ui_element.text
-                for active_critter_idx in self.world.player.active_critters:
-                    candidate_critter = self.world.player.critters[active_critter_idx]
-                    if candidate_critter.name == critter_name:
-                        critter_idx = active_critter_idx
+                critter_idx = event.ui_element.critter_index
                 self.world.encounter.active_critter_index = critter_idx
                 self.reload_self_critter_image()
                 information: list[str] = []
@@ -129,6 +124,7 @@ class BattleScreen(Screen):
                     manager=self.ui_manager,
                 )
             )
+            self.critter_buttons[-1].critter_index = critter_idx
             y += 32
 
     def initialize_fight_buttons(self):

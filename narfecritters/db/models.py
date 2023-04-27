@@ -8,6 +8,9 @@ from dataclasses import dataclass, field
 from dataclass_wizard import YAMLWizard
 
 
+ACTIVE_CRITTERS_MAX = 6
+
+
 class Area(Enum):
     OVERWORLD = 1
     POKECENTER = 2
@@ -152,7 +155,7 @@ class NPC:
 
     def add_critter(self, critter):
         self.critters.append(critter)
-        if len(self.active_critters) < 6:
+        if len(self.active_critters) < ACTIVE_CRITTERS_MAX:
             self.active_critters.append(len(self.critters) - 1)
 
 

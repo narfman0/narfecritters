@@ -7,6 +7,7 @@ from pygame_gui.elements import UIButton
 
 from narfecritters.ui.screen import Screen, ScreenManager
 from narfecritters.ui.settings import WINDOW_SIZE
+from narfecritters.db.models import ACTIVE_CRITTERS_MAX
 from narfecritters.game.world import World
 
 
@@ -42,17 +43,36 @@ class CrittersScreen(Screen):
                     # TODO this is messy, but should always be the pause screen.
                     # screen manager should autorun an init function of some sort?
                     self.screen_manager.current.initialize_menu_buttons()
+            if event.ui_element in self.active_critter_buttons:
+                critter_slot_idx = event.ui_element.critter_slot_idx
+                del self.world.player.active_critters[critter_slot_idx]
+                self.kill_active_critter_buttons()
+                self.kill_critter_buttons()
+                self.initialize_active_critter_buttons()
+                self.initialize_critter_buttons()
+            if event.ui_element in self.critter_buttons:
+                if len(self.world.player.active_critters) >= ACTIVE_CRITTERS_MAX:
+                    return
+                critter_index = event.ui_element.critter_index
+                self.world.player.active_critters.append(critter_index)
+                self.kill_active_critter_buttons()
+                self.kill_critter_buttons()
+                self.initialize_active_critter_buttons()
+                self.initialize_critter_buttons()
 
     def initialize_active_critter_buttons(self):
         y = 64
-        for active_critter_idx in range(6):
+        for critter_slot_idx in range(ACTIVE_CRITTERS_MAX):
             text = None
-            if active_critter_idx >= len(self.world.player.active_critters):
+            if critter_slot_idx >= len(self.world.player.active_critters):
                 text = "-"
             else:
-                critter = self.world.player.critters[active_critter_idx]
+                critter = self.world.player.critters[
+                    self.world.player.active_critters[critter_slot_idx]
+                ]
                 text = self.text_for_critter(critter)
             button = UIButton((64, y), text, manager=self.ui_manager)
+            button.critter_slot_idx = critter_slot_idx
             self.active_critter_buttons.append(button)
             y += 32
 
@@ -63,6 +83,7 @@ class CrittersScreen(Screen):
                 continue
             text = self.text_for_critter(critter)
             button = UIButton((WINDOW_SIZE[0] // 2, y), text, manager=self.ui_manager)
+            button.critter_index = idx
             self.critter_buttons.append(button)
             y += 32
 
