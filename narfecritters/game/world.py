@@ -20,6 +20,7 @@ TYPES = Types.load()  # this is a trick for performance and usability in tests, 
 class Encounter:
     enemy: Pokemon
     order_player_first: bool = True
+    run_attempts: int = 0
 
 
 @dataclass
@@ -60,7 +61,7 @@ class World:
         self.player = NPC(
             x=TILE_SIZE * 10 + TILE_SIZE // 2, y=TILE_SIZE * 10 + TILE_SIZE // 2
         )
-        self.encounter = None
+        self.encounter: Optional[Encounter] = None
         self.area: Optional[Area] = None
         self._tmxdata: Optional[pytmx.TiledMap] = None
         self.area_encounters: list[AreaEncounter] = []
@@ -202,7 +203,25 @@ class World:
             )
             LOGGER.info(information[-1])
 
+    def run(self) -> TurnResult:
+        """Attempt to flee the attacking critter"""
+        information: list[str] = []
+
+        odds_escape = (
+            int((self.active_critter.speed * 128) / self.enemy.speed)
+            + 30 * self.encounter.run_attempts
+        ) % 256
+        if odds_escape >= self.random.randint(0, 255):
+            information.append(f"{self.active_critter.name} escaped successfully!")
+            self.end_encounter(False, information)
+        else:
+            information.append(f"{self.active_critter.name} failed to run away.")
+            self.encounter.run_attempts += 1
+            self.turn_enemy(information)
+        return TurnResult(information)
+
     def turn(self, move_name) -> TurnResult:
+        """Take each critters turn. Observes speeds for priority order."""
         information: list[str] = []
         if self.encounter.order_player_first:
             self.turn_player(move_name, information)
