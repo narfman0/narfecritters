@@ -182,9 +182,10 @@ class BattleScreen(Screen):
         surface.blit(self.self_critters_image, trainer_critters_img_pos)
 
     def reload_self_critter_image(self):
-        self.self_critters_image = self.load_scaled_critters_image(
-            self.world.active_critter.id, 5, back=True
-        )
+        if self.world.active_critter:
+            self.self_critters_image = self.load_scaled_critters_image(
+                self.world.active_critter.id, 5, back=True
+            )
 
     @classmethod
     def load_scaled_critters_image(cls, id, scale, back=False):
