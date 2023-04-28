@@ -52,7 +52,7 @@ class TurnResult:
 @dataclass
 class AreaEncounter:
     id: int
-    probability: float
+    probability: int
 
 
 class World:
@@ -67,7 +67,7 @@ class World:
         self.encounter: Optional[Encounter] = None
         self.area: Optional[Area] = None
         self._tmxdata: Optional[pytmx.TiledMap] = None
-        self.area_encounters: list[AreaEncounter] = []
+        self.candidate_encounters: list[int] = []
         self.move_action = None
 
     def update(self, dt: float):
@@ -131,9 +131,7 @@ class World:
                 tile_props.get("type") == "tallgrass"
                 and self.random.random() < ENCOUNTER_PROBABILITY
             ):
-                enemy_id = self.random.choice(
-                    [area_encounter.id for area_encounter in self.area_encounters]
-                )
+                enemy_id = self.random.choice(self.candidate_encounters)
                 enemy = self.encyclopedia.create(
                     self.random,
                     id=enemy_id,
@@ -363,14 +361,14 @@ class World:
 
     def set_tile_data(self, tmxdata: pytmx.TiledMap):
         self._tmxdata = tmxdata
-        self.area_encounters = []
+        self.candidate_encounters: list[int] = []
         encounters_str = tmxdata.properties.get("Encounters")
         if not encounters_str:
             return
         for encounter in encounters_str.split("\n"):
             name, probability = str(encounter).split(",")
             id = self.encyclopedia.name_to_id[name]
-            self.area_encounters.append(AreaEncounter(id, float(probability)))
+            self.candidate_encounters.extend([id] * int(probability))
 
     @classmethod
     def get_type_effectiveness_response_suffix(cls, type_factor: float):
