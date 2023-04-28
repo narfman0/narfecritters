@@ -146,8 +146,8 @@ class Critter(YAMLWizard):
 
 @dataclass
 class NPC:
-    x: int
-    y: int
+    x: int = 0
+    y: int = 0
     critters: list[Critter] = field(default_factory=list)
     active_critters: list[int] = field(default_factory=list)
 

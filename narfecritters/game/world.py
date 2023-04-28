@@ -7,7 +7,7 @@ from xml.etree import ElementTree
 from pygame.math import Vector2
 import pytmx
 
-from narfecritters.ui.settings import START_TILE, TILE_SIZE
+from narfecritters.ui.settings import TILE_SIZE
 from narfecritters.db.models import *
 
 LOGGER = logging.getLogger(__name__)
@@ -60,10 +60,7 @@ class World:
         self.encyclopedia = encyclopedia if encyclopedia else Encyclopedia.load()
         self.moves = Moves.load()
         self.random = random if random else Random()
-        self.player = NPC(
-            x=TILE_SIZE * START_TILE[0] + TILE_SIZE // 2,
-            y=TILE_SIZE * START_TILE[1] + TILE_SIZE // 2,
-        )
+        self.player = NPC()
         self.encounter: Optional[Encounter] = None
         self.area: Optional[Area] = None
         self._tmxdata: Optional[pytmx.TiledMap] = None
@@ -360,6 +357,10 @@ class World:
         )
 
     def set_tile_data(self, tmxdata: pytmx.TiledMap):
+        if self._tmxdata is None:
+            start_x, start_y = map(int, tmxdata.properties.get("StartTile").split(","))
+            self.player.x = TILE_SIZE * start_x + TILE_SIZE // 2
+            self.player.y = TILE_SIZE * start_y + TILE_SIZE // 2
         self._tmxdata = tmxdata
         self.candidate_encounters: list[int] = []
         encounters_str = tmxdata.properties.get("Encounters")
