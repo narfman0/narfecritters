@@ -12,7 +12,9 @@ from narfecritters.ui.screen import Screen, ScreenManager
 from narfecritters.ui.settings import TILE_SIZE, WINDOW_SIZE
 
 LOGGER = logging.getLogger(__name__)
-TILE_VIEW_SPAN = 16  # how many tiles away shall we paint
+TILE_VIEW_SPAN = (
+    WINDOW_SIZE[0] // 2 // TILE_SIZE + 2
+)  # how many tiles away shall we paint
 
 
 class AreaScreen(Screen):

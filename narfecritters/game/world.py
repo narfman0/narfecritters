@@ -7,7 +7,7 @@ from xml.etree import ElementTree
 from pygame.math import Vector2
 import pytmx
 
-from narfecritters.ui.settings import TILE_SIZE
+from narfecritters.ui.settings import START_TILE, TILE_SIZE
 from narfecritters.db.models import *
 
 LOGGER = logging.getLogger(__name__)
@@ -61,7 +61,8 @@ class World:
         self.moves = Moves.load()
         self.random = random if random else Random()
         self.player = NPC(
-            x=TILE_SIZE * 10 + TILE_SIZE // 2, y=TILE_SIZE * 10 + TILE_SIZE // 2
+            x=TILE_SIZE * START_TILE[0] + TILE_SIZE // 2,
+            y=TILE_SIZE * START_TILE[1] + TILE_SIZE // 2,
         )
         self.encounter: Optional[Encounter] = None
         self.area: Optional[Area] = None
