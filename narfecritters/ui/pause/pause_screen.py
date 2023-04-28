@@ -29,23 +29,23 @@ class PauseScreen(Screen):
         self.world = world
         self.menu_buttons: list[UIButton] = []
         self.active_critter_buttons: list[UIButton] = []
-        self.initialize_menu_buttons()
+        self.init()
 
     def process_event(self, event):
         if event.type == UI_BUTTON_PRESSED:
             if event.ui_element in self.menu_buttons:
                 if event.ui_element.text == MenuOptions.BACK.name:
-                    self.kill_menu_buttons()
+                    self.kill()
                     self.screen_manager.pop()
                 if event.ui_element.text == MenuOptions.CRITTERS.name:
-                    self.kill_menu_buttons()
+                    self.kill()
                     self.screen_manager.push(
                         CrittersScreen(self.ui_manager, self.screen_manager, self.world)
                     )
                 if event.ui_element.text == MenuOptions.QUIT.name:
                     exit()
 
-    def initialize_menu_buttons(self):
+    def init(self):
         y = WINDOW_SIZE[1] - 156
         for menu_option in MenuOptions:
             menu_button = UIButton(
@@ -54,10 +54,8 @@ class PauseScreen(Screen):
             self.menu_buttons.append(menu_button)
             y += 32
 
-    def kill_menu_buttons(self):
-        for button in self.menu_buttons:
-            button.kill()
-        self.menu_buttons = []
+    def kill(self):
+        self.kill_elements(self.menu_buttons)
 
     def draw(self, surface: pygame.Surface):
         surface.blit(self.background, (0, 0))

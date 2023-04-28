@@ -144,24 +144,16 @@ class BattleScreen(Screen):
             y += 32
 
     def kill_menu_buttons(self):
-        for button in self.menu_buttons:
-            button.kill()
-        self.menu_buttons = []
+        self.kill_elements(self.menu_buttons)
 
     def kill_fight_buttons(self):
-        for button in self.fight_buttons:
-            button.kill()
-        self.fight_buttons = []
+        self.kill_elements(self.fight_buttons)
 
     def kill_critter_buttons(self):
-        for button in self.critter_buttons:
-            button.kill()
-        self.critter_buttons = []
+        self.kill_elements(self.critter_buttons)
 
     def kill_information_elements(self):
-        for element in self.information_elements:
-            element.kill()
-        self.information_elements = []
+        self.kill_elements(self.information_elements)
 
     def draw(self, surface: pygame.Surface):
         surface.blit(self.background, (0, 0))

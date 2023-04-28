@@ -40,9 +40,6 @@ class CrittersScreen(Screen):
                     self.kill_active_critter_buttons()
                     self.kill_critter_buttons()
                     self.screen_manager.pop()
-                    # TODO this is messy, but should always be the pause screen.
-                    # screen manager should autorun an init function of some sort?
-                    self.screen_manager.current.initialize_menu_buttons()
             if event.ui_element in self.active_critter_buttons:
                 critter_slot_idx = event.ui_element.critter_slot_idx
                 del self.world.player.active_critters[critter_slot_idx]
@@ -97,19 +94,13 @@ class CrittersScreen(Screen):
             y += 32
 
     def kill_active_critter_buttons(self):
-        for button in self.active_critter_buttons:
-            button.kill()
-        self.active_critter_buttons = []
+        self.kill_elements(self.active_critter_buttons)
 
     def kill_critter_buttons(self):
-        for button in self.critter_buttons:
-            button.kill()
-        self.critter_buttons = []
+        self.kill_elements(self.critter_buttons)
 
     def kill_menu_buttons(self):
-        for button in self.menu_buttons:
-            button.kill()
-        self.menu_buttons = []
+        self.kill_elements(self.menu_buttons)
 
     @classmethod
     def text_for_critter(self, critter):
