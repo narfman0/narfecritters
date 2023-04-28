@@ -2,9 +2,7 @@
 
 ## Required
 
-* Menu refinement
-  * Scrolling
-  * Sorting lists
+* Menu refinement - Sorting lists
 * Blackout respawns at healing center
 * NPC walking animations
 * Moves

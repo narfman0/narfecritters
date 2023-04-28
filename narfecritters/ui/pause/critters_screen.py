@@ -3,7 +3,7 @@ from enum import Enum
 
 import pygame
 from pygame_gui import UI_BUTTON_PRESSED, UIManager
-from pygame_gui.elements import UIButton
+from pygame_gui.elements import UIButton, UIPanel, UIScrollingContainer
 
 from narfecritters.ui.screen import Screen, ScreenManager
 from narfecritters.ui.settings import WINDOW_SIZE
@@ -37,6 +37,8 @@ class CrittersScreen(Screen):
                     self.screen_manager.pop()
             if event.ui_element in self.active_critter_buttons:
                 critter_slot_idx = event.ui_element.critter_slot_idx
+                if len(self.world.player.active_critters) <= critter_slot_idx:
+                    return
                 del self.world.player.active_critters[critter_slot_idx]
                 self.reinit()
             if event.ui_element in self.critter_buttons:
@@ -47,7 +49,7 @@ class CrittersScreen(Screen):
                 self.reinit()
 
     def initialize_active_critter_buttons(self):
-        y = 64
+        y = 32
         for critter_slot_idx in range(ACTIVE_CRITTERS_MAX):
             text = None
             if critter_slot_idx >= len(self.world.player.active_critters):
@@ -57,18 +59,27 @@ class CrittersScreen(Screen):
                     self.world.player.active_critters[critter_slot_idx]
                 ]
                 text = self.text_for_critter(critter)
-            button = UIButton((64, y), text, manager=self.ui_manager)
+            button = UIButton(
+                relative_rect=pygame.Rect(32, y, WINDOW_SIZE[0] // 3, 32),
+                text=text,
+                manager=self.ui_manager,
+            )
             button.critter_slot_idx = critter_slot_idx
             self.active_critter_buttons.append(button)
             y += 32
 
     def initialize_critter_buttons(self):
-        y = 64
+        y = 0
         for idx, critter in enumerate(self.world.player.critters):
             if idx in self.world.player.active_critters:
                 continue
             text = self.text_for_critter(critter)
-            button = UIButton((WINDOW_SIZE[0] // 2, y), text, manager=self.ui_manager)
+            button = UIButton(
+                relative_rect=pygame.Rect(0, y, WINDOW_SIZE[0] // 3 - 16, 32),
+                text=text,
+                container=self.scrolling_container,
+                manager=self.ui_manager,
+            )
             button.critter_index = idx
             self.critter_buttons.append(button)
             y += 32
@@ -82,12 +93,34 @@ class CrittersScreen(Screen):
             self.menu_buttons.append(menu_button)
             y += 32
 
+    def init_scrolling_container(self):
+        scrolling_height = (
+            len(self.world.player.critters) - len(self.world.player.active_critters)
+        ) * 32
+        self.scrolling_container = UIScrollingContainer(
+            pygame.Rect(
+                WINDOW_SIZE[0] // 3 + 32,
+                32,
+                WINDOW_SIZE[0] // 3,
+                WINDOW_SIZE[1] - 64,
+            ),
+            manager=self.ui_manager,
+        )
+        self.scrolling_container.set_scrollable_area_dimensions(
+            (
+                WINDOW_SIZE[0] // 2,
+                scrolling_height,
+            )
+        )
+
     def init(self):
+        self.init_scrolling_container()
         self.initialize_menu_buttons()
         self.initialize_active_critter_buttons()
         self.initialize_critter_buttons()
 
     def kill(self):
+        self.scrolling_container.kill()
         self.kill_active_critter_buttons()
         self.kill_critter_buttons()
         self.kill_menu_buttons()
