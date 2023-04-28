@@ -42,18 +42,15 @@ class BattleScreen(Screen):
     def process_event(self, event):
         if event.type == UI_BUTTON_PRESSED:
             if event.ui_element in self.menu_buttons:
+                self.kill_menu_buttons()
                 if event.ui_element.text == MenuOptions.FIGHT.name:
-                    self.kill_menu_buttons()
                     self.initialize_fight_buttons()
                 if event.ui_element.text == MenuOptions.RUN.name:
-                    self.kill_menu_buttons()
                     self.information_queue.extend(self.world.run().information)
                     self.initialize_information_elements()
                 if event.ui_element.text == MenuOptions.CRITTERS.name:
-                    self.kill_menu_buttons()
                     self.initialize_critter_buttons()
                 if event.ui_element.text == MenuOptions.CATCH.name:
-                    self.kill_menu_buttons()
                     self.information_queue.extend(self.world.catch().information)
                     self.initialize_information_elements()
             elif event.ui_element in self.fight_buttons:

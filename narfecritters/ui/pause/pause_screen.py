@@ -28,7 +28,6 @@ class PauseScreen(Screen):
         self.screen_manager = screen_manager
         self.world = world
         self.menu_buttons: list[UIButton] = []
-        self.active_critter_buttons: list[UIButton] = []
         self.init()
 
     def process_event(self, event):

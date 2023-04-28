@@ -28,9 +28,7 @@ class CrittersScreen(Screen):
         self.menu_buttons: list[UIButton] = []
         self.active_critter_buttons: list[UIButton] = []
         self.critter_buttons: list[UIButton] = []
-        self.initialize_menu_buttons()
-        self.initialize_active_critter_buttons()
-        self.initialize_critter_buttons()
+        self.init()
 
     def process_event(self, event):
         if event.type == UI_BUTTON_PRESSED:
@@ -40,19 +38,13 @@ class CrittersScreen(Screen):
             if event.ui_element in self.active_critter_buttons:
                 critter_slot_idx = event.ui_element.critter_slot_idx
                 del self.world.player.active_critters[critter_slot_idx]
-                self.kill_active_critter_buttons()
-                self.kill_critter_buttons()
-                self.initialize_active_critter_buttons()
-                self.initialize_critter_buttons()
+                self.reinit()
             if event.ui_element in self.critter_buttons:
                 if len(self.world.player.active_critters) >= ACTIVE_CRITTERS_MAX:
                     return
                 critter_index = event.ui_element.critter_index
                 self.world.player.active_critters.append(critter_index)
-                self.kill_active_critter_buttons()
-                self.kill_critter_buttons()
-                self.initialize_active_critter_buttons()
-                self.initialize_critter_buttons()
+                self.reinit()
 
     def initialize_active_critter_buttons(self):
         y = 64
@@ -89,6 +81,11 @@ class CrittersScreen(Screen):
             )
             self.menu_buttons.append(menu_button)
             y += 32
+
+    def init(self):
+        self.initialize_menu_buttons()
+        self.initialize_active_critter_buttons()
+        self.initialize_critter_buttons()
 
     def kill(self):
         self.kill_active_critter_buttons()

@@ -27,6 +27,10 @@ class Screen:
     def kill(self):
         pass
 
+    def reinit(self):
+        self.kill()
+        self.init()
+
     @classmethod
     def kill_elements(cls, elements: list[UIElement]):
         for button in elements:
