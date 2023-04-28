@@ -143,6 +143,12 @@ class BattleScreen(Screen):
             self.fight_buttons[-1].move_name = critters_move.name
             y += 32
 
+    def kill(self):
+        self.kill_menu_buttons()
+        self.kill_fight_buttons()
+        self.kill_critter_buttons()
+        self.kill_information_elements()
+
     def kill_menu_buttons(self):
         self.kill_elements(self.menu_buttons)
 

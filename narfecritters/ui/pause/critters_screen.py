@@ -36,9 +36,6 @@ class CrittersScreen(Screen):
         if event.type == UI_BUTTON_PRESSED:
             if event.ui_element in self.menu_buttons:
                 if event.ui_element.text == MenuOptions.BACK.name:
-                    self.kill_menu_buttons()
-                    self.kill_active_critter_buttons()
-                    self.kill_critter_buttons()
                     self.screen_manager.pop()
             if event.ui_element in self.active_critter_buttons:
                 critter_slot_idx = event.ui_element.critter_slot_idx
@@ -92,6 +89,11 @@ class CrittersScreen(Screen):
             )
             self.menu_buttons.append(menu_button)
             y += 32
+
+    def kill(self):
+        self.kill_active_critter_buttons()
+        self.kill_critter_buttons()
+        self.kill_menu_buttons()
 
     def kill_active_critter_buttons(self):
         self.kill_elements(self.active_critter_buttons)

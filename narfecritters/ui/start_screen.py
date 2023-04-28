@@ -63,7 +63,9 @@ class StartScreen(Screen):
                         Area.OVERWORLD,
                     )
                 )
-                self.kill_elements(self.buttons + self.greeting_elements)
+
+    def kill(self):
+        self.kill_elements(self.buttons + self.greeting_elements)
 
     def draw(self, surface: pygame.Surface):
         surface.blit(self.background, (0, 0))

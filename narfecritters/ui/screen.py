@@ -24,6 +24,9 @@ class Screen:
     def draw(self, surface: Surface):
         pass
 
+    def kill(self):
+        pass
+
     @classmethod
     def kill_elements(cls, elements: list[UIElement]):
         for button in elements:
@@ -36,9 +39,13 @@ class ScreenManager:
         self.screens: list[Screen] = []
 
     def push(self, screen: Screen):
+        if self.current:
+            self.current.kill()
         self.screens.append(screen)
 
     def pop(self):
+        if self.current:
+            self.current.kill()
         self.screens.pop()
         if self.current:
             self.current.init()

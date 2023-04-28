@@ -35,10 +35,8 @@ class PauseScreen(Screen):
         if event.type == UI_BUTTON_PRESSED:
             if event.ui_element in self.menu_buttons:
                 if event.ui_element.text == MenuOptions.BACK.name:
-                    self.kill()
                     self.screen_manager.pop()
                 if event.ui_element.text == MenuOptions.CRITTERS.name:
-                    self.kill()
                     self.screen_manager.push(
                         CrittersScreen(self.ui_manager, self.screen_manager, self.world)
                     )
