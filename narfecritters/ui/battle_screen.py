@@ -84,7 +84,7 @@ class BattleScreen(Screen):
                     self.initialize_menu_buttons()
 
     def initialize_information_elements(self):
-        y = WINDOW_SIZE[1] - 156
+        y = WINDOW_SIZE[1] - (len(MenuOptions) + 1) * 32
 
         self.information_elements.append(
             UIButton(
@@ -102,7 +102,7 @@ class BattleScreen(Screen):
         )
 
     def initialize_menu_buttons(self):
-        y = WINDOW_SIZE[1] - 156
+        y = WINDOW_SIZE[1] - (len(MenuOptions) + 1) * 32
         for menu_option in MenuOptions:
             menu_button = UIButton(
                 (WINDOW_SIZE[0] - 128, y), menu_option.name, manager=self.ui_manager
@@ -125,7 +125,7 @@ class BattleScreen(Screen):
             y += 32
 
     def initialize_fight_buttons(self):
-        y = WINDOW_SIZE[1] - 156
+        y = WINDOW_SIZE[1] - (len(MenuOptions) + 1) * 32
         for critters_move in self.world.active_critter.moves:
             if len(self.fight_buttons) >= 4:
                 LOGGER.warn(f"Critter has move than 4 moves!")

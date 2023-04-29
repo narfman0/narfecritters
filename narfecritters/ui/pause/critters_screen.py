@@ -85,7 +85,7 @@ class CrittersScreen(Screen):
             y += 32
 
     def initialize_menu_buttons(self):
-        y = WINDOW_SIZE[1] - 156
+        y = WINDOW_SIZE[1] - (len(MenuOptions) + 1) * 32
         for menu_option in MenuOptions:
             menu_button = UIButton(
                 (WINDOW_SIZE[0] - 128, y), menu_option.name, manager=self.ui_manager
