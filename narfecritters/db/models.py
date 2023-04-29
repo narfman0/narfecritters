@@ -159,6 +159,7 @@ class NPC:
     y: int = 0
     critters: list[Critter] = field(default_factory=list)
     active_critters: list[int] = field(default_factory=list)
+    sprite: Optional[str] = "player"
 
     @property
     def active_critter(self):

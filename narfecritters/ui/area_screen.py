@@ -7,6 +7,7 @@ from pygame_gui import UIManager
 from narfecritters.db.models import Area
 from narfecritters.game.world import World
 from narfecritters.ui.battle_screen import BattleScreen
+from narfecritters.ui.npc_sprite import NPCSprite
 from narfecritters.ui.pause.pause_screen import PauseScreen
 from narfecritters.ui.screen import Screen, ScreenManager
 from narfecritters.ui.settings import TILE_SIZE, WINDOW_SIZE
@@ -28,7 +29,8 @@ class AreaScreen(Screen):
         super().__init__(ui_manager)
         self.screen_manager = screen_manager
         self.world = world
-        self.load_player_image()
+        self.player_sprite = NPCSprite("player", 0.66)
+        self.sprites = pygame.sprite.Group(self.player_sprite)
         self.tmxdata = pytmx.load_pygame(f"data/tiled/{area.name.lower()}.tmx")
         self.world.area = area
         self.world.set_tile_data(self.tmxdata)
@@ -42,6 +44,7 @@ class AreaScreen(Screen):
                 PauseScreen(self.ui_manager, self.screen_manager, self.world)
             )
         if not self.world.move_action:
+            self.player_sprite.stop()
             self.handle_move()
         result = self.world.update(dt)
         if result.encounter:
@@ -57,6 +60,10 @@ class AreaScreen(Screen):
                 result.area_change,
             )
             self.screen_manager.push(screen)
+        player_width, player_height = self.player_sprite.image.get_size()
+        self.player_sprite.rect.left = WINDOW_SIZE[0] // 2 - player_width // 2
+        self.player_sprite.rect.top = WINDOW_SIZE[1] // 2 - player_height // 2
+        self.sprites.update()
 
     def handle_move(self):
         move_kwargs = {}
@@ -70,7 +77,7 @@ class AreaScreen(Screen):
             or pygame.key.get_pressed()[pygame.K_d]
         ):
             move_kwargs["right"] = True
-        if (
+        elif (
             pygame.key.get_pressed()[pygame.K_UP]
             or pygame.key.get_pressed()[pygame.K_w]
         ):
@@ -86,11 +93,12 @@ class AreaScreen(Screen):
                 or pygame.key.get_pressed()[pygame.K_RSHIFT]
             )
             self.world.move(running=running, **move_kwargs)
+            self.player_sprite.move(**move_kwargs)
 
     def draw(self, surface: pygame.Surface):
         surface.blit(self.background, (0, 0))
         self.draw_terrain(surface)
-        self.draw_player(surface)
+        self.sprites.draw(surface)
 
     def draw_terrain(self, surface):
         px = self.world.player.x
@@ -113,21 +121,3 @@ class AreaScreen(Screen):
                                 WINDOW_SIZE[1] // 2 + y * TILE_SIZE - py,
                             ),
                         )
-
-    def draw_player(self, surface):
-        surface.blit(
-            self.player_image,
-            (
-                WINDOW_SIZE[0] // 2 - self.player_image.get_width() // 2,
-                WINDOW_SIZE[1] // 2 - self.player_image.get_height() // 2,
-            ),
-        )
-
-    def load_player_image(self):
-        image = pygame.image.load(
-            "data/sprites/overworld/player_standing.png"
-        ).convert_alpha()
-        size = image.get_size()
-        self.player_image = pygame.transform.scale(
-            image, (int(size[0] * 2), int(size[1] * 2))
-        )
