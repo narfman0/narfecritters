@@ -10,7 +10,6 @@
   * Model multi-turn moves
   * Disallow unsupported moves
   * Learn moves on levelup
-* Saving/loading
 * Build world to encompass paths leading to areas with the three legendary birds
   * Start at a starter zone, with three directions leading to more specific typed pokemon
   * Moderate zone holds critters that can potentially counter a separate path's legendary when leveled up
