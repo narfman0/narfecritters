@@ -4,7 +4,6 @@
 
 * Menu refinement - Sorting lists
 * Blackout respawns at healing center
-* NPC walking animations
 * Moves
   * Model move buffs+debuffs
   * Model multi-turn moves
