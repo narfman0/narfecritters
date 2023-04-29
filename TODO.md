@@ -2,7 +2,6 @@
 
 ## Required
 
-* Menu refinement - Sorting lists
 * Blackout respawns at healing center
 * Moves
   * Model move buffs+debuffs
@@ -22,7 +21,14 @@
 
 ## Stretch goals
 
-* Button+menu styling
+* Aesthetics
+  * Cleaner screen transitions
+  * Menu Backgrounds
+    * Choosing pokemon
+    * Battles
+    * Pause menu
+  * Button+menu styling
+  * Menu refinement - Sorting lists
 * Multiplayer
 * Random dungeons/regions
 * Economy
