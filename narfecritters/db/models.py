@@ -96,6 +96,10 @@ class Critter(YAMLWizard):
         return self.name.replace("-", " ").capitalize()
 
     @property
+    def fainted(self):
+        return self.current_hp <= 0
+
+    @property
     def level(self):
         # only modeling medium-fast experience group for now
         return self.level_for_medium_fast_xp(self.experience)
@@ -161,7 +165,7 @@ class NPC:
     @property
     def active_critter_index(self):
         for active_critter_idx in self.active_critters:
-            if self.critters[active_critter_idx].current_hp > 0:
+            if not self.critters[active_critter_idx].fainted:
                 return active_critter_idx
         return None
 

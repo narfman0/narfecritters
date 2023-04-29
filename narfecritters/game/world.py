@@ -19,9 +19,9 @@ TYPES = Types.load()  # this is a trick for performance and usability in tests, 
 @dataclass
 class Encounter:
     enemy: Critter
+    active_critter_index: int
     order_player_first: bool = True
     run_attempts: int = 0
-    active_critter_index: int = 0
 
 
 @dataclass
@@ -311,13 +311,8 @@ class World:
         if self.active_critter.current_hp <= 0:
             information.append(f"Your {self.active_critter.name} fainted!")
             LOGGER.info(information[-1])
-            next_nonfainted_active_critter_idx = None
-            for active_critter_idx in self.player.active_critters:
-                if self.player.critters[active_critter_idx].current_hp > 0:
-                    next_nonfainted_active_critter_idx = active_critter_idx
-            if next_nonfainted_active_critter_idx:
-                self.encounter.active_critter_index = next_nonfainted_active_critter_idx
-            else:
+            self.encounter.active_critter_index = self.player.active_critter_index
+            if self.encounter.active_critter_index is None:
                 self.end_encounter(False, information)
             return True
         return False
@@ -384,9 +379,7 @@ class World:
     @property
     def active_critter(self) -> Critter:
         if self.encounter:
-            return self.player.critters[
-                self.player.active_critters[self.encounter.active_critter_index]
-            ]
+            return self.player.critters[self.encounter.active_critter_index]
         return self.player.active_critter
 
     @property

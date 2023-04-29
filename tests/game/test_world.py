@@ -25,7 +25,7 @@ class TestWorld(unittest.TestCase):
         critter2 = encyclopedia.create(random, id=1, level=5)
         world = World(encyclopedia=encyclopedia, random=random)
         world.player.add_critter(critter1)
-        world.encounter = Encounter(critter2)
+        world.encounter = Encounter(critter2, active_critter_index=0)
 
         player_move = world.moves.find_by_id(critter1.moves[0].id)
         self.assertEqual(5, critter1.level)
