@@ -7,6 +7,7 @@ from pygame_gui.elements import UIButton
 
 from narfecritters.ui.screen import Screen, ScreenManager
 from narfecritters.ui.pause.critters_screen import CrittersScreen
+from narfecritters.ui.pause.load_screen import LoadScreen
 from narfecritters.ui.pause.save_screen import SaveScreen
 from narfecritters.ui.settings import WINDOW_SIZE
 from narfecritters.game.world import World
@@ -18,6 +19,7 @@ LOGGER = logging.getLogger(__name__)
 class MenuOptions(Enum):
     CRITTERS = 1
     BACK = 2
+    LOAD = 5
     SAVE = 4
     QUIT = 3
 
@@ -44,6 +46,10 @@ class PauseScreen(Screen):
                 if event.ui_element.text == MenuOptions.SAVE.name:
                     self.screen_manager.push(
                         SaveScreen(self.ui_manager, self.screen_manager, self.world)
+                    )
+                if event.ui_element.text == MenuOptions.LOAD.name:
+                    self.screen_manager.push(
+                        LoadScreen(self.ui_manager, self.screen_manager, self.world)
                     )
                 if event.ui_element.text == MenuOptions.QUIT.name:
                     exit()

@@ -84,10 +84,10 @@ class Critter(YAMLWizard):
     moves: list[CritterMove]
     capture_rate: Optional[int]
     flavor_text: Optional[str]
-    ivs: Optional[Stats] = field(default=False, init=False)
-    evs: Optional[Stats] = field(default=False, init=False)
-    current_hp: Optional[int] = field(default=False, init=False)
-    experience: Optional[int] = field(default=False, init=False)
+    ivs: Optional[Stats] = field(default=Stats, init=False)
+    evs: Optional[Stats] = field(default=Stats, init=False)
+    current_hp: Optional[int] = field(default=0, init=False)
+    experience: Optional[int] = field(default=0, init=False)
 
     def take_damage(self, damage: int):
         self.current_hp = max(0, self.current_hp - damage)

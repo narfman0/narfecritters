@@ -72,13 +72,7 @@ class SaveScreen(Screen):
         self.initialize_slot_buttons()
 
     def kill(self):
-        self.kill_slot_buttons()
-        self.kill_menu_buttons()
-
-    def kill_slot_buttons(self):
         self.kill_elements(self.slot_buttons)
-
-    def kill_menu_buttons(self):
         self.kill_elements(self.menu_buttons)
 
     def draw(self, surface: pygame.Surface):
