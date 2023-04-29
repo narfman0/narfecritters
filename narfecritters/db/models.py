@@ -1,5 +1,6 @@
 import copy
 from enum import Enum
+import os
 from typing import Optional
 from random import Random
 from functools import lru_cache
@@ -173,6 +174,21 @@ class NPC:
         self.critters.append(critter)
         if len(self.active_critters) < ACTIVE_CRITTERS_MAX:
             self.active_critters.append(len(self.critters) - 1)
+
+
+@dataclass
+class Save(YAMLWizard):
+    SLOT_COUNT = 6
+    players: list[NPC | None]
+
+    def save(self):
+        return self.to_yaml_file(f"data/db/save.yml")
+
+    @classmethod
+    def load(cls):
+        if not os.path.exists("data/db/save.yml"):
+            return Save(players=[None] * Save.SLOT_COUNT)
+        return Save.from_yaml_file("data/db/save.yml")
 
 
 @dataclass
