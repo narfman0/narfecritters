@@ -75,7 +75,7 @@ class CritterMove:
 
 
 @dataclass
-class Critter(YAMLWizard):
+class Species(YAMLWizard):
     id: int
     name: str
     base_experience: int
@@ -84,17 +84,21 @@ class Critter(YAMLWizard):
     moves: list[CritterMove]
     capture_rate: Optional[int]
     flavor_text: Optional[str]
-    ivs: Optional[Stats] = field(default=Stats, init=False)
-    evs: Optional[Stats] = field(default=Stats, init=False)
-    current_hp: Optional[int] = field(default=0, init=False)
-    experience: Optional[int] = field(default=0, init=False)
-
-    def take_damage(self, damage: int):
-        self.current_hp = max(0, self.current_hp - damage)
 
     @property
     def name_pretty(self):
         return self.name.replace("-", " ").capitalize()
+
+
+@dataclass
+class Critter(Species, YAMLWizard):
+    ivs: Optional[Stats] = None
+    evs: Optional[Stats] = None
+    current_hp: Optional[int] = None
+    experience: Optional[int] = None
+
+    def take_damage(self, damage: int):
+        self.current_hp = max(0, self.current_hp - damage)
 
     @property
     def fainted(self):
@@ -232,31 +236,29 @@ class Moves(YAMLWizard):
 @dataclass
 class Encyclopedia(YAMLWizard):
     name_to_id: dict[str, int]
-    id_to_critter: dict[int, Critter] = field(default_factory=dict)
+    id_to_species: dict[int, Species] = field(default_factory=dict)
 
     @classmethod
     def load(cls):
         return Encyclopedia.from_yaml_file("data/db/encyclopedia.yml")
 
     def find_by_id(self, id: int):
-        if id not in self.id_to_critter:
-            self.id_to_critter[id] = Critter.from_yaml_file(
-                f"data/db/critters/{id}.yml"
-            )
-        return self.id_to_critter[id]
+        if id not in self.id_to_species:
+            self.id_to_species[id] = Species.from_yaml_file(f"data/db/species/{id}.yml")
+        return self.id_to_species[id]
 
     def find_by_name(self, name):
         return self.find_by_id(self.name_to_id[name])
 
     def create(self, random: Random, name=None, id=None, level=0) -> Critter:
-        critter = None
+        species = None
         if id:
-            critter = self.find_by_id(id)
+            species = self.find_by_id(id)
         elif name:
-            critter = self.find_by_name(name)
-        if critter is None:
-            raise Exception(f"Critter name {name} or id {id} not found")
-        instance = copy.copy(critter)
+            species = self.find_by_name(name)
+        if species is None:
+            raise Exception(f"Species name {name} or id {id} not found")
+        instance = Critter(**species.__dict__)
         instance.evs = Stats()
         instance.ivs = Stats.create_random_ivs(random)
         # only modeling medium-fast xp group
