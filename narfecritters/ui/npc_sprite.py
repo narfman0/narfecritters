@@ -11,11 +11,12 @@ class Direction(Enum):
 
 
 class NPCSprite(pygame.sprite.Sprite):
-    SUBFRAMES_PER_FRAME = 6
+    SUBFRAMES_PER_FRAME = 8
 
-    def __init__(self, sprite_name, scale=1):
+    def __init__(self, sprite_name, scale=1, offset=(0, 0)):
         super(NPCSprite, self).__init__()
         self.sprite_name = sprite_name
+        self.offset = offset
 
         self.images: dict[list[pygame.Surface]] = {}
         for direction in Direction:
@@ -37,7 +38,7 @@ class NPCSprite(pygame.sprite.Sprite):
 
         self.active_images = self.images[Direction.DOWN]
         self.image = self.active_images[self.index]
-        width, height = image.get_size()
+        width, height = self.image.get_size()
         self.rect = pygame.Rect(0, 0, width, height)
 
     def move(self, up=False, down=False, left=False, right=False):
@@ -71,3 +72,8 @@ class NPCSprite(pygame.sprite.Sprite):
             self.index = 0
 
         self.image = self.active_images[self.index]
+
+    def set_position(self, x, y):
+        width, height = self.image.get_size()
+        self.rect.left = x + self.offset[0] - width // 2
+        self.rect.top = y + self.offset[1] - height // 2

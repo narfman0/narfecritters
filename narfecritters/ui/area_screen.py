@@ -29,7 +29,7 @@ class AreaScreen(Screen):
         super().__init__(ui_manager)
         self.screen_manager = screen_manager
         self.world = world
-        self.player_sprite = NPCSprite("player", 0.66)
+        self.player_sprite = NPCSprite("player", 0.8, offset=(0, -4))
         self.sprites = pygame.sprite.Group(self.player_sprite)
         self.world.set_area(area)
 
@@ -58,9 +58,7 @@ class AreaScreen(Screen):
                 result.area_change,
             )
             self.screen_manager.push(screen)
-        player_width, player_height = self.player_sprite.image.get_size()
-        self.player_sprite.rect.left = WINDOW_SIZE[0] // 2 - player_width // 2
-        self.player_sprite.rect.top = WINDOW_SIZE[1] // 2 - player_height // 2
+        self.player_sprite.set_position(WINDOW_SIZE[0] // 2, WINDOW_SIZE[1] // 2)
         self.sprites.update()
 
     def handle_move(self):
