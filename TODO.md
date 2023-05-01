@@ -2,7 +2,6 @@
 
 ## Required
 
-* Blackout respawns at healing center
 * Moves
   * Model move buffs+debuffs
   * Model multi-turn moves

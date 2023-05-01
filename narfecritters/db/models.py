@@ -157,6 +157,9 @@ class Critter(Species, YAMLWizard):
 class NPC:
     x: int = 0
     y: int = 0
+    respawn_x: int = 0
+    respawn_y: int = 0
+    respawn_area: Optional[Area] = None
     critters: list[Critter] = field(default_factory=list)
     active_critters: list[int] = field(default_factory=list)
     sprite: Optional[str] = "player"

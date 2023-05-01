@@ -31,9 +31,7 @@ class AreaScreen(Screen):
         self.world = world
         self.player_sprite = NPCSprite("player", 0.66)
         self.sprites = pygame.sprite.Group(self.player_sprite)
-        self.tmxdata = pytmx.load_pygame(f"data/tiled/{area.name.lower()}.tmx")
-        self.world.area = area
-        self.world.set_tile_data(self.tmxdata)
+        self.world.set_area(area)
 
     def update(self, dt: float):
         if (
@@ -106,13 +104,13 @@ class AreaScreen(Screen):
         tile_x = int(px // TILE_SIZE)
         tile_y = int(py // TILE_SIZE)
         tile_x_begin = max(0, tile_x - TILE_VIEW_SPAN)
-        tile_x_end = min(tile_x + TILE_VIEW_SPAN, self.tmxdata.width)
+        tile_x_end = min(tile_x + TILE_VIEW_SPAN, self.world.tmxdata.width)
         tile_y_begin = max(0, tile_y - TILE_VIEW_SPAN)
-        tile_y_end = min(tile_y + TILE_VIEW_SPAN, self.tmxdata.height)
+        tile_y_end = min(tile_y + TILE_VIEW_SPAN, self.world.tmxdata.height)
         for layer in [0, 1]:
             for x in range(tile_x_begin, tile_x_end):
                 for y in range(tile_y_begin, tile_y_end):
-                    image = self.tmxdata.get_tile_image(x, y, layer)
+                    image = self.world.tmxdata.get_tile_image(x, y, layer)
                     if image:
                         surface.blit(
                             image,

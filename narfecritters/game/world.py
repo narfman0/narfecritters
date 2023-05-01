@@ -63,7 +63,7 @@ class World:
         self.player = NPC()
         self.encounter: Optional[Encounter] = None
         self.area: Optional[Area] = None
-        self._tmxdata: Optional[pytmx.TiledMap] = None
+        self.tmxdata: Optional[pytmx.TiledMap] = None
         self.candidate_encounters: list[int] = []
         self.move_action = None
 
@@ -87,10 +87,19 @@ class World:
                 if destination_area:
                     return MoveResult(area_change=destination_area)
                 if self.active_critter is None:
-                    LOGGER.warn("All pokemon fainted!")
+                    LOGGER.warn("All critters fainted!")
+                    self.respawn()
                 elif self.detect_and_handle_random_encounter():
                     return MoveResult(encounter=True)
         return MoveResult()
+
+    def respawn(self):
+        """Heal critters and udate player location, generally due to blackout"""
+        self.player.x = self.player.respawn_x
+        self.player.y = self.player.respawn_y
+        self.set_area(self.player.respawn_area)
+        for critter in self.player.critters:
+            critter.current_hp = critter.max_hp
 
     def move(
         self,
@@ -123,7 +132,7 @@ class World:
         px = int(self.player.x // TILE_SIZE)
         py = int(self.player.y // TILE_SIZE)
         for layer in range(0, 2):
-            tile_props = self._tmxdata.get_tile_properties(px, py, layer) or {}
+            tile_props = self.tmxdata.get_tile_properties(px, py, layer) or {}
             if (
                 tile_props.get("type") == "tallgrass"
                 and self.random.random() < ENCOUNTER_PROBABILITY
@@ -148,13 +157,14 @@ class World:
         px = int(self.player.x // TILE_SIZE)
         py = int(self.player.y // TILE_SIZE)
         for layer in range(0, 2):
-            tile_props = self._tmxdata.get_tile_properties(px, py, layer) or {}
+            tile_props = self.tmxdata.get_tile_properties(px, py, layer) or {}
             if tile_props.get("type") == "heal":
                 for critters in self.player.critters:
                     critters.current_hp = critters.max_hp
+                self.update_respawn()
                 LOGGER.info("Healed!")
             if tile_props.get("type") == "transition":
-                object = self._tmxdata.get_object_by_name(
+                object = self.tmxdata.get_object_by_name(
                     f"transition,{self.area.name.lower()},{px},{py}"
                 )
                 destination_area = Area[object.properties["Destination"].upper()]
@@ -169,7 +179,7 @@ class World:
         px = target_x // TILE_SIZE
         py = target_y // TILE_SIZE
         for layer in range(0, 2):
-            tile_props = self._tmxdata.get_tile_properties(px, py, layer) or {}
+            tile_props = self.tmxdata.get_tile_properties(px, py, layer) or {}
             if tile_props.get("colliders"):
                 return True
         return False
@@ -178,6 +188,13 @@ class World:
         if win:
             self.grant_experience(information)
         self.encounter = None
+        if self.active_critter is None:
+            self.respawn()
+
+    def update_respawn(self):
+        self.player.respawn_area = self.area
+        self.player.respawn_x = self.player.x
+        self.player.respawn_y = self.player.y
 
     def grant_experience(self, information: list[str]):
         # xp gain formula described: https://bulbapedia.bulbagarden.net/wiki/Experience
@@ -351,14 +368,18 @@ class World:
             type_factor=type_factor,
         )
 
-    def set_tile_data(self, tmxdata: pytmx.TiledMap):
-        if self._tmxdata is None:
-            start_x, start_y = map(int, tmxdata.properties.get("StartTile").split(","))
+    def set_area(self, area: Area):
+        self.area = area
+        self.tmxdata = pytmx.load_pygame(f"data/tiled/{area.name.lower()}.tmx")
+        if not self.player.respawn_area:
+            start_x, start_y = map(
+                int, self.tmxdata.properties.get("StartTile").split(",")
+            )
             self.player.x = TILE_SIZE * start_x + TILE_SIZE // 2
             self.player.y = TILE_SIZE * start_y + TILE_SIZE // 2
-        self._tmxdata = tmxdata
+            self.update_respawn()
         self.candidate_encounters: list[int] = []
-        encounters_str = tmxdata.properties.get("Encounters")
+        encounters_str = self.tmxdata.properties.get("Encounters")
         if not encounters_str:
             return
         for encounter in encounters_str.split("\n"):
