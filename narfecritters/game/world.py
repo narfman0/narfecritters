@@ -56,8 +56,8 @@ class AreaEncounter:
 
 
 class World:
-    def __init__(self, encyclopedia=None, random=None):
-        self.encyclopedia = encyclopedia if encyclopedia else Encyclopedia.load()
+    def __init__(self, random=None):
+        self.encyclopedia = Encyclopedia.load()
         self.moves = Moves.load()
         self.random = random if random else Random()
         self.player = NPC()
