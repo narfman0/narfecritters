@@ -17,6 +17,21 @@ class TestWorld(unittest.TestCase):
         ember = Move(id=2, name="ember", power=35, type_id=10)
         self.assertEqual(14, world.attack(critter1, critter2, ember).damage)
 
+    def test_debuff(self):
+        random = Random(x=12345)
+        world = World(random=random)
+        critter2 = world.encyclopedia.create(random, id=1, level=5)
+        critter1 = world.encyclopedia.create(random, id=4, level=5)
+        world.player.add_critter(critter1)
+        move = Move(
+            id=45,
+            name="growl",
+            type_id=1,
+            stat_changes=[StatChange(amount=-1, name="attack")],
+        )
+        world.encounter = Encounter(critter2, active_critter_index=0)
+        world.turn_player(move.name, [])
+
     def test_turn(self):
         random = Random(x=12345)
         world = World(random=random)

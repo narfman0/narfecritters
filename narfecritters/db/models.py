@@ -30,11 +30,18 @@ class Type:
 
 
 @dataclass
+class StatChange:
+    amount: int
+    name: str
+
+
+@dataclass
 class Move:
     id: int
     name: str
-    power: int
     type_id: int
+    power: Optional[int] = None
+    stat_changes: list[StatChange] = field(default_factory=list)
 
     @property
     def name_pretty(self):

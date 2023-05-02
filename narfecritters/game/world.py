@@ -39,8 +39,8 @@ class MoveAction:
 
 @dataclass
 class AttackResult:
-    damage: int
-    type_factor: float
+    damage: Optional[int] = None
+    type_factor: Optional[float] = None
 
 
 @dataclass
@@ -295,17 +295,17 @@ class World:
     def turn_player(self, move_name, information: list[str]):
         move = self.moves.find_by_name(move_name)
         attack_result = self.attack(self.active_critter, self.enemy, move)
-        enemy_damage = attack_result.damage
-        self.enemy.take_damage(enemy_damage)
-
-        information_suffix = self.get_type_effectiveness_response_suffix(
-            attack_result.type_factor
-        )
-        information.append(
-            f"Enemy {self.enemy.name} took {enemy_damage} dmg from {move_name}."
-            + information_suffix
-        )
-        LOGGER.info(information[-1])
+        if attack_result.damage:
+            enemy_damage = attack_result.damage
+            self.enemy.take_damage(enemy_damage)
+            information_suffix = self.get_type_effectiveness_response_suffix(
+                attack_result.type_factor
+            )
+            information.append(
+                f"Enemy {self.enemy.name} took {enemy_damage} dmg from {move_name}."
+                + information_suffix
+            )
+            LOGGER.info(information[-1])
         if self.enemy.current_hp <= 0:
             information.append(f"Enemy {self.enemy.name} fainted!")
             LOGGER.info(information[-1])
@@ -336,6 +336,8 @@ class World:
 
     def attack(self, attacker: Critter, defender: Critter, move: Move):
         """Follows gen5 dmg formula as defined: https://bulbapedia.bulbagarden.net/wiki/Damage#Generation_V_onward"""
+        if move.power is None:
+            return AttackResult()  # TODO support non-power based attacks
         base_damage = (
             round(
                 (
