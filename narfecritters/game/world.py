@@ -22,6 +22,8 @@ class Encounter:
     active_critter_index: int
     order_player_first: bool = True
     run_attempts: int = 0
+    enemy_stat_stages: Stats = Stats()
+    player_stat_stages: Stats = Stats()
 
 
 @dataclass
@@ -337,7 +339,21 @@ class World:
     def attack(self, attacker: Critter, defender: Critter, move: Move):
         """Follows gen5 dmg formula as defined: https://bulbapedia.bulbagarden.net/wiki/Damage#Generation_V_onward"""
         if move.power is None:
-            return AttackResult()  # TODO support non-power based attacks
+            if move.stat_changes:
+                # TODO implement buffs, return information, add targets, make this cleaner
+                defender_stat_stages = (
+                    self.encounter.enemy_stat_stages
+                    if attacker == self.active_critter
+                    else self.encounter.player_stat_stages
+                )
+                for stat_change in move.stat_changes:
+                    current_stat = getattr(defender_stat_stages, stat_change.name)
+                    setattr(
+                        defender_stat_stages,
+                        stat_change.name,
+                        current_stat + stat_change.amount,
+                    )
+            return AttackResult()
         base_damage = (
             round(
                 (

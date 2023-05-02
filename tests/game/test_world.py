@@ -31,6 +31,7 @@ class TestWorld(unittest.TestCase):
         )
         world.encounter = Encounter(critter2, active_critter_index=0)
         world.turn_player(move.name, [])
+        self.assertEqual(-1, world.encounter.enemy_stat_stages.attack)
 
     def test_turn(self):
         random = Random(x=12345)
