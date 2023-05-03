@@ -247,7 +247,11 @@ class World:
             self.end_encounter(True, information)
         else:
             information.append(f"Failed to catch {self.enemy.name}.")
-            fainted = self.turn_enemy(information)
+            fainted = self.use_move(
+                defender=self.active_critter,
+                attacker=self.enemy,
+                information=information,
+            )
         return TurnResult(information, fainted)
 
     def shake_check(self, a) -> bool:
@@ -275,66 +279,80 @@ class World:
         else:
             information.append(f"{self.active_critter.name} failed to run away.")
             self.encounter.run_attempts += 1
-            fainted = self.turn_enemy(information)
+            fainted = self.use_move(
+                defender=self.active_critter,
+                attacker=self.enemy,
+                information=information,
+            )
         return TurnResult(information, fainted)
 
     def turn(self, move_name) -> TurnResult:
         """Take each critters turn. Observes speeds for priority order."""
         information: list[str] = []
         fainted = False
+        move = self.moves.find_by_name(move_name)
         if self.encounter.order_player_first:
-            self.turn_player(move_name, information)
+            self.use_move(
+                defender=self.enemy,
+                attacker=self.active_critter,
+                information=information,
+                move=move,
+            )
         else:
-            fainted = self.turn_enemy(information)
+            fainted = self.use_move(
+                defender=self.active_critter,
+                attacker=self.enemy,
+                information=information,
+            )
 
         if self.encounter:
             if self.encounter.order_player_first:
-                fainted = self.turn_enemy(information)
+                fainted = self.use_move(
+                    defender=self.active_critter,
+                    attacker=self.enemy,
+                    information=information,
+                )
             else:
-                self.turn_player(move_name, information)
+                self.use_move(
+                    defender=self.enemy,
+                    attacker=self.active_critter,
+                    information=information,
+                    move=move,
+                )
         return TurnResult(information, fainted)
 
-    def turn_player(self, move_name, information: list[str]):
-        move = self.moves.find_by_name(move_name)
-        attack_result = self.attack(self.active_critter, self.enemy, move)
-        if attack_result.damage:
-            enemy_damage = attack_result.damage
-            self.enemy.take_damage(enemy_damage)
-            information_suffix = self.get_type_effectiveness_response_suffix(
-                attack_result.type_factor
-            )
-            information.append(
-                f"Enemy {self.enemy.name} took {enemy_damage} dmg from {move_name}."
-                + information_suffix
-            )
-            LOGGER.info(information[-1])
-        if self.enemy.current_hp <= 0:
-            information.append(f"Enemy {self.enemy.name} fainted!")
-            LOGGER.info(information[-1])
-            self.end_encounter(True, information)
-
-    def turn_enemy(self, information: list[str], move: Move = None) -> bool:
+    def use_move(
+        self,
+        attacker: Critter,
+        defender: Critter,
+        information: list[str],
+        move: Optional[Move] = None,
+    ) -> bool:
+        """Use a move, if not given, choose randomly"""
         if not move:
-            move = self.moves.find_by_id(self.random.choice(self.enemy.moves).id)
-        attack_result = self.attack(self.enemy, self.active_critter, move)
+            move = self.moves.find_by_id(self.random.choice(attacker.moves).id)
+        attack_result = self.attack(attacker, defender, move)
         if attack_result.damage:
             player_damage = attack_result.damage
-            self.active_critter.take_damage(player_damage)
+            defender.take_damage(player_damage)
 
             information_suffix = self.get_type_effectiveness_response_suffix(
                 attack_result.type_factor
             )
             information.append(
-                f"{self.active_critter.name} took {player_damage} dmg from {move.name}. "
+                f"{defender.name} took {player_damage} dmg from {move.name}. "
                 + information_suffix
             )
             LOGGER.info(information[-1])
-        if self.active_critter.current_hp <= 0:
-            information.append(f"Your {self.active_critter.name} fainted!")
+        if defender.current_hp <= 0:
+            information.append(f"{defender.name} fainted!")
             LOGGER.info(information[-1])
-            self.encounter.active_critter_index = self.player.active_critter_index
-            if self.encounter.active_critter_index is None:
-                self.end_encounter(False, information)
+            if defender in self.player.critters:
+                self.encounter.active_critter_index = self.player.active_critter_index
+                if self.encounter.active_critter_index is None:
+                    self.end_encounter(False, information)
+            else:
+                self.end_encounter(True, information)
             return True
         return False
 

@@ -67,7 +67,11 @@ class BattleScreen(Screen):
                 self.world.encounter.active_critter_index = critter_idx
                 self.reload_self_critter_image()
                 information: list[str] = []
-                fainted = self.world.turn_enemy(information)
+                fainted = self.world.use_move(
+                    defender=self.world.active_critter,
+                    attacker=self.world.enemy,
+                    information=information,
+                )
                 if fainted:
                     # TODO itd be nice to do this after the information elements catch up
                     self.reload_self_critter_image()

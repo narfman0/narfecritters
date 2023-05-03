@@ -32,9 +32,19 @@ class TestWorld(unittest.TestCase):
             ],
         )
         world.encounter = Encounter(critter2, active_critter_index=0)
-        world.turn_player(move.name, [])
+        world.use_move(
+            defender=critter2,
+            attacker=critter1,
+            information=[],
+            move=move,
+        )
         self.assertEqual(-1, world.encounter.enemy_stat_stages.attack)
-        world.turn_enemy([], move)
+        world.use_move(
+            defender=critter1,
+            attacker=critter2,
+            information=[],
+            move=move,
+        )
         self.assertEqual(-1, world.encounter.player_stat_stages.attack)
 
     def test_turn(self):
@@ -48,15 +58,22 @@ class TestWorld(unittest.TestCase):
         player_move = world.moves.find_by_id(critter1.moves[0].id)
         self.assertEqual(5, critter1.level)
         self.assertEqual(125, critter1.experience)
-        world.turn_player(player_move.name, [])
-        world.turn_enemy([])
+        world.use_move(
+            defender=critter2,
+            attacker=critter1,
+            information=[],
+            move=player_move,
+        )
+        world.use_move(
+            defender=critter1,
+            attacker=critter2,
+            information=[],
+        )
         self.assertEqual(11, critter1.current_hp)
         self.assertEqual(16, critter2.current_hp)
 
-        world.turn_player(player_move.name, [])
-        world.turn_player(player_move.name, [])
-        world.turn_player(player_move.name, [])
-        world.turn_player(player_move.name, [])
+        for x in range(4):
+            world.use_move(critter1, critter2, [], player_move)
         self.assertEqual(0, critter2.current_hp)
         self.assertEqual(190, critter1.experience)
 
