@@ -224,7 +224,7 @@ class World:
         https://bulbapedia.bulbagarden.net/wiki/Catch_rate#Capture_method_.28Generation_V.2B.29
         """
         information: list[str] = []
-        fainted = False
+        player_critter = self.active_critter
 
         bonus_ball = 1
         status_bonus = 1  # TODO
@@ -241,12 +241,12 @@ class World:
             self.end_encounter(True, information)
         else:
             information.append(f"Failed to catch {self.enemy.name}.")
-            fainted = self.use_move(
-                defender=self.active_critter,
+            self.use_move(
+                defender=player_critter,
                 attacker=self.enemy,
                 information=information,
             )
-        return TurnResult(information, fainted)
+        return TurnResult(information, player_critter.fainted)
 
     def shake_check(self, a) -> bool:
         """Perform 3 shake checkes as described:
@@ -261,59 +261,55 @@ class World:
     def run(self) -> TurnResult:
         """Attempt to flee the attacking critter"""
         information: list[str] = []
-        fainted = False
+        player_critter = self.active_critter
 
         odds_escape = (
-            int((self.active_critter.speed * 128) / self.enemy.speed)
+            int((player_critter.speed * 128) / self.enemy.speed)
             + 30 * self.encounter.run_attempts
         ) % 256
         if odds_escape >= self.random.randint(0, 255):
-            information.append(f"{self.active_critter.name} escaped successfully!")
+            information.append(f"{player_critter.name} escaped successfully!")
             self.end_encounter(False, information)
         else:
-            information.append(f"{self.active_critter.name} failed to run away.")
+            information.append(f"{player_critter.name} failed to run away.")
             self.encounter.run_attempts += 1
-            fainted = self.use_move(
-                defender=self.active_critter,
+            self.use_move(
+                defender=player_critter,
                 attacker=self.enemy,
                 information=information,
             )
-        return TurnResult(information, fainted)
+        return TurnResult(information, player_critter.fainted)
 
     def turn(self, move_name) -> TurnResult:
         """Take each critters turn. Observes speeds for priority order."""
         information: list[str] = []
-        fainted = False
-        move = self.moves.find_by_name(move_name)
+        player_move = self.moves.find_by_name(move_name)
+        enemy_move = self.moves.find_by_id(self.random.choice(self.enemy.moves).id)
+        player_critter = self.active_critter
         if self.encounter.order_player_first:
-            self.use_move(
-                defender=self.enemy,
-                attacker=self.active_critter,
-                information=information,
-                move=move,
-            )
+            first = player_critter
+            first_move = player_move
+            second = self.enemy
+            second_move = enemy_move
         else:
-            fainted = self.use_move(
-                defender=self.active_critter,
-                attacker=self.enemy,
+            first = self.enemy
+            first_move = enemy_move
+            second = player_critter
+            second_move = player_move
+        self.use_move(
+            defender=second,
+            attacker=first,
+            information=information,
+            move=first_move,
+        )
+        if not second.fainted:
+            self.use_move(
+                defender=first,
+                attacker=second,
                 information=information,
+                move=second_move,
             )
-
-        if self.encounter:
-            if self.encounter.order_player_first:
-                fainted = self.use_move(
-                    defender=self.active_critter,
-                    attacker=self.enemy,
-                    information=information,
-                )
-            else:
-                self.use_move(
-                    defender=self.enemy,
-                    attacker=self.active_critter,
-                    information=information,
-                    move=move,
-                )
-        return TurnResult(information, fainted)
+        return TurnResult(information, player_critter.fainted)
 
     def use_move(
         self,
@@ -321,7 +317,7 @@ class World:
         defender: Critter,
         information: list[str],
         move: Optional[Move] = None,
-    ) -> bool:
+    ):
         """Use a move, if not given, choose randomly"""
         if not move:
             move = self.moves.find_by_id(self.random.choice(attacker.moves).id)
@@ -347,9 +343,7 @@ class World:
                     self.end_encounter(False, information)
             else:
                 self.end_encounter(True, information)
-            return True
         self.move_stat_changes(attacker, defender, move)
-        return False
 
     def move_stat_changes(self, attacker: Critter, defender: Critter, move: Move):
         if not move.stat_changes:
