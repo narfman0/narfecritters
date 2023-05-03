@@ -7,7 +7,7 @@ from pygame.math import Vector2
 import pytmx
 
 from narfecritters.ui.settings import TILE_SIZE
-from narfecritters.db.models import *
+from narfecritters.models import *
 from narfecritters.game.move_damage import calculate_move_damage
 
 LOGGER = logging.getLogger(__name__)

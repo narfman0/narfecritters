@@ -7,7 +7,7 @@ from pygame_gui.elements import UIButton, UIPanel, UIScrollingContainer
 
 from narfecritters.ui.screen import Screen, ScreenManager
 from narfecritters.ui.settings import WINDOW_SIZE
-from narfecritters.db.models import ACTIVE_CRITTERS_MAX
+from narfecritters.models import ACTIVE_CRITTERS_MAX
 from narfecritters.game.world import World
 
 

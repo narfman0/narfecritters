@@ -1,7 +1,7 @@
 from random import Random
 import unittest
 
-from narfecritters.db.models import *
+from narfecritters.models import *
 from narfecritters.game.move_damage import calculate_move_damage
 
 

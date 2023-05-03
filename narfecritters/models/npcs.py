@@ -4,10 +4,10 @@ from typing import Optional
 from dataclasses import dataclass, field
 from dataclass_wizard import YAMLWizard
 
-from narfecritters.db.models.areas import *
-from narfecritters.db.models.critters import *
-from narfecritters.db.models.moves import *
-from narfecritters.db.models.stats import *
+from narfecritters.models.areas import *
+from narfecritters.models.critters import *
+from narfecritters.models.moves import *
+from narfecritters.models.stats import *
 
 ACTIVE_CRITTERS_MAX = 6
 

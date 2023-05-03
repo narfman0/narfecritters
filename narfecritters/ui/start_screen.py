@@ -4,7 +4,7 @@ import pygame
 from pygame_gui import UI_BUTTON_PRESSED, UIManager
 from pygame_gui.elements import UIButton
 
-from narfecritters.db.models import Area
+from narfecritters.models import Area
 from narfecritters.ui.area_screen import AreaScreen
 from narfecritters.ui.screen import Screen, ScreenManager
 from narfecritters.ui.settings import WINDOW_SIZE

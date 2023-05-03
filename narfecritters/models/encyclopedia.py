@@ -3,12 +3,12 @@ from random import Random
 from dataclasses import dataclass, field
 from dataclass_wizard import YAMLWizard
 
-from narfecritters.db.models.areas import *
-from narfecritters.db.models.critters import *
-from narfecritters.db.models.moves import *
-from narfecritters.db.models.npcs import *
-from narfecritters.db.models.stats import *
-from narfecritters.db.models.types import *
+from narfecritters.models.areas import *
+from narfecritters.models.critters import *
+from narfecritters.models.moves import *
+from narfecritters.models.npcs import *
+from narfecritters.models.stats import *
+from narfecritters.models.types import *
 
 
 @dataclass

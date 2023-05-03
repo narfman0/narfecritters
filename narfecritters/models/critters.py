@@ -4,7 +4,7 @@ from functools import lru_cache
 from dataclasses import dataclass
 from dataclass_wizard import YAMLWizard
 
-from narfecritters.db.models.stats import *
+from narfecritters.models.stats import *
 
 
 @dataclass

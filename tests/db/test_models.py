@@ -1,6 +1,6 @@
 import unittest
 
-from narfecritters.db.models import *
+from narfecritters.models import *
 
 
 class TestModels(unittest.TestCase):

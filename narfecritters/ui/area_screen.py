@@ -4,7 +4,7 @@ import pygame
 import pytmx
 from pygame_gui import UIManager
 
-from narfecritters.db.models import Area
+from narfecritters.models import Area
 from narfecritters.game.world import World
 from narfecritters.ui.battle_screen import BattleScreen
 from narfecritters.ui.npc_sprite import NPCSprite

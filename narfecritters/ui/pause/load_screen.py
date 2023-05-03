@@ -8,7 +8,7 @@ from pygame_gui.elements import UIButton
 from narfecritters.ui.screen import Screen, ScreenManager
 from narfecritters.ui.pause.save_screen import SaveScreen
 from narfecritters.ui.settings import WINDOW_SIZE
-from narfecritters.db.models import Save
+from narfecritters.models import Save
 from narfecritters.game.world import World
 
 

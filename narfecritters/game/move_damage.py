@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from narfecritters.db.models import *
+from narfecritters.models import *
 
 TYPES = Types.load()  # this is a trick for performance and usability in tests, refactor
 APPLICABILITY = [
