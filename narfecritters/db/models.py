@@ -54,11 +54,6 @@ class MoveCategory(Enum):
 class StatChange:
     amount: int
     name: str
-    target: MoveTarget
-    crit_rate: int = 0
-    flinch_chance: int = 0
-    healing: int = 0
-    stat_chance: int = 0
 
 
 @dataclass
@@ -66,6 +61,11 @@ class Move:
     id: int
     name: str
     type_id: int
+    target: MoveTarget
+    crit_rate: int
+    flinch_chance: int
+    healing: int
+    stat_chance: int
     category: MoveCategory = MoveCategory.DAMAGE
     power: Optional[int] = None
     stat_changes: list[StatChange] = field(default_factory=list)

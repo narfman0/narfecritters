@@ -17,9 +17,12 @@ class TestWorld(unittest.TestCase):
             name="growl",
             type_id=1,
             category=MoveCategory.NET_GOOD_STATS,
-            stat_changes=[
-                StatChange(amount=-1, name="attack", target=MoveTarget.ALL_OPPONENTS)
-            ],
+            stat_changes=[StatChange(amount=-1, name="attack")],
+            target=MoveTarget.ALL_OPPONENTS,
+            crit_rate=0,
+            flinch_chance=0,
+            healing=0,
+            stat_chance=0,
         )
         world.encounter = Encounter(critter2, active_critter_index=0)
         world.use_move(
