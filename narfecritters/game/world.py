@@ -2,14 +2,13 @@ import logging
 import math
 from dataclasses import dataclass
 from random import Random
-from xml.etree import ElementTree
 
 from pygame.math import Vector2
 import pytmx
 
 from narfecritters.ui.settings import TILE_SIZE
 from narfecritters.db.models import *
-from narfecritters.game.move_damage import move_damage, MoveDamageResult
+from narfecritters.game.move_damage import calculate_move_damage
 
 LOGGER = logging.getLogger(__name__)
 ENCOUNTER_PROBABILITY = 0.1
@@ -318,7 +317,7 @@ class World:
         """Use a move, if not given, choose randomly"""
         if not move:
             move = self.moves.find_by_id(self.random.choice(attacker.moves).id)
-        result = move_damage(attacker, defender, move, self.random)
+        result = calculate_move_damage(attacker, defender, move, self.random)
         if result and result.damage:
             player_damage = result.damage
             defender.take_damage(player_damage)

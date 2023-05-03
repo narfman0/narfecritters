@@ -43,7 +43,7 @@ def calculate_type_factor(defender: Critter, move: Move):
     return type_factor
 
 
-def move_damage(
+def calculate_move_damage(
     attacker: Critter, defender: Critter, move: Move, random: Random
 ) -> Optional[MoveDamageResult]:
     """Follows gen5 dmg formula as defined: https://bulbapedia.bulbagarden.net/wiki/Damage#Generation_V_onward"""
