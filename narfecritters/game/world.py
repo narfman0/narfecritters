@@ -9,11 +9,11 @@ import pytmx
 
 from narfecritters.ui.settings import TILE_SIZE
 from narfecritters.db.models import *
+from narfecritters.game.move_damage import move_damage, MoveDamageResult
 
 LOGGER = logging.getLogger(__name__)
 ENCOUNTER_PROBABILITY = 0.1
 MOVE_SPEED = 200
-TYPES = Types.load()  # this is a trick for performance and usability in tests, refactor
 
 
 @dataclass
@@ -37,12 +37,6 @@ class MoveAction:
     target_x: int
     target_y: int
     running: bool
-
-
-@dataclass
-class AttackResult:
-    damage: Optional[int] = None
-    type_factor: Optional[float] = None
 
 
 @dataclass
@@ -331,13 +325,13 @@ class World:
         """Use a move, if not given, choose randomly"""
         if not move:
             move = self.moves.find_by_id(self.random.choice(attacker.moves).id)
-        attack_result = self.attack(attacker, defender, move)
-        if attack_result and attack_result.damage:
-            player_damage = attack_result.damage
+        result = move_damage(attacker, defender, move, self.random)
+        if result and result.damage:
+            player_damage = result.damage
             defender.take_damage(player_damage)
 
             information_suffix = self.get_type_effectiveness_response_suffix(
-                attack_result.type_factor
+                result.type_factor
             )
             information.append(
                 f"{defender.name} took {player_damage} dmg from {move.name}. "
@@ -373,51 +367,6 @@ class World:
                 stat_change.name,
                 current_stat + stat_change.amount,
             )
-
-    def attack(
-        self, attacker: Critter, defender: Critter, move: Move
-    ) -> Optional[AttackResult]:
-        """Follows gen5 dmg formula as defined: https://bulbapedia.bulbagarden.net/wiki/Damage#Generation_V_onward"""
-        APPLICABILITY = [
-            MoveCategory.DAMAGE,
-            MoveCategory.DAMAGE_AILMENT,
-            MoveCategory.DAMAGE_HEAL,
-            MoveCategory.DAMAGE_LOWER,
-            MoveCategory.DAMAGE_RAISE,
-        ]
-        if move.category not in APPLICABILITY:
-            return
-        base_damage = (
-            round(
-                (
-                    (round((2 * attacker.level) / 5) + 2)
-                    * move.power
-                    * round(attacker.attack / defender.defense)
-                )
-                / 50
-            )
-            + 2
-        )
-        # TODO critical hits in gen5 use interesting stages, leaving at stage +0 for now
-        # see https://bulbapedia.bulbagarden.net/wiki/Critical_hit for implementation details
-        critical_hit_scalar = 1 if self.random.random() > 0.0625 else 2
-        random_factor = self.random.random() * 0.15 + 0.85
-        stab = 1.5 if move.type_id in attacker.type_ids else 1
-
-        type_factor = 1
-        for type_id in defender.type_ids:
-            if move.type_id in TYPES.find_by_id(type_id).double_damage_from:
-                type_factor *= 2
-            if move.type_id in TYPES.find_by_id(type_id).half_damage_from:
-                type_factor /= 2
-            if move.type_id in TYPES.find_by_id(type_id).no_damage_from:
-                type_factor *= 0
-        return AttackResult(
-            damage=round(
-                base_damage * critical_hit_scalar * random_factor * stab * type_factor
-            ),
-            type_factor=type_factor,
-        )
 
     def set_area(self, area: Area):
         self.area = area

@@ -6,17 +6,6 @@ from narfecritters.game.world import Encounter, World
 
 
 class TestWorld(unittest.TestCase):
-    def test_attack(self):
-        random = Random(x=12345)
-        world = World(random=random)
-        critter2 = world.encyclopedia.create(random, id=1, level=5)
-        critter1 = world.encyclopedia.create(random, id=4, level=5)
-
-        scratch = Move(id=1, name="scratch", power=35, type_id=1)
-        self.assertEqual(4, world.attack(critter1, critter2, scratch).damage)
-        ember = Move(id=2, name="ember", power=35, type_id=10)
-        self.assertEqual(14, world.attack(critter1, critter2, ember).damage)
-
     def test_debuff(self):
         random = Random(x=12345)
         world = World(random=random)
