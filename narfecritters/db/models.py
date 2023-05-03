@@ -30,7 +30,22 @@ class Type:
 
 
 class MoveTarget(Enum):
-    ALL_OPPONENTS = 1
+    SPECIFIC_MOVE = 1
+    SELECTED_CRITTERS_ME_FIRST = 2
+    ALLY = 3
+    USERS_FIELD = 4
+    USER_OR_ALLY = 5
+    OPPONENTS_FIELD = 6
+    USER = 7
+    RANDOM_OPPONENT = 8
+    ALL_OTHER_CRITTERS = 9
+    SELECTED_CRITTERS = 10
+    ALL_OPPONENTS = 11
+    ENTIRE_FIELD = 12
+    USER_AND_ALLIES = 13
+    ALL_CRITTERS = 14
+    ALL_ALLIES = 15
+    FAINTING_CRITTERS = 16
 
 
 class MoveCategory(Enum):

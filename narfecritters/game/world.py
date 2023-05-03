@@ -352,24 +352,59 @@ class World:
                     self.end_encounter(False, information)
             else:
                 self.end_encounter(True, information)
-        self.move_stat_changes(attacker, defender, move)
+        self.move_stat_changes(
+            attacker,
+            defender,
+            attacker_encounter_stages,
+            defender_encounter_stages,
+            move,
+            information,
+        )
 
-    def move_stat_changes(self, attacker: Critter, defender: Critter, move: Move):
+    def move_stat_changes(
+        self,
+        attacker: Critter,
+        defender: Critter,
+        attacker_encounter_stages: EncounterStages,
+        defender_encounter_stages: EncounterStages,
+        move: Move,
+        information: list[str],
+    ):
         if not move.stat_changes:
             return
-        # TODO implement buffs, return information, add targets, make this cleaner
-        defender_stat_stages = (
-            self.encounter.enemy_stat_stages
-            if attacker == self.active_critter
-            else self.encounter.player_stat_stages
-        )
         for stat_change in move.stat_changes:
-            current_stat = getattr(defender_stat_stages, stat_change.name)
-            setattr(
-                defender_stat_stages,
-                stat_change.name,
-                current_stat + stat_change.amount,
-            )
+            if (
+                move.target.ALL_CRITTERS
+                or move.target.ENTIRE_FIELD
+                or move.target.ALL_OPPONENTS
+                or move.target.OPPONENTS_FIELD
+                or move.target.RANDOM_OPPONENT
+                or move.target.ALL_OTHER_CRITTERS
+            ):
+                current_stat = getattr(defender_encounter_stages, stat_change.name)
+                setattr(
+                    defender_encounter_stages,
+                    stat_change.name,
+                    current_stat + stat_change.amount,
+                )
+                information.append(f"{stat_change.name} changed for {defender.name}")
+            if (
+                move.target.ALL_CRITTERS
+                or move.target.ENTIRE_FIELD
+                or move.target.ALL_ALLIES
+                or move.target.USER_AND_ALLIES
+                or move.target.USER
+                or move.target.USER_OR_ALLY
+                or move.target.SELECTED_CRITTERS_ME_FIRST
+                or move.target.ALLY
+            ):
+                current_stat = getattr(attacker_encounter_stages, stat_change.name)
+                setattr(
+                    attacker_encounter_stages,
+                    stat_change.name,
+                    current_stat + stat_change.amount,
+                )
+                information.append(f"{stat_change.name} changed for {attacker.name}")
 
     def set_area(self, area: Area):
         self.area = area

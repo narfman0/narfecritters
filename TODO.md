@@ -4,6 +4,11 @@
 
 * Moves
   * Model move buffs+debuffs
+  * Model healing
+  * Model critical hit
+  * Model targets
+  * Model evasion
+  * Model accuracy
   * Model multi-turn moves
   * Disallow unsupported moves
   * Learn moves on levelup
