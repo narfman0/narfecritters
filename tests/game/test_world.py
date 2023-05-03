@@ -12,19 +12,10 @@ class TestWorld(unittest.TestCase):
         critter2 = world.encyclopedia.create(random, id=1, level=5)
         critter1 = world.encyclopedia.create(random, id=4, level=5)
         world.player.add_critter(critter1)
-        move = Move(
-            id=45,
-            name="growl",
-            type_id=1,
-            category=MoveCategory.NET_GOOD_STATS,
-            stat_changes=[StatChange(amount=-1, name="attack")],
-            target=MoveTarget.ALL_OPPONENTS,
-            crit_rate=0,
-            flinch_chance=0,
-            healing=0,
-            stat_chance=0,
-        )
+        move = world.moves.find_by_name("growl")
+        move.target = MoveTarget.ALL_OPPONENTS
         world.encounter = Encounter(critter2, active_critter_index=0)
+        self.assertEqual(0, world.encounter.enemy_stat_stages.attack)
         world.use_move(
             defender=critter2,
             attacker=critter1,
@@ -34,6 +25,7 @@ class TestWorld(unittest.TestCase):
             move=move,
         )
         self.assertEqual(-1, world.encounter.enemy_stat_stages.attack)
+        self.assertEqual(0, world.encounter.player_stat_stages.attack)
         world.use_move(
             defender=critter1,
             attacker=critter2,
@@ -42,6 +34,7 @@ class TestWorld(unittest.TestCase):
             information=[],
             move=move,
         )
+        self.assertEqual(-1, world.encounter.enemy_stat_stages.attack)
         self.assertEqual(-1, world.encounter.player_stat_stages.attack)
 
     def test_turn(self):
