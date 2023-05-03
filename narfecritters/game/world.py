@@ -332,7 +332,7 @@ class World:
         if not move:
             move = self.moves.find_by_id(self.random.choice(attacker.moves).id)
         attack_result = self.attack(attacker, defender, move)
-        if attack_result.damage:
+        if attack_result and attack_result.damage:
             player_damage = attack_result.damage
             defender.take_damage(player_damage)
 
@@ -344,6 +344,7 @@ class World:
                 + information_suffix
             )
             LOGGER.info(information[-1])
+        self.move_stat_changes(attacker, defender, move)
         if defender.current_hp <= 0:
             information.append(f"{defender.name} fainted!")
             LOGGER.info(information[-1])
@@ -356,24 +357,35 @@ class World:
             return True
         return False
 
-    def attack(self, attacker: Critter, defender: Critter, move: Move):
-        """Follows gen5 dmg formula as defined: https://bulbapedia.bulbagarden.net/wiki/Damage#Generation_V_onward"""
-        if move.power is None:
-            if move.stat_changes:
-                # TODO implement buffs, return information, add targets, make this cleaner
-                defender_stat_stages = (
-                    self.encounter.enemy_stat_stages
-                    if attacker == self.active_critter
-                    else self.encounter.player_stat_stages
+    def move_stat_changes(self, attacker: Critter, defender: Critter, move: Move):
+        if move.stat_changes:
+            # TODO implement buffs, return information, add targets, make this cleaner
+            defender_stat_stages = (
+                self.encounter.enemy_stat_stages
+                if attacker == self.active_critter
+                else self.encounter.player_stat_stages
+            )
+            for stat_change in move.stat_changes:
+                current_stat = getattr(defender_stat_stages, stat_change.name)
+                setattr(
+                    defender_stat_stages,
+                    stat_change.name,
+                    current_stat + stat_change.amount,
                 )
-                for stat_change in move.stat_changes:
-                    current_stat = getattr(defender_stat_stages, stat_change.name)
-                    setattr(
-                        defender_stat_stages,
-                        stat_change.name,
-                        current_stat + stat_change.amount,
-                    )
-            return AttackResult()
+
+    def attack(
+        self, attacker: Critter, defender: Critter, move: Move
+    ) -> Optional[AttackResult]:
+        """Follows gen5 dmg formula as defined: https://bulbapedia.bulbagarden.net/wiki/Damage#Generation_V_onward"""
+        APPLICABILITY = [
+            MoveCategory.DAMAGE,
+            MoveCategory.DAMAGE_AILMENT,
+            MoveCategory.DAMAGE_HEAL,
+            MoveCategory.DAMAGE_LOWER,
+            MoveCategory.DAMAGE_RAISE,
+        ]
+        if move.category not in APPLICABILITY:
+            return
         base_damage = (
             round(
                 (

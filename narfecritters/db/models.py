@@ -33,6 +33,23 @@ class MoveTarget(Enum):
     ALL_OPPONENTS = 1
 
 
+class MoveCategory(Enum):
+    DAMAGE = 0
+    AILMENT = 1
+    NET_GOOD_STATS = 2
+    HEAL = 3
+    DAMAGE_AILMENT = 4
+    SWAGGER = 5
+    DAMAGE_LOWER = 6
+    DAMAGE_RAISE = 7
+    DAMAGE_HEAL = 8
+    OHKO = 9
+    WHOLE_FIELD_EFFECT = 10
+    FIELD_EFFECT = 11
+    FORCE_SWITCH = 12
+    UNIQUE = 13
+
+
 @dataclass
 class StatChange:
     amount: int
@@ -49,6 +66,7 @@ class Move:
     id: int
     name: str
     type_id: int
+    category: MoveCategory = MoveCategory.DAMAGE
     power: Optional[int] = None
     stat_changes: list[StatChange] = field(default_factory=list)
 

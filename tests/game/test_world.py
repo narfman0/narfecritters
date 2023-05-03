@@ -27,6 +27,7 @@ class TestWorld(unittest.TestCase):
             id=45,
             name="growl",
             type_id=1,
+            category=MoveCategory.NET_GOOD_STATS,
             stat_changes=[
                 StatChange(amount=-1, name="attack", target=MoveTarget.ALL_OPPONENTS)
             ],
