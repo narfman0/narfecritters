@@ -22,8 +22,8 @@ class Encounter:
     active_critter_index: int
     order_player_first: bool = True
     run_attempts: int = 0
-    enemy_stat_stages: Stats = Stats()
-    player_stat_stages: Stats = Stats()
+    enemy_stat_stages: EncounterStages = EncounterStages()
+    player_stat_stages: EncounterStages = EncounterStages()
 
 
 @dataclass
@@ -313,20 +313,22 @@ class World:
             LOGGER.info(information[-1])
             self.end_encounter(True, information)
 
-    def turn_enemy(self, information: list[str]) -> bool:
-        enemy_move = self.moves.find_by_id(self.random.choice(self.enemy.moves).id)
-        attack_result = self.attack(self.enemy, self.active_critter, enemy_move)
-        player_damage = attack_result.damage
-        self.active_critter.take_damage(player_damage)
+    def turn_enemy(self, information: list[str], move: Move = None) -> bool:
+        if not move:
+            move = self.moves.find_by_id(self.random.choice(self.enemy.moves).id)
+        attack_result = self.attack(self.enemy, self.active_critter, move)
+        if attack_result.damage:
+            player_damage = attack_result.damage
+            self.active_critter.take_damage(player_damage)
 
-        information_suffix = self.get_type_effectiveness_response_suffix(
-            attack_result.type_factor
-        )
-        information.append(
-            f"{self.active_critter.name} took {player_damage} dmg from {enemy_move.name}. "
-            + information_suffix
-        )
-        LOGGER.info(information[-1])
+            information_suffix = self.get_type_effectiveness_response_suffix(
+                attack_result.type_factor
+            )
+            information.append(
+                f"{self.active_critter.name} took {player_damage} dmg from {move.name}. "
+                + information_suffix
+            )
+            LOGGER.info(information[-1])
         if self.active_critter.current_hp <= 0:
             information.append(f"Your {self.active_critter.name} fainted!")
             LOGGER.info(information[-1])

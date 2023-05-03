@@ -29,10 +29,19 @@ class Type:
     no_damage_to: list[int] = field(default_factory=set)
 
 
+class MoveTarget(Enum):
+    ALL_OPPONENTS = 1
+
+
 @dataclass
 class StatChange:
     amount: int
     name: str
+    target: MoveTarget
+    crit_rate: int = 0
+    flinch_chance: int = 0
+    healing: int = 0
+    stat_chance: int = 0
 
 
 @dataclass
@@ -67,6 +76,12 @@ class Stats:
             random.randint(0, 31),
             random.randint(0, 31),
         )
+
+
+@dataclass
+class EncounterStages(Stats):
+    evasion: int = 0
+    accuracy: int = 0
 
 
 @dataclass

@@ -27,11 +27,15 @@ class TestWorld(unittest.TestCase):
             id=45,
             name="growl",
             type_id=1,
-            stat_changes=[StatChange(amount=-1, name="attack")],
+            stat_changes=[
+                StatChange(amount=-1, name="attack", target=MoveTarget.ALL_OPPONENTS)
+            ],
         )
         world.encounter = Encounter(critter2, active_critter_index=0)
         world.turn_player(move.name, [])
         self.assertEqual(-1, world.encounter.enemy_stat_stages.attack)
+        world.turn_enemy([], move)
+        self.assertEqual(-1, world.encounter.player_stat_stages.attack)
 
     def test_turn(self):
         random = Random(x=12345)
