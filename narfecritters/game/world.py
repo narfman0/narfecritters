@@ -344,7 +344,6 @@ class World:
                 + information_suffix
             )
             LOGGER.info(information[-1])
-        self.move_stat_changes(attacker, defender, move)
         if defender.current_hp <= 0:
             information.append(f"{defender.name} fainted!")
             LOGGER.info(information[-1])
@@ -355,23 +354,25 @@ class World:
             else:
                 self.end_encounter(True, information)
             return True
+        self.move_stat_changes(attacker, defender, move)
         return False
 
     def move_stat_changes(self, attacker: Critter, defender: Critter, move: Move):
-        if move.stat_changes:
-            # TODO implement buffs, return information, add targets, make this cleaner
-            defender_stat_stages = (
-                self.encounter.enemy_stat_stages
-                if attacker == self.active_critter
-                else self.encounter.player_stat_stages
+        if not move.stat_changes:
+            return
+        # TODO implement buffs, return information, add targets, make this cleaner
+        defender_stat_stages = (
+            self.encounter.enemy_stat_stages
+            if attacker == self.active_critter
+            else self.encounter.player_stat_stages
+        )
+        for stat_change in move.stat_changes:
+            current_stat = getattr(defender_stat_stages, stat_change.name)
+            setattr(
+                defender_stat_stages,
+                stat_change.name,
+                current_stat + stat_change.amount,
             )
-            for stat_change in move.stat_changes:
-                current_stat = getattr(defender_stat_stages, stat_change.name)
-                setattr(
-                    defender_stat_stages,
-                    stat_change.name,
-                    current_stat + stat_change.amount,
-                )
 
     def attack(
         self, attacker: Critter, defender: Critter, move: Move
