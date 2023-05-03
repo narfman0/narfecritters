@@ -25,6 +25,8 @@ class TestWorld(unittest.TestCase):
         world.use_move(
             defender=critter2,
             attacker=critter1,
+            attacker_encounter_stages=world.encounter.player_stat_stages,
+            defender_encounter_stages=world.encounter.enemy_stat_stages,
             information=[],
             move=move,
         )
@@ -32,6 +34,8 @@ class TestWorld(unittest.TestCase):
         world.use_move(
             defender=critter1,
             attacker=critter2,
+            attacker_encounter_stages=world.encounter.enemy_stat_stages,
+            defender_encounter_stages=world.encounter.player_stat_stages,
             information=[],
             move=move,
         )
@@ -51,19 +55,30 @@ class TestWorld(unittest.TestCase):
         world.use_move(
             defender=critter2,
             attacker=critter1,
+            attacker_encounter_stages=world.encounter.player_stat_stages,
+            defender_encounter_stages=world.encounter.enemy_stat_stages,
             information=[],
             move=player_move,
         )
         world.use_move(
             defender=critter1,
             attacker=critter2,
+            attacker_encounter_stages=world.encounter.enemy_stat_stages,
+            defender_encounter_stages=world.encounter.player_stat_stages,
             information=[],
         )
         self.assertEqual(11, critter1.current_hp)
         self.assertEqual(16, critter2.current_hp)
 
         for x in range(4):
-            world.use_move(critter1, critter2, [], player_move)
+            world.use_move(
+                attacker=critter1,
+                defender=critter2,
+                attacker_encounter_stages=world.encounter.player_stat_stages,
+                defender_encounter_stages=world.encounter.enemy_stat_stages,
+                information=[],
+                move=player_move,
+            )
         self.assertEqual(0, critter2.current_hp)
         self.assertEqual(190, critter1.experience)
 

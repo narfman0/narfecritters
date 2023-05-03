@@ -240,6 +240,8 @@ class World:
             self.use_move(
                 defender=player_critter,
                 attacker=self.enemy,
+                attacker_encounter_stages=self.encounter.enemy_stat_stages,
+                defender_encounter_stages=self.encounter.player_stat_stages,
                 information=information,
             )
         return TurnResult(information, player_critter.fainted)
@@ -272,6 +274,8 @@ class World:
             self.use_move(
                 defender=player_critter,
                 attacker=self.enemy,
+                attacker_encounter_stages=self.encounter.enemy_stat_stages,
+                defender_encounter_stages=self.encounter.player_stat_stages,
                 information=information,
             )
         return TurnResult(information, player_critter.fainted)
@@ -280,21 +284,26 @@ class World:
         """Take each critters turn. Observes speeds for priority order."""
         information: list[str] = []
         player_move = self.moves.find_by_name(move_name)
-        enemy_move = self.moves.find_by_id(self.random.choice(self.enemy.moves).id)
         player_critter = self.active_critter
         if self.encounter.order_player_first:
             first = player_critter
             first_move = player_move
             second = self.enemy
-            second_move = enemy_move
+            second_move = None
+            first_encounter_stages = self.encounter.player_stat_stages
+            second_encounter_stages = self.encounter.enemy_stat_stages
         else:
             first = self.enemy
-            first_move = enemy_move
+            first_move = None
             second = player_critter
             second_move = player_move
+            first_encounter_stages = self.encounter.enemy_stat_stages
+            second_encounter_stages = self.encounter.player_stat_stages
         self.use_move(
             defender=second,
             attacker=first,
+            attacker_encounter_stages=first_encounter_stages,
+            defender_encounter_stages=second_encounter_stages,
             information=information,
             move=first_move,
         )
@@ -302,6 +311,8 @@ class World:
             self.use_move(
                 defender=first,
                 attacker=second,
+                attacker_encounter_stages=second_encounter_stages,
+                defender_encounter_stages=first_encounter_stages,
                 information=information,
                 move=second_move,
             )
@@ -311,6 +322,8 @@ class World:
         self,
         attacker: Critter,
         defender: Critter,
+        attacker_encounter_stages: EncounterStages,
+        defender_encounter_stages: EncounterStages,
         information: list[str],
         move: Optional[Move] = None,
     ):

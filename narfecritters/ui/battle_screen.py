@@ -71,6 +71,8 @@ class BattleScreen(Screen):
                 self.world.use_move(
                     defender=active_critter,
                     attacker=self.world.enemy,
+                    attacker_encounter_stages=self.world.encounter.enemy_stat_stages,
+                    defender_encounter_stages=self.world.encounter.player_stat_stages,
                     information=information,
                 )
                 if active_critter.fainted:
