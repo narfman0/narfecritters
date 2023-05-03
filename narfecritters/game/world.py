@@ -82,9 +82,6 @@ class World:
                 destination_area = self.detect_area_transition()
                 if destination_area:
                     return MoveResult(area_change=destination_area)
-                if self.active_critter is None:
-                    LOGGER.warn("All critters fainted!")
-                    self.respawn()
                 elif self.detect_and_handle_random_encounter():
                     return MoveResult(encounter=True)
         return MoveResult()
