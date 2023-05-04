@@ -49,6 +49,11 @@ def calculate_move_damage(
     """Follows gen5 dmg formula as defined: https://bulbapedia.bulbagarden.net/wiki/Damage#Generation_V_onward"""
     if move.category not in APPLICABILITY:
         return
+    if move.power is None:
+        print(
+            f"Move {move.name} is trying to calculate damage, but the move has no power!"
+        )
+        return
     base_damage = calculate_base_damage(attacker, defender, move)
     # TODO critical hits in gen5 use interesting stages, leaving at stage +0 for now
     # see https://bulbapedia.bulbagarden.net/wiki/Critical_hit for implementation details
