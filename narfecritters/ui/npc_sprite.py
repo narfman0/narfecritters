@@ -22,9 +22,9 @@ class NPCSprite(pygame.sprite.Sprite):
         for direction in Direction:
             self.images[direction] = []
             for i in range(4):
-                filename = f"walk{direction.name.capitalize()}{i}.png"
+                filename = f"{direction.name.lower()}{i}.png"
                 path = f"data/sprites/npcs/{sprite_name}/{filename}"
-                image = pygame.image.load(path).convert()
+                image = pygame.image.load(path).convert_alpha()
                 if scale != 1:
                     width, height = image.get_size()
                     image = pygame.transform.scale(

@@ -60,7 +60,7 @@ class StartScreen(Screen):
                         self.ui_manager,
                         self.screen_manager,
                         self.world,
-                        Area.OVERWORLD,
+                        Area.DEFAULT,
                     )
                 )
 

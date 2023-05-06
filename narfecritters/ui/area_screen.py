@@ -1,7 +1,6 @@
 import logging
 
 import pygame
-import pytmx
 from pygame_gui import UIManager
 
 from narfecritters.models import Area
@@ -32,6 +31,7 @@ class AreaScreen(Screen):
         self.player_sprite = NPCSprite("player", 0.8, offset=(0, -4))
         self.sprites = pygame.sprite.Group(self.player_sprite)
         self.world.set_area(area)
+        self.merchant_sprite = None
 
     def update(self, dt: float):
         if (
@@ -58,8 +58,24 @@ class AreaScreen(Screen):
                 result.area_change,
             )
             self.screen_manager.push(screen)
+
+        self.update_merchant_sprite()
+
         self.player_sprite.set_position(WINDOW_SIZE[0] // 2, WINDOW_SIZE[1] // 2)
         self.sprites.update()
+
+    def update_merchant_sprite(self):
+        if self.world.merchant:
+            if not self.merchant_sprite:
+                self.merchant_sprite = NPCSprite("npc06", 1, offset=(0, -4))
+            self.merchant_sprite.set_position(
+                WINDOW_SIZE[0] // 2 + self.world.merchant.x - self.world.player.x,
+                WINDOW_SIZE[1] // 2 + self.world.merchant.y - self.world.player.y,
+            )
+            if not self.sprites.has(self.merchant_sprite):
+                self.sprites.add(self.merchant_sprite)
+        elif self.world.merchant is None:
+            self.merchant_sprite.kill()
 
     def handle_move(self):
         move_kwargs = {}

@@ -61,6 +61,7 @@ class World:
         self.tmxdata: Optional[pytmx.TiledMap] = None
         self.candidate_encounters: list[int] = []
         self.move_action = None
+        self.merchant = None
 
     def update(self, dt: float):
         if self.move_action:
@@ -416,6 +417,16 @@ class World:
             self.player.x = TILE_SIZE * start_x + TILE_SIZE // 2
             self.player.y = TILE_SIZE * start_y + TILE_SIZE // 2
             self.update_respawn()
+
+        if area == Area.DEFAULT:
+            start_x, start_y = map(
+                int, self.tmxdata.properties.get("StartTile").split(",")
+            )
+            merchant_x, merchant_y = self.random.choices([-3, -2, -1, 1, 2, 3], k=2)
+            self.spawn_merchant(start_x + merchant_x, start_y + merchant_y)
+        else:
+            self.merchant = None
+
         self.candidate_encounters: list[int] = []
         encounters_str = self.tmxdata.properties.get("Encounters")
         if not encounters_str:
@@ -424,6 +435,11 @@ class World:
             name, probability = str(encounter).split(",")
             id = self.encyclopedia.name_to_id[name]
             self.candidate_encounters.extend([id] * int(probability))
+
+    def spawn_merchant(self, tile_x, tile_y):
+        x = TILE_SIZE * tile_x + TILE_SIZE // 2
+        y = TILE_SIZE * tile_y + TILE_SIZE // 2
+        self.merchant = NPC(x, y, sprite="npc06")
 
     @classmethod
     def get_type_effectiveness_response_suffix(cls, type_factor: float):
