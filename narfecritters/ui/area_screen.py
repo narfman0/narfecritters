@@ -74,7 +74,7 @@ class AreaScreen(Screen):
             )
             if not self.sprites.has(self.merchant_sprite):
                 self.sprites.add(self.merchant_sprite)
-        elif self.world.merchant is None:
+        elif self.world.merchant is None and self.merchant_sprite:
             self.merchant_sprite.kill()
 
     def handle_move(self):
@@ -118,13 +118,13 @@ class AreaScreen(Screen):
         tile_x = int(px // TILE_SIZE)
         tile_y = int(py // TILE_SIZE)
         tile_x_begin = max(0, tile_x - TILE_VIEW_SPAN)
-        tile_x_end = min(tile_x + TILE_VIEW_SPAN, self.world.tmxdata.width)
+        tile_x_end = min(tile_x + TILE_VIEW_SPAN, self.world.map.width)
         tile_y_begin = max(0, tile_y - TILE_VIEW_SPAN)
-        tile_y_end = min(tile_y + TILE_VIEW_SPAN, self.world.tmxdata.height)
+        tile_y_end = min(tile_y + TILE_VIEW_SPAN, self.world.map.height)
         for layer in [0, 1]:
             for x in range(tile_x_begin, tile_x_end):
                 for y in range(tile_y_begin, tile_y_end):
-                    image = self.world.tmxdata.get_tile_image(x, y, layer)
+                    image = self.world.map.get_tile_image(x, y, layer)
                     if image:
                         surface.blit(
                             image,

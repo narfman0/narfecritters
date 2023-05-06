@@ -4,11 +4,11 @@ from dataclasses import dataclass
 from random import Random
 
 from pygame.math import Vector2
-import pytmx
 
 from narfecritters.ui.settings import TILE_SIZE
 from narfecritters.models import *
 from narfecritters.game.move_damage import calculate_move_damage
+from narfecritters.game.map import Map
 
 LOGGER = logging.getLogger(__name__)
 ENCOUNTER_PROBABILITY = 0.1
@@ -58,7 +58,7 @@ class World:
         self.player = NPC()
         self.encounter: Optional[Encounter] = None
         self.area: Optional[Area] = None
-        self.tmxdata: Optional[pytmx.TiledMap] = None
+        self.map: Optional[Map] = None
         self.candidate_encounters: list[int] = []
         self.move_action = None
         self.merchant = None
@@ -125,9 +125,8 @@ class World:
         px = int(self.player.x // TILE_SIZE)
         py = int(self.player.y // TILE_SIZE)
         for layer in range(0, 2):
-            tile_props = self.tmxdata.get_tile_properties(px, py, layer) or {}
             if (
-                tile_props.get("type") == "tallgrass"
+                self.map.get_tile_type(px, py, layer) == "tallgrass"
                 and self.random.random() < ENCOUNTER_PROBABILITY
             ):
                 enemy_id = self.random.choice(self.candidate_encounters)
@@ -150,30 +149,24 @@ class World:
         px = int(self.player.x // TILE_SIZE)
         py = int(self.player.y // TILE_SIZE)
         for layer in range(0, 2):
-            tile_props = self.tmxdata.get_tile_properties(px, py, layer) or {}
-            if tile_props.get("type") == "heal":
+            if self.map.get_tile_type(px, py, layer) == "heal":
                 for critters in self.player.critters:
                     critters.current_hp = critters.max_hp
                 self.update_respawn()
                 LOGGER.info("Healed!")
-            if tile_props.get("type") == "transition":
-                object = self.tmxdata.get_object_by_name(
-                    f"transition,{self.area.name.lower()},{px},{py}"
-                )
-                destination_area = Area[object.properties["Destination"].upper()]
-                dest_x, dest_y = map(int, object.properties["DestinationXY"].split(","))
-                LOGGER.info(f"Transitioning to {destination_area.name.lower()}")
-                self.player.x = TILE_SIZE * dest_x + TILE_SIZE // 2
-                self.player.y = TILE_SIZE * dest_y + TILE_SIZE // 2
-                return destination_area
+            if self.map.get_tile_type(px, py, layer) == "transition":
+                details = self.map.get_transition_details(px, py)
+                LOGGER.info(f"Transitioning to {details.destination_area.name.lower()}")
+                self.player.x = TILE_SIZE * details.destination_x + TILE_SIZE // 2
+                self.player.y = TILE_SIZE * details.destination_y + TILE_SIZE // 2
+                return details.destination_area
         return None
 
     def detect_and_handle_collisions(self, target_x, target_y):
         px = target_x // TILE_SIZE
         py = target_y // TILE_SIZE
         for layer in range(0, 2):
-            tile_props = self.tmxdata.get_tile_properties(px, py, layer) or {}
-            if tile_props.get("colliders"):
+            if self.map.has_colliders(px, py, layer):
                 return True
         return False
 
@@ -409,32 +402,21 @@ class World:
 
     def set_area(self, area: Area):
         self.area = area
-        self.tmxdata = pytmx.load_pygame(f"data/tiled/{area.name.lower()}.tmx")
+        self.map = Map(area)
         if not self.player.respawn_area:
-            start_x, start_y = map(
-                int, self.tmxdata.properties.get("StartTile").split(",")
-            )
+            start_x, start_y = self.map.get_start_tile()
             self.player.x = TILE_SIZE * start_x + TILE_SIZE // 2
             self.player.y = TILE_SIZE * start_y + TILE_SIZE // 2
             self.update_respawn()
 
         if area == Area.DEFAULT:
-            start_x, start_y = map(
-                int, self.tmxdata.properties.get("StartTile").split(",")
-            )
+            start_x, start_y = self.map.get_start_tile()
             merchant_x, merchant_y = self.random.choices([-3, -2, -1, 1, 2, 3], k=2)
             self.spawn_merchant(start_x + merchant_x, start_y + merchant_y)
         else:
             self.merchant = None
 
-        self.candidate_encounters: list[int] = []
-        encounters_str = self.tmxdata.properties.get("Encounters")
-        if not encounters_str:
-            return
-        for encounter in encounters_str.split("\n"):
-            name, probability = str(encounter).split(",")
-            id = self.encyclopedia.name_to_id[name]
-            self.candidate_encounters.extend([id] * int(probability))
+        self.candidate_encounters = self.map.get_candidate_encounters(self.encyclopedia)
 
     def spawn_merchant(self, tile_x, tile_y):
         x = TILE_SIZE * tile_x + TILE_SIZE // 2
