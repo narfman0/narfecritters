@@ -8,7 +8,7 @@ from pygame_gui.elements import UIButton
 from narfecritters.ui.screen import Screen, ScreenManager
 from narfecritters.ui.settings import WINDOW_SIZE
 from narfecritters.game.world import World, COST_POTION
-from narfecritters.models.npcs import Inventory
+from narfecritters.models.npcs import ItemType
 
 LOGGER = logging.getLogger(__name__)
 
@@ -36,7 +36,8 @@ class BuyScreen(Screen):
                 if event.ui_element.text == MenuOptions.POTION.name:
                     if self.world.player.money > COST_POTION:
                         self.world.player.money -= COST_POTION
-                        self.world.player.add_item(Inventory.POTION)
+                        self.world.player.add_item(ItemType.POTION)
+                        LOGGER.info("Purchased a potion!")
 
     def init(self):
         y = WINDOW_SIZE[1] - (len(MenuOptions) + 1) * 32

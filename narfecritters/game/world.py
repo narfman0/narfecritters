@@ -14,6 +14,7 @@ LOGGER = logging.getLogger(__name__)
 ENCOUNTER_PROBABILITY = 0.1
 MOVE_SPEED = 200
 COST_POTION = 50
+POTION_HEAL_AMOUNT = 20
 
 
 @dataclass

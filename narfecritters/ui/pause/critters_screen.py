@@ -3,15 +3,20 @@ from enum import Enum
 
 import pygame
 from pygame_gui import UI_BUTTON_PRESSED, UIManager
-from pygame_gui.elements import UIButton, UIPanel, UIScrollingContainer
+from pygame_gui.elements import UIButton, UIScrollingContainer
 
 from narfecritters.ui.screen import Screen, ScreenManager
 from narfecritters.ui.settings import WINDOW_SIZE
 from narfecritters.models import ACTIVE_CRITTERS_MAX
+from narfecritters.models.critters import Critter
 from narfecritters.game.world import World
 
 
 LOGGER = logging.getLogger(__name__)
+
+
+def text_for_critter(critter: Critter):
+    return f"{critter.name} lvl {critter.level} {critter.current_hp}/{critter.max_hp}"
 
 
 class MenuOptions(Enum):
@@ -58,7 +63,7 @@ class CrittersScreen(Screen):
                 critter = self.world.player.critters[
                     self.world.player.active_critters[critter_slot_idx]
                 ]
-                text = self.text_for_critter(critter)
+                text = text_for_critter(critter)
             button = UIButton(
                 relative_rect=pygame.Rect(32, y, WINDOW_SIZE[0] // 3, 32),
                 text=text,
@@ -133,12 +138,6 @@ class CrittersScreen(Screen):
 
     def kill_menu_buttons(self):
         self.kill_elements(self.menu_buttons)
-
-    @classmethod
-    def text_for_critter(self, critter):
-        return (
-            f"{critter.name} lvl {critter.level} {critter.current_hp}/{critter.max_hp}"
-        )
 
     def draw(self, surface: pygame.Surface):
         surface.blit(self.background, (0, 0))

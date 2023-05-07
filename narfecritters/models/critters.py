@@ -45,6 +45,9 @@ class Critter(Species, YAMLWizard):
     def take_damage(self, damage: int):
         self.current_hp = max(0, self.current_hp - damage)
 
+    def heal(self, amount: int):
+        self.current_hp = min(self.max_hp, self.current_hp + amount)
+
     @property
     def fainted(self):
         return self.current_hp <= 0
