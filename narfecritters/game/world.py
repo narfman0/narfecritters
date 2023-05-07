@@ -13,6 +13,7 @@ from narfecritters.game.map import Map
 LOGGER = logging.getLogger(__name__)
 ENCOUNTER_PROBABILITY = 0.1
 MOVE_SPEED = 200
+COST_POTION = 50
 
 
 @dataclass

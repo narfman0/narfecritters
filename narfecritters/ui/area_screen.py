@@ -6,6 +6,7 @@ from pygame_gui import UIManager
 from narfecritters.models import Area
 from narfecritters.game.world import World
 from narfecritters.ui.battle_screen import BattleScreen
+from narfecritters.ui.merchant.merchant_screen import MerchantScreen
 from narfecritters.ui.npc_sprite import NPCSprite
 from narfecritters.ui.pause.pause_screen import PauseScreen
 from narfecritters.ui.screen import Screen, ScreenManager
@@ -40,6 +41,14 @@ class AreaScreen(Screen):
         ):
             self.screen_manager.push(
                 PauseScreen(self.ui_manager, self.screen_manager, self.world)
+            )
+        if (
+            pygame.key.get_pressed()[pygame.K_KP_ENTER]
+            or pygame.key.get_pressed()[pygame.K_EQUALS]
+        ):
+            # TODO make sure we are by the npc
+            self.screen_manager.push(
+                MerchantScreen(self.ui_manager, self.screen_manager, self.world)
             )
         if not self.world.move_action:
             self.player_sprite.stop()

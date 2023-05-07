@@ -12,16 +12,31 @@ from narfecritters.models.stats import *
 ACTIVE_CRITTERS_MAX = 6
 
 
+class Inventory(Enum):
+    POTION = 1
+
+
 @dataclass
 class NPC:
     x: int = 0
     y: int = 0
     respawn_x: int = 0
     respawn_y: int = 0
+    money: int = 0
     respawn_area: Optional[Area] = None
+    inventory: dict[Inventory, int] = field(default_factory=dict)
     critters: list[Critter] = field(default_factory=list)
     active_critters: list[int] = field(default_factory=list)
     sprite: Optional[str] = "player"
+
+    def add_item(self, item: Inventory):
+        current = self.inventory.get(item, 0)
+        self.inventory[item] = current + 1
+
+    def remove_item(self, item: Inventory):
+        current = self.inventory.get(item, 0)
+        if current > 0:
+            self.inventory[item] = current - 1
 
     @property
     def active_critter(self):
