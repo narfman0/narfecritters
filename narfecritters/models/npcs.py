@@ -23,8 +23,30 @@ class NPC:
     respawn_area: Optional[Area] = None
     inventory: dict[ItemType, int] = field(default_factory=dict)
     critters: list[Critter] = field(default_factory=list)
-    active_critters: list[int] = field(default_factory=list)
+    active_critters: list[UUID] = field(default_factory=list)
     sprite: Optional[str] = "player"
+
+    @property
+    def active_critter(self):
+        return self.find_critter_by_uuid(self.active_critter_uuid)
+
+    @property
+    def active_critter_uuid(self):
+        for active_critter_uuid in self.active_critters:
+            if not self.find_critter_by_uuid(active_critter_uuid).fainted:
+                return active_critter_uuid
+        return None
+
+    def add_critter(self, critter: Critter):
+        self.critters.append(critter)
+        if len(self.active_critters) < ACTIVE_CRITTERS_MAX:
+            self.active_critters.append(critter.uuid)
+
+    def find_critter_by_uuid(self, uuid):
+        for critter in self.critters:
+            if critter.uuid == uuid:
+                return critter
+        return None
 
     def add_item(self, item: ItemType, amount: int = 1):
         current = self.inventory.get(item, 0)
@@ -40,25 +62,6 @@ class NPC:
 
     def get_item_count(self, item: ItemType):
         return self.inventory.get(item, 0)
-
-    @property
-    def active_critter(self):
-        active_idx = self.active_critter_index
-        if active_idx is not None:
-            return self.critters[active_idx]
-        return None
-
-    @property
-    def active_critter_index(self):
-        for active_critter_idx in self.active_critters:
-            if not self.critters[active_critter_idx].fainted:
-                return active_critter_idx
-        return None
-
-    def add_critter(self, critter):
-        self.critters.append(critter)
-        if len(self.active_critters) < ACTIVE_CRITTERS_MAX:
-            self.active_critters.append(len(self.critters) - 1)
 
 
 @dataclass

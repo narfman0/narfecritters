@@ -89,9 +89,9 @@ class ItemScreen(Screen):
             if critter_slot_idx >= len(self.world.player.active_critters):
                 text = "-"
             else:
-                critter = self.world.player.critters[
+                critter = self.world.player.find_critter_by_uuid(
                     self.world.player.active_critters[critter_slot_idx]
-                ]
+                )
                 text = text_for_critter(critter)
             button = UIButton(
                 relative_rect=pygame.Rect(32, y, WINDOW_SIZE[0] // 3, 32),

@@ -2,6 +2,7 @@ import logging
 import math
 from dataclasses import dataclass
 from random import Random
+from uuid import UUID
 
 from pygame.math import Vector2
 
@@ -18,7 +19,7 @@ MOVE_SPEED = 200
 @dataclass
 class Encounter:
     enemy: Critter
-    active_critter_index: int
+    active_player_critter_uuid: UUID
     order_player_first: bool = True
     run_attempts: int = 0
     enemy_stat_stages: EncounterStages = EncounterStages()
@@ -142,7 +143,7 @@ class World:
                 self.encounter = Encounter(
                     enemy=enemy,
                     order_player_first=order_player_first,
-                    active_critter_index=self.player.active_critter_index,
+                    active_player_critter_uuid=self.player.active_critter_uuid,
                 )
                 return True
 
@@ -356,8 +357,10 @@ class World:
             information.append(f"{defender.name} fainted!")
             LOGGER.info(information[-1])
             if defender in self.player.critters:
-                self.encounter.active_critter_index = self.player.active_critter_index
-                if self.encounter.active_critter_index is None:
+                self.encounter.active_player_critter_uuid = (
+                    self.player.active_critter_uuid
+                )
+                if self.encounter.active_player_critter_uuid is None:
                     self.end_encounter(False, information)
             else:
                 self.end_encounter(True, information)
@@ -451,7 +454,9 @@ class World:
     @property
     def active_critter(self) -> Critter:
         if self.encounter:
-            return self.player.critters[self.encounter.active_critter_index]
+            return self.player.find_critter_by_uuid(
+                self.encounter.active_player_critter_uuid
+            )
         return self.player.active_critter
 
     @property

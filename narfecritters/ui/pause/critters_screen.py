@@ -49,8 +49,8 @@ class CrittersScreen(Screen):
             if event.ui_element in self.critter_buttons:
                 if len(self.world.player.active_critters) >= ACTIVE_CRITTERS_MAX:
                     return
-                critter_index = event.ui_element.critter_index
-                self.world.player.active_critters.append(critter_index)
+                critter_uuid = event.ui_element.critter_uuid
+                self.world.player.active_critters.append(critter_uuid)
                 self.reinit()
 
     def initialize_active_critter_buttons(self):
@@ -60,9 +60,9 @@ class CrittersScreen(Screen):
             if critter_slot_idx >= len(self.world.player.active_critters):
                 text = "-"
             else:
-                critter = self.world.player.critters[
+                critter = self.world.player.find_critter_by_uuid(
                     self.world.player.active_critters[critter_slot_idx]
-                ]
+                )
                 text = text_for_critter(critter)
             button = UIButton(
                 relative_rect=pygame.Rect(32, y, WINDOW_SIZE[0] // 3, 32),
@@ -75,8 +75,8 @@ class CrittersScreen(Screen):
 
     def initialize_critter_buttons(self):
         y = 0
-        for idx, critter in enumerate(self.world.player.critters):
-            if idx in self.world.player.active_critters:
+        for critter in self.world.player.critters:
+            if critter.uuid in self.world.player.active_critters:
                 continue
             text = self.text_for_critter(critter)
             button = UIButton(
@@ -85,7 +85,7 @@ class CrittersScreen(Screen):
                 container=self.scrolling_container,
                 manager=self.ui_manager,
             )
-            button.critter_index = idx
+            button.critter_uuid = critter.uuid
             self.critter_buttons.append(button)
             y += 32
 

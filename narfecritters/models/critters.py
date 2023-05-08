@@ -1,5 +1,6 @@
 from typing import Optional
 from functools import lru_cache
+from uuid import UUID
 
 from dataclasses import dataclass
 from dataclass_wizard import YAMLWizard
@@ -37,6 +38,7 @@ class Species(YAMLWizard):
 
 @dataclass
 class Critter(Species, YAMLWizard):
+    uuid: UUID
     ivs: Optional[Stats] = None
     evs: Optional[Stats] = None
     current_hp: Optional[int] = None

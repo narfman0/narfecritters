@@ -1,4 +1,5 @@
 from random import Random
+import uuid
 
 from dataclasses import dataclass, field
 from dataclass_wizard import YAMLWizard
@@ -36,7 +37,7 @@ class Encyclopedia(YAMLWizard):
             species = self.find_by_name(name)
         if species is None:
             raise Exception(f"Species name {name} or id {id} not found")
-        instance = Critter(**species.__dict__)
+        instance = Critter(uuid=uuid.uuid1(), **species.__dict__)
         instance.evs = Stats()
         instance.ivs = Stats.create_random_ivs(random)
         # only modeling medium-fast xp group

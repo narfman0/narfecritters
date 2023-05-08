@@ -14,7 +14,7 @@ class TestWorld(unittest.TestCase):
         world.player.add_critter(critter1)
         move = world.moves.find_by_name("growl")
         move.target = MoveTarget.ALL_OPPONENTS
-        world.encounter = Encounter(critter2, active_critter_index=0)
+        world.encounter = Encounter(critter2, active_player_critter_uuid=critter1.uuid)
         self.assertEqual(0, world.encounter.enemy_stat_stages.attack)
         world.use_move(
             defender=critter2,
@@ -43,7 +43,7 @@ class TestWorld(unittest.TestCase):
         critter1 = world.encyclopedia.create(random, id=4, level=5)
         critter2 = world.encyclopedia.create(random, id=1, level=5)
         world.player.add_critter(critter1)
-        world.encounter = Encounter(critter2, active_critter_index=0)
+        world.encounter = Encounter(critter2, active_player_critter_uuid=critter1.uuid)
 
         player_move = world.moves.find_by_id(critter1.moves[0].id)
         self.assertEqual(5, critter1.level)
@@ -62,8 +62,9 @@ class TestWorld(unittest.TestCase):
             attacker_encounter_stages=world.encounter.enemy_stat_stages,
             defender_encounter_stages=world.encounter.player_stat_stages,
             information=[],
+            move=player_move,
         )
-        self.assertEqual(11, critter1.current_hp)
+        self.assertEqual(15, critter1.current_hp)
         self.assertEqual(16, critter2.current_hp)
 
         for x in range(4):
