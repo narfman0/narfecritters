@@ -172,6 +172,15 @@ class World:
                 return True
         return False
 
+    def detect_merchant(self):
+        """TODO track which way we are facing and interact with that thing on map"""
+        if not self.merchant:
+            return False
+        x_dist = math.pow(self.merchant.x - self.player.x, 2)
+        y_dist = math.pow(self.merchant.y - self.player.y, 2)
+        dist = math.sqrt(x_dist + y_dist)
+        return dist // TILE_SIZE <= 1
+
     def end_encounter(self, win, information: list[str]):
         if win:
             self.grant_experience(information)

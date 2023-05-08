@@ -43,13 +43,13 @@ class AreaScreen(Screen):
                 PauseScreen(self.ui_manager, self.screen_manager, self.world)
             )
         if (
-            pygame.key.get_pressed()[pygame.K_KP_ENTER]
+            pygame.key.get_pressed()[pygame.K_RETURN]
             or pygame.key.get_pressed()[pygame.K_EQUALS]
         ):
-            # TODO make sure we are by the npc
-            self.screen_manager.push(
-                MerchantScreen(self.ui_manager, self.screen_manager, self.world)
-            )
+            if self.world.detect_merchant():
+                self.screen_manager.push(
+                    MerchantScreen(self.ui_manager, self.screen_manager, self.world)
+                )
         if not self.world.move_action:
             self.player_sprite.stop()
             self.handle_move()

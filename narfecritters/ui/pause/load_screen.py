@@ -1,15 +1,9 @@
 import logging
 from enum import Enum
 
-import pygame
-from pygame_gui import UI_BUTTON_PRESSED, UIManager
-from pygame_gui.elements import UIButton
+from pygame_gui import UI_BUTTON_PRESSED
 
-from narfecritters.ui.screen import Screen, ScreenManager
 from narfecritters.ui.pause.save_screen import SaveScreen
-from narfecritters.ui.settings import WINDOW_SIZE
-from narfecritters.models import Save
-from narfecritters.game.world import World
 
 
 LOGGER = logging.getLogger(__name__)
