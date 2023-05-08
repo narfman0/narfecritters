@@ -1,5 +1,5 @@
 import logging
-from enum import Enum
+from enum import Enum, auto
 
 import pygame
 from pygame_gui import UI_BUTTON_PRESSED, UIManager
@@ -8,15 +8,16 @@ from pygame_gui.core import UIElement
 
 from narfecritters.ui.screen import Screen, ScreenManager
 from narfecritters.ui.settings import WINDOW_SIZE
-from narfecritters.game.world import World, COST_POTION
-from narfecritters.models.npcs import ItemType
+from narfecritters.game.world import World, COST_POTION, COST_BALL
+from narfecritters.models.items import ItemType
 
 LOGGER = logging.getLogger(__name__)
 
 
 class MenuOptions(Enum):
-    POTION = 1
-    BACK = 2
+    POTION = auto()
+    BALL = auto()
+    BACK = auto()
 
 
 class BuyScreen(Screen):
@@ -40,6 +41,12 @@ class BuyScreen(Screen):
                         self.world.player.money -= COST_POTION
                         self.world.player.add_item(ItemType.POTION)
                         LOGGER.info("Purchased a potion!")
+                        self.reinit()
+                if event.ui_element.text == MenuOptions.BALL.name:
+                    if self.world.player.money >= COST_BALL:
+                        self.world.player.money -= COST_BALL
+                        self.world.player.add_item(ItemType.BALL)
+                        LOGGER.info("Purchased a ball!")
                         self.reinit()
 
     def init(self):

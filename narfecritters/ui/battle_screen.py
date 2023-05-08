@@ -6,9 +6,10 @@ from pygame_gui import UI_BUTTON_PRESSED, UIManager
 from pygame_gui.core.ui_element import UIElement
 from pygame_gui.elements import UIButton
 
+from narfecritters.game.world import World
+from narfecritters.models.items import ItemType
 from narfecritters.ui.screen import Screen, ScreenManager
 from narfecritters.ui.settings import WINDOW_SIZE
-from narfecritters.game.world import World
 
 
 LOGGER = logging.getLogger(__name__)
@@ -51,7 +52,12 @@ class BattleScreen(Screen):
                 if event.ui_element.text == MenuOptions.CRITTERS.name:
                     self.initialize_critter_buttons()
                 if event.ui_element.text == MenuOptions.CATCH.name:
-                    self.information_queue.extend(self.world.catch().information)
+                    if self.world.player.has_item(ItemType.BALL):
+                        self.information_queue.extend(
+                            self.world.catch(ItemType.BALL).information
+                        )
+                    else:
+                        self.information_queue.append("Not enough balls to catch!")
                     self.initialize_information_elements()
             elif event.ui_element in self.fight_buttons:
                 self.kill_fight_buttons()

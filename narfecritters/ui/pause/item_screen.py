@@ -9,7 +9,7 @@ from narfecritters.ui.screen import Screen, ScreenManager
 from narfecritters.ui.pause.critters_screen import text_for_critter
 from narfecritters.ui.settings import WINDOW_SIZE
 from narfecritters.game.world import World, POTION_HEAL_AMOUNT
-from narfecritters.models.npcs import ItemType
+from narfecritters.models.items import ItemType
 from narfecritters.models import ACTIVE_CRITTERS_MAX
 
 LOGGER = logging.getLogger(__name__)

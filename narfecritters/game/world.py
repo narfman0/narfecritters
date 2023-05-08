@@ -13,8 +13,6 @@ from narfecritters.game.map import Map
 LOGGER = logging.getLogger(__name__)
 ENCOUNTER_PROBABILITY = 0.1
 MOVE_SPEED = 200
-COST_POTION = 50
-POTION_HEAL_AMOUNT = 20
 
 
 @dataclass
@@ -58,6 +56,7 @@ class World:
         self.moves = Moves.load()
         self.random = random if random else Random()
         self.player = NPC()
+        self.player.add_item(ItemType.BALL, 3)
         self.encounter: Optional[Encounter] = None
         self.area: Optional[Area] = None
         self.map: Optional[Map] = None
@@ -219,12 +218,17 @@ class World:
             )
             LOGGER.info(information[-1])
 
-    def catch(self) -> TurnResult:
+    def catch(self, ball_type: ItemType) -> TurnResult:
         """
         Attempt to catch the attacking critter. See:
         https://bulbapedia.bulbagarden.net/wiki/Catch_rate#Capture_method_.28Generation_V.2B.29
         """
         information: list[str] = []
+        if self.player.inventory[ball_type] > 0:
+            self.player.remove_item(ball_type)
+        else:
+            information.append(f"No balls left!")
+            return TurnResult(information, False)
         player_critter = self.active_critter
 
         bonus_ball = 1

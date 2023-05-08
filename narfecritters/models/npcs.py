@@ -6,14 +6,11 @@ from dataclass_wizard import YAMLWizard
 
 from narfecritters.models.areas import *
 from narfecritters.models.critters import *
+from narfecritters.models.items import *
 from narfecritters.models.moves import *
 from narfecritters.models.stats import *
 
 ACTIVE_CRITTERS_MAX = 6
-
-
-class ItemType(Enum):
-    POTION = 1
 
 
 @dataclass
@@ -22,21 +19,24 @@ class NPC:
     y: int = 0
     respawn_x: int = 0
     respawn_y: int = 0
-    money: int = 100
+    money: int = 0
     respawn_area: Optional[Area] = None
     inventory: dict[ItemType, int] = field(default_factory=dict)
     critters: list[Critter] = field(default_factory=list)
     active_critters: list[int] = field(default_factory=list)
     sprite: Optional[str] = "player"
 
-    def add_item(self, item: ItemType):
+    def add_item(self, item: ItemType, amount: int = 1):
         current = self.inventory.get(item, 0)
-        self.inventory[item] = current + 1
+        self.inventory[item] = current + amount
 
-    def remove_item(self, item: ItemType):
+    def remove_item(self, item: ItemType, amount: int = 1):
         current = self.inventory.get(item, 0)
-        if current > 0:
-            self.inventory[item] = current - 1
+        if current >= amount:
+            self.inventory[item] = current - amount
+
+    def has_item(self, item: ItemType, amount: int = 1):
+        return self.inventory.get(item, 0) > amount
 
     @property
     def active_critter(self):

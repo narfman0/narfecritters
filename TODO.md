@@ -2,9 +2,7 @@
 
 ## Required
 
-* Items
-  * Balls
-  * Selling caught critters to provide money
+* Items - sell caught critters to provide money
 * Critters
   * Evolutions
   * Fishing
