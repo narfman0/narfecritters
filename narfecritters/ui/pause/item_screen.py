@@ -18,6 +18,7 @@ LOGGER = logging.getLogger(__name__)
 class MenuOptions(Enum):
     POTION = auto()
     BALL = auto()
+    MONEY = auto()
     BACK = auto()
 
 
@@ -44,6 +45,9 @@ class ItemScreen(Screen):
                 if event.ui_element.menu_option == MenuOptions.BALL:
                     self.active_item_type = ItemType.BALL
                     self.kill_active_critter_buttons()
+                if event.ui_element.menu_option == MenuOptions.MONEY:
+                    self.active_item_type = None
+                    self.kill_active_critter_buttons()
             if event.ui_element in self.active_critter_buttons:
                 if self.active_item_type is None:
                     LOGGER.warn("No item active to use!")
@@ -67,8 +71,10 @@ class ItemScreen(Screen):
             text = menu_option.name
             if menu_option is MenuOptions.POTION:
                 text += f" ({self.world.player.get_item_count(ItemType.POTION)})"
-            if menu_option is MenuOptions.BALL:
+            elif menu_option is MenuOptions.BALL:
                 text += f" ({self.world.player.get_item_count(ItemType.BALL)})"
+            elif menu_option is MenuOptions.MONEY:
+                text = f"{self.world.player.money}$"
             menu_button = UIButton(
                 (WINDOW_SIZE[0] - 128, y), text, manager=self.ui_manager
             )

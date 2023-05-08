@@ -4,6 +4,7 @@
 
 * Items - sell caught critters to provide money
 * Critters
+  * Use UUIDs for critter identification rather than id+index tracking
   * Evolutions
   * Fishing
   * Learn moves on levelup
