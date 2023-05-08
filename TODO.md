@@ -2,7 +2,6 @@
 
 ## Required
 
-* Items - sell caught critters to provide money
 * Critters
   * Evolutions
   * Fishing

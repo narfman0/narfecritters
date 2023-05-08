@@ -42,6 +42,10 @@ class NPC:
         if len(self.active_critters) < ACTIVE_CRITTERS_MAX:
             self.active_critters.append(critter.uuid)
 
+    def remove_critter(self, critter: Critter):
+        self.critters.remove(critter)
+        self.active_critters.remove(critter.uuid)
+
     def find_critter_by_uuid(self, uuid):
         for critter in self.critters:
             if critter.uuid == uuid:
@@ -58,7 +62,7 @@ class NPC:
             self.inventory[item] = current - amount
 
     def has_item(self, item: ItemType, amount: int = 1):
-        return self.inventory.get(item, 0) > amount
+        return self.inventory.get(item, 0) >= amount
 
     def get_item_count(self, item: ItemType):
         return self.inventory.get(item, 0)
