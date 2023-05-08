@@ -38,6 +38,9 @@ class NPC:
     def has_item(self, item: ItemType, amount: int = 1):
         return self.inventory.get(item, 0) > amount
 
+    def get_item_count(self, item: ItemType):
+        return self.inventory.get(item, 0)
+
     @property
     def active_critter(self):
         active_idx = self.active_critter_index

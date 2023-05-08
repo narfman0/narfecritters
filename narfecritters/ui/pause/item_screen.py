@@ -1,5 +1,5 @@
 import logging
-from enum import Enum
+from enum import Enum, auto
 
 import pygame
 from pygame_gui import UI_BUTTON_PRESSED, UIManager
@@ -16,8 +16,9 @@ LOGGER = logging.getLogger(__name__)
 
 
 class MenuOptions(Enum):
-    POTION = 1
-    BACK = 2
+    POTION = auto()
+    BALL = auto()
+    BACK = auto()
 
 
 class ItemScreen(Screen):
@@ -35,16 +36,19 @@ class ItemScreen(Screen):
     def process_event(self, event):
         if event.type == UI_BUTTON_PRESSED:
             if event.ui_element in self.menu_buttons:
-                if event.ui_element.text == MenuOptions.BACK.name:
+                if event.ui_element.menu_option == MenuOptions.BACK:
                     self.screen_manager.pop()
-                if event.ui_element.text == MenuOptions.POTION.name:
+                if event.ui_element.menu_option == MenuOptions.POTION:
                     self.active_item_type = ItemType.POTION
                     self.initialize_active_critter_buttons()
+                if event.ui_element.menu_option == MenuOptions.BALL:
+                    self.active_item_type = ItemType.BALL
+                    self.kill_active_critter_buttons()
             if event.ui_element in self.active_critter_buttons:
                 if self.active_item_type is None:
                     LOGGER.warn("No item active to use!")
                     return
-                if self.world.player.inventory[self.active_item_type] <= 0:
+                if not self.world.player.has_item(self.active_item_type):
                     LOGGER.warn("Not enough of item for use!")
                     return
                 critter_slot_idx = event.ui_element.critter_slot_idx
@@ -60,9 +64,15 @@ class ItemScreen(Screen):
     def init(self):
         y = WINDOW_SIZE[1] - (len(MenuOptions) + 1) * 32
         for menu_option in MenuOptions:
+            text = menu_option.name
+            if menu_option is MenuOptions.POTION:
+                text += f" ({self.world.player.get_item_count(ItemType.POTION)})"
+            if menu_option is MenuOptions.BALL:
+                text += f" ({self.world.player.get_item_count(ItemType.BALL)})"
             menu_button = UIButton(
-                (WINDOW_SIZE[0] - 128, y), menu_option.name, manager=self.ui_manager
+                (WINDOW_SIZE[0] - 128, y), text, manager=self.ui_manager
             )
+            menu_button.menu_option = menu_option
             self.menu_buttons.append(menu_button)
             y += 32
 
