@@ -15,7 +15,7 @@ class EvolutionTrigger:
 
 
 @dataclass
-class CritterMove:
+class SpeciesMove:
     id: int
     name: str
     learn_method: str
@@ -33,7 +33,7 @@ class Species(YAMLWizard):
     base_experience: int
     base_stats: Stats
     type_ids: list[int]
-    moves: list[CritterMove]
+    moves: list[SpeciesMove]
     capture_rate: Optional[int]
     flavor_text: Optional[str]
     evolution_trigger: Optional[EvolutionTrigger]
