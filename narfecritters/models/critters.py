@@ -9,6 +9,12 @@ from narfecritters.models.stats import *
 
 
 @dataclass
+class EvolutionTrigger:
+    evolved_species_id: int
+    min_level: Optional[int]
+
+
+@dataclass
 class CritterMove:
     id: int
     name: str
@@ -30,6 +36,7 @@ class Species(YAMLWizard):
     moves: list[CritterMove]
     capture_rate: Optional[int]
     flavor_text: Optional[str]
+    evolution_trigger: Optional[EvolutionTrigger]
 
     @property
     def name_pretty(self):
