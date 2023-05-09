@@ -72,7 +72,7 @@ class SellScreen(Screen):
                     self.world.player.active_critters[critter_slot_idx]
                 )
                 critter_worth = 100 + 50 * critter.level  # TODO tweak algorithm
-                text = f"{text_for_critter(critter)} - {critter_worth}"
+                text = f"{text_for_critter(critter)}: ${critter_worth}"
             button = UIButton(
                 relative_rect=pygame.Rect(32, y, WINDOW_SIZE[0] // 3, 32),
                 text=text,

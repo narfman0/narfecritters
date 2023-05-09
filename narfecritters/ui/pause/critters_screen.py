@@ -61,7 +61,7 @@ class CrittersScreen(Screen):
                 )
                 text = text_for_critter(critter)
             button = UIButton(
-                relative_rect=pygame.Rect(32, y, WINDOW_SIZE[0] // 3, 32),
+                relative_rect=pygame.Rect(32, y, WINDOW_SIZE[0] // 3 - 16, 32),
                 text=text,
                 manager=self.ui_manager,
             )
@@ -109,7 +109,7 @@ class CrittersScreen(Screen):
         )
         self.scrolling_container.set_scrollable_area_dimensions(
             (
-                WINDOW_SIZE[0] // 2,
+                WINDOW_SIZE[0] // 3,
                 scrolling_height,
             )
         )
