@@ -7,16 +7,12 @@ from pygame_gui.elements import UIButton, UIScrollingContainer
 
 from narfecritters.ui.screen import Screen, ScreenManager
 from narfecritters.ui.settings import WINDOW_SIZE
+from narfecritters.ui.util import text_for_critter
 from narfecritters.models import ACTIVE_CRITTERS_MAX
-from narfecritters.models.critters import Critter
 from narfecritters.game.world import World
 
 
 LOGGER = logging.getLogger(__name__)
-
-
-def text_for_critter(critter: Critter):
-    return f"{critter.name} lvl {critter.level} {critter.current_hp}/{critter.max_hp}"
 
 
 class MenuOptions(Enum):
@@ -78,7 +74,7 @@ class CrittersScreen(Screen):
         for critter in self.world.player.critters:
             if critter.uuid in self.world.player.active_critters:
                 continue
-            text = self.text_for_critter(critter)
+            text = text_for_critter(critter)
             button = UIButton(
                 relative_rect=pygame.Rect(0, y, WINDOW_SIZE[0] // 3 - 16, 32),
                 text=text,

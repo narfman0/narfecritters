@@ -5,9 +5,9 @@ import pygame
 from pygame_gui import UI_BUTTON_PRESSED, UIManager
 from pygame_gui.elements import UIButton
 
-from narfecritters.ui.pause.critters_screen import text_for_critter
 from narfecritters.ui.screen import Screen, ScreenManager
 from narfecritters.ui.settings import WINDOW_SIZE
+from narfecritters.ui.util import text_for_critter
 from narfecritters.game.world import World
 from narfecritters.models import ACTIVE_CRITTERS_MAX
 
