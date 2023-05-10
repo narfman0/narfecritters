@@ -182,11 +182,33 @@ class World:
         return dist // TILE_SIZE <= 1
 
     def end_encounter(self, win, information: list[str]):
+        current_level = self.active_critter.level
         if win:
             self.grant_experience(information)
+            if current_level < self.active_critter.level:
+                information.append(
+                    f"{self.active_critter.name} leveled up to {self.active_critter.level}"
+                )
+                LOGGER.info(information[-1])
+                self.detect_and_execute_evolution(information)
         self.encounter = None
         if self.active_critter is None:
             self.respawn()
+
+    def detect_and_execute_evolution(self, information: list[str]):
+        previous_name = self.active_critter.name
+        for evolution_trigger in self.active_critter.evolution_triggers:
+            if (
+                evolution_trigger.min_level
+                and evolution_trigger.min_level <= self.active_critter.level
+            ):
+                target_species_id = evolution_trigger.evolved_species_id
+                self.encyclopedia.evolve(self.active_critter, target_species_id)
+                information.append(
+                    f"{previous_name} has evolved into {self.active_critter.name}"
+                )
+                LOGGER.info(information[-1])
+                return
 
     def update_respawn(self):
         self.player.respawn_area = self.area
@@ -210,14 +232,8 @@ class World:
             )
             + 1
         )
-        current_level = self.active_critter.level
         self.active_critter.experience += xp_gain
         LOGGER.info(f"{self.active_critter.name} gained {xp_gain} experience!")
-        if current_level < self.active_critter.level:
-            information.append(
-                f"{self.active_critter.name} leveled up to {self.active_critter.level}"
-            )
-            LOGGER.info(information[-1])
 
     def catch(self, ball_type: ItemType) -> TurnResult:
         """

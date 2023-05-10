@@ -79,6 +79,13 @@ class TestWorld(unittest.TestCase):
         self.assertEqual(0, critter2.current_hp)
         self.assertEqual(190, critter1.experience)
 
+    def test_evolution(self):
+        world = World()
+        critter = world.encyclopedia.create(random=world.random, id=1, level=16)
+        world.player.add_critter(critter)
+        world.detect_and_execute_evolution([])
+        self.assertEqual(2, world.player.active_critter.id)
+
     def test_save_load(self):
         npc = NPC(x=15, y=15)
         npc_slot = 5

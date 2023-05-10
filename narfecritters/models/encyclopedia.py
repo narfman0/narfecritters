@@ -29,6 +29,10 @@ class Encyclopedia(YAMLWizard):
     def find_by_name(self, name):
         return self.find_by_id(self.name_to_id[name])
 
+    def evolve(self, critter, target_species_id):
+        target_species = self.find_by_id(target_species_id)
+        critter.__dict__.update(target_species.__dict__)
+
     def create(self, random: Random, name=None, id=None, level=0) -> Critter:
         species = None
         if id:

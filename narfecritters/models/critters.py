@@ -34,9 +34,9 @@ class Species(YAMLWizard):
     base_stats: Stats
     type_ids: list[int]
     moves: list[SpeciesMove]
+    evolution_triggers: list[EvolutionTrigger]
     capture_rate: Optional[int]
     flavor_text: Optional[str]
-    evolution_trigger: Optional[EvolutionTrigger]
 
     @property
     def name_pretty(self):
