@@ -193,7 +193,6 @@ class World:
                 information.append(
                     f"{self.active_critter.name} leveled up to {self.active_critter.level}"
                 )
-                LOGGER.info(information[-1])
                 self.detect_and_execute_evolution(information)
         self.encounter = None
         if self.active_critter is None:
@@ -211,7 +210,6 @@ class World:
                 information.append(
                     f"{previous_name} has evolved into {self.active_critter.name}"
                 )
-                LOGGER.info(information[-1])
                 return
 
     def update_respawn(self):
@@ -372,10 +370,8 @@ class World:
                 f"{defender.name} took {player_damage} dmg from {move.name}. "
                 + information_suffix
             )
-            LOGGER.info(information[-1])
         if defender.current_hp <= 0:
             information.append(f"{defender.name} fainted!")
-            LOGGER.info(information[-1])
             if defender in self.player.critters:
                 self.encounter.active_player_critter_uuid = (
                     self.player.active_critter_uuid

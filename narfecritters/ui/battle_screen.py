@@ -98,11 +98,12 @@ class BattleScreen(Screen):
 
     def initialize_information_elements(self):
         y = WINDOW_SIZE[1] - (len(MenuOptions) + 1) * 32
-
+        information_text = self.information_queue[0]
+        LOGGER.info(information_text)
         self.information_elements.append(
             UIButton(
                 (32, y),
-                self.information_queue[0],
+                information_text,
                 self.ui_manager,
             )
         )
