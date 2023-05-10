@@ -130,7 +130,7 @@ class AreaScreen(Screen):
         tile_x_end = min(tile_x + TILE_VIEW_SPAN, self.world.map.width)
         tile_y_begin = max(0, tile_y - TILE_VIEW_SPAN)
         tile_y_end = min(tile_y + TILE_VIEW_SPAN, self.world.map.height)
-        for layer in [0, 1]:
+        for layer in range(self.world.map.get_tile_layer_count()):
             for x in range(tile_x_begin, tile_x_end):
                 for y in range(tile_y_begin, tile_y_end):
                     image = self.world.map.get_tile_image(x, y, layer)

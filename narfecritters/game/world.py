@@ -126,16 +126,20 @@ class World:
     def detect_and_handle_random_encounter(self):
         px = int(self.player.x // TILE_SIZE)
         py = int(self.player.y // TILE_SIZE)
-        for layer in range(0, 2):
+        for layer in range(self.map.get_tile_layer_count()):
             if (
                 self.map.get_tile_type(px, py, layer) == "tallgrass"
                 and self.random.random() < ENCOUNTER_PROBABILITY
             ):
                 enemy_id = self.random.choice(self.candidate_encounters)
+                encounter_level = self.map.get_area_encounter_level()
+                level = round(
+                    self.random.gauss(encounter_level.mean, encounter_level.sigma)
+                )
                 enemy = self.encyclopedia.create(
                     self.random,
                     id=enemy_id,
-                    level=round(self.random.random() * 3 + 1),
+                    level=level,
                 )
                 order_player_first = enemy.speed < self.active_critter.speed
                 if enemy.speed == self.active_critter.speed:

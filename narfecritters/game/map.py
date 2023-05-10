@@ -13,6 +13,12 @@ class TransitionDetails:
     destination_y: int
 
 
+@dataclass
+class EncounterLevel:
+    mean: float
+    sigma: float
+
+
 class Map:
     def __init__(self, area: Area):
         self.area = area
@@ -20,6 +26,11 @@ class Map:
 
     def get_start_tile(self):
         return map(int, self.tmxdata.properties.get("StartTile").split(","))
+
+    def get_area_encounter_level(self):
+        mean = float(self.tmxdata.properties.get("EncounterLevelMean"))
+        sigma = float(self.tmxdata.properties.get("EncounterLevelSigma"))
+        return EncounterLevel(mean, sigma)
 
     def get_candidate_encounters(self, encyclopedia: Encyclopedia):
         candidate_encounters: list[int] = []
@@ -37,9 +48,7 @@ class Map:
         return tile_props.get("type")
 
     def get_transition_details(self, tile_x, tile_y):
-        object = self.tmxdata.get_object_by_name(
-            f"transition,{self.area.name.lower()},{tile_x},{tile_y}"
-        )
+        object = self.tmxdata.get_object_by_name(f"transition,{tile_x},{tile_y}")
         destination_area = Area[object.properties["Destination"].upper()]
         dest_x, dest_y = map(int, object.properties["DestinationXY"].split(","))
         return TransitionDetails(destination_area, dest_x, dest_y)
@@ -50,6 +59,9 @@ class Map:
 
     def get_tile_image(self, tile_x, tile_y, layer):
         return self.tmxdata.get_tile_image(tile_x, tile_y, layer)
+
+    def get_tile_layer_count(self):
+        return len(list(self.tmxdata.visible_tile_layers))
 
     @property
     def width(self):

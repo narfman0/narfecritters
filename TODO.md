@@ -3,7 +3,6 @@
 ## Required
 
 * Critters
-  * Evolutions
   * Fishing
   * Learn moves on levelup
 * Moves
