@@ -17,13 +17,22 @@ class MoveDamageResult:
     type_factor: Optional[float] = None
 
 
-def calculate_base_damage(attacker: Critter, defender: Critter, move: Move):
+def calculate_base_damage(
+    attacker: Critter,
+    defender: Critter,
+    attacker_encounter_stages: EncounterStages,
+    defender_encounter_stages: EncounterStages,
+    move: Move,
+):
     return (
         round(
             (
                 (round((2 * attacker.level) / 5) + 2)
                 * move.power
-                * round(attacker.attack / defender.defense)
+                * round(
+                    (attacker.attack * attacker_encounter_stages.attack_multipler)
+                    / (defender.defense * defender_encounter_stages.defense_multipler)
+                )
             )
             / 50
         )
@@ -44,7 +53,12 @@ def calculate_type_factor(defender: Critter, move: Move):
 
 
 def calculate_move_damage(
-    attacker: Critter, defender: Critter, move: Move, random: Random
+    attacker: Critter,
+    defender: Critter,
+    attacker_encounter_stages: EncounterStages,
+    defender_encounter_stages: EncounterStages,
+    move: Move,
+    random: Random,
 ) -> Optional[MoveDamageResult]:
     """Follows gen5 dmg formula as defined: https://bulbapedia.bulbagarden.net/wiki/Damage#Generation_V_onward"""
     if move.category not in APPLICABILITY:
@@ -54,7 +68,9 @@ def calculate_move_damage(
             f"Move {move.name} is trying to calculate damage, but the move has no power!"
         )
         return
-    base_damage = calculate_base_damage(attacker, defender, move)
+    base_damage = calculate_base_damage(
+        attacker, defender, attacker_encounter_stages, defender_encounter_stages, move
+    )
     # TODO critical hits in gen5 use interesting stages, leaving at stage +0 for now
     # see https://bulbapedia.bulbagarden.net/wiki/Critical_hit for implementation details
     critical_hit_scalar = 1 if random.random() > 0.0625 else 2

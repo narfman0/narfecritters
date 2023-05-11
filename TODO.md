@@ -11,6 +11,7 @@
   * Model accuracy
   * Model multi-turn moves
   * Learn moves on levelup
+  * Observe special moves (spatk/spdef)
   * Disallow unsupported moves
 * Worldbuilding
   * Build world to encompass paths leading to areas with the three legendary birds

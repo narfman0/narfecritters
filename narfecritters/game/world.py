@@ -2,13 +2,13 @@ import logging
 import math
 from dataclasses import dataclass
 from random import Random
-from uuid import UUID
 
 from pygame.math import Vector2
 
 from narfecritters.ui.settings import TILE_SIZE
 from narfecritters.models import *
 from narfecritters.game.move_damage import calculate_move_damage
+from narfecritters.game.move_stat_changes import calculate_move_stat_changes
 from narfecritters.game.map import Map
 
 LOGGER = logging.getLogger(__name__)
@@ -358,7 +358,14 @@ class World:
         """Use a move, if not given, choose randomly"""
         if not move:
             move = self.moves.find_by_id(self.random.choice(attacker.moves).id)
-        result = calculate_move_damage(attacker, defender, move, self.random)
+        result = calculate_move_damage(
+            attacker,
+            defender,
+            attacker_encounter_stages,
+            defender_encounter_stages,
+            move,
+            self.random,
+        )
         if result and result.damage:
             player_damage = result.damage
             defender.take_damage(player_damage)
@@ -378,7 +385,7 @@ class World:
                     self.end_encounter(False, information)
             else:
                 self.end_encounter(True, information)
-        self.move_stat_changes(
+        calculate_move_stat_changes(
             attacker,
             defender,
             attacker_encounter_stages,
@@ -386,51 +393,6 @@ class World:
             move,
             information,
         )
-
-    def move_stat_changes(
-        self,
-        attacker: Critter,
-        defender: Critter,
-        attacker_encounter_stages: EncounterStages,
-        defender_encounter_stages: EncounterStages,
-        move: Move,
-        information: list[str],
-    ):
-        if not move.stat_changes:
-            return
-        for stat_change in move.stat_changes:
-            if move.target in [
-                MoveTarget.ALL_CRITTERS,
-                MoveTarget.ENTIRE_FIELD,
-                MoveTarget.ALL_OPPONENTS,
-                MoveTarget.OPPONENTS_FIELD,
-                MoveTarget.RANDOM_OPPONENT,
-                MoveTarget.ALL_OTHER_CRITTERS,
-            ]:
-                current_stat = getattr(defender_encounter_stages, stat_change.name)
-                setattr(
-                    defender_encounter_stages,
-                    stat_change.name,
-                    current_stat + stat_change.amount,
-                )
-                information.append(f"{stat_change.name} changed for {defender.name}")
-            if move.target in [
-                MoveTarget.ALL_CRITTERS,
-                MoveTarget.ENTIRE_FIELD,
-                MoveTarget.ALL_ALLIES,
-                MoveTarget.USER_AND_ALLIES,
-                MoveTarget.USER,
-                MoveTarget.USER_OR_ALLY,
-                MoveTarget.SELECTED_CRITTERS_ME_FIRST,
-                MoveTarget.ALLY,
-            ]:
-                current_stat = getattr(attacker_encounter_stages, stat_change.name)
-                setattr(
-                    attacker_encounter_stages,
-                    stat_change.name,
-                    current_stat + stat_change.amount,
-                )
-                information.append(f"{stat_change.name} changed for {attacker.name}")
 
     def set_area(self, area: Area):
         self.area = area

@@ -36,6 +36,9 @@ class TestWorld(unittest.TestCase):
         )
         self.assertEqual(-1, world.encounter.enemy_stat_stages.attack)
         self.assertEqual(-1, world.encounter.player_stat_stages.attack)
+        self.assertAlmostEqual(
+            2 / 3, world.encounter.player_stat_stages.attack_multipler
+        )
 
     def test_turn(self):
         random = Random(x=12345)
