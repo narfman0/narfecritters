@@ -19,7 +19,7 @@ MOVE_SPEED = 200
 @dataclass
 class Encounter:
     enemy: Critter
-    active_player_critter_uuid: UUID
+    active_player_critter: Critter
     order_player_first: bool = True
     run_attempts: int = 0
     enemy_stat_stages: EncounterStages = EncounterStages()
@@ -147,7 +147,7 @@ class World:
                 self.encounter = Encounter(
                     enemy=enemy,
                     order_player_first=order_player_first,
-                    active_player_critter_uuid=self.player.active_critter_uuid,
+                    active_player_critter=self.player.active_critter,
                 )
                 return True
 
@@ -373,10 +373,8 @@ class World:
         if defender.current_hp <= 0:
             information.append(f"{defender.name} fainted!")
             if defender in self.player.critters:
-                self.encounter.active_player_critter_uuid = (
-                    self.player.active_critter_uuid
-                )
-                if self.encounter.active_player_critter_uuid is None:
+                self.encounter.active_player_critter = self.player.active_critter
+                if self.encounter.active_player_critter is None:
                     self.end_encounter(False, information)
             else:
                 self.end_encounter(True, information)
@@ -470,9 +468,7 @@ class World:
     @property
     def active_critter(self) -> Critter:
         if self.encounter:
-            return self.player.find_critter_by_uuid(
-                self.encounter.active_player_critter_uuid
-            )
+            return self.encounter.active_player_critter
         return self.player.active_critter
 
     @property

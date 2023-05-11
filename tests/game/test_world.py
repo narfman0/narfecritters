@@ -14,7 +14,7 @@ class TestWorld(unittest.TestCase):
         world.player.add_critter(critter1)
         move = world.moves.find_by_name("growl")
         move.target = MoveTarget.ALL_OPPONENTS
-        world.encounter = Encounter(critter2, active_player_critter_uuid=critter1.uuid)
+        world.encounter = Encounter(critter2, active_player_critter=critter1)
         self.assertEqual(0, world.encounter.enemy_stat_stages.attack)
         world.use_move(
             defender=critter2,
@@ -43,7 +43,7 @@ class TestWorld(unittest.TestCase):
         critter1 = world.encyclopedia.create(random, id=4, level=5)
         critter2 = world.encyclopedia.create(random, id=1, level=5)
         world.player.add_critter(critter1)
-        world.encounter = Encounter(critter2, active_player_critter_uuid=critter1.uuid)
+        world.encounter = Encounter(critter2, active_player_critter=critter1)
 
         player_move = world.moves.find_by_id(critter1.moves[0].id)
         self.assertEqual(5, critter1.level)
@@ -78,6 +78,23 @@ class TestWorld(unittest.TestCase):
             )
         self.assertEqual(0, critter2.current_hp)
         self.assertEqual(190, critter1.experience)
+
+    def test_all_moves(self):
+        world = World()
+        attacker = world.encyclopedia.create(random=world.random, id=1, level=5)
+        defender = world.encyclopedia.create(random=world.random, id=1, level=1)
+        attacker_encounter_stages = EncounterStages()
+        defender_encounter_stages = EncounterStages()
+        for move in world.moves.moves:
+            continue  # TODO
+            world.use_move(
+                attacker,
+                defender,
+                attacker_encounter_stages,
+                defender_encounter_stages,
+                [],
+                move=move,
+            )
 
     def test_evolution(self):
         world = World()
