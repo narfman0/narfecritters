@@ -82,11 +82,12 @@ class TestWorld(unittest.TestCase):
     def test_all_moves(self):
         world = World()
         attacker = world.encyclopedia.create(random=world.random, id=1, level=5)
-        defender = world.encyclopedia.create(random=world.random, id=1, level=1)
-        attacker_encounter_stages = EncounterStages()
-        defender_encounter_stages = EncounterStages()
+        world.player.add_critter(attacker)
         for move in world.moves.moves:
-            continue  # TODO
+            defender_encounter_stages = EncounterStages()
+            attacker_encounter_stages = EncounterStages()
+            defender = world.encyclopedia.create(random=world.random, id=1, level=1)
+            world.encounter = Encounter(defender, active_player_critter=attacker)
             world.use_move(
                 attacker,
                 defender,

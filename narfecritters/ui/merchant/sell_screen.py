@@ -41,10 +41,7 @@ class SellScreen(Screen):
                 if event.ui_element.text == MenuOptions.BACK.name:
                     self.screen_manager.pop()
             if event.ui_element in self.active_critter_buttons:
-                critter_uuid = event.ui_element.critter_uuid
-                critter = self.world.player.find_critter_by_uuid(critter_uuid)
-                if not critter:
-                    return
+                critter = event.ui_element.critter
                 critter_worth = event.ui_element.critter_worth
                 self.world.player.money += critter_worth
                 self.world.player.remove_critter(critter)
@@ -79,7 +76,7 @@ class SellScreen(Screen):
                 manager=self.ui_manager,
             )
             if critter:
-                button.critter_uuid = critter.uuid
+                button.critter = critter
                 button.critter_worth = critter_worth
             self.active_critter_buttons.append(button)
             y += 32

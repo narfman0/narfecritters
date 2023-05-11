@@ -28,13 +28,10 @@ class NPC:
 
     @property
     def active_critter(self):
-        return self.find_critter_by_uuid(self.active_critter_uuid)
-
-    @property
-    def active_critter_uuid(self):
         for active_critter_uuid in self.active_critters:
-            if not self.find_critter_by_uuid(active_critter_uuid).fainted:
-                return active_critter_uuid
+            active_critter = self.find_critter_by_uuid(active_critter_uuid)
+            if not active_critter.fainted:
+                return active_critter
         return None
 
     def add_critter(self, critter: Critter):
