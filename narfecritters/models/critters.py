@@ -1,11 +1,16 @@
+from enum import Enum, auto
 from typing import Optional
 from functools import lru_cache
 from uuid import UUID
 
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from dataclass_wizard import YAMLWizard
 
 from narfecritters.models.stats import *
+
+
+class StatusType(Enum):
+    POISONED = auto()
 
 
 @dataclass
@@ -50,12 +55,16 @@ class Critter(Species, YAMLWizard):
     evs: Optional[Stats] = None
     current_hp: Optional[int] = None
     experience: Optional[int] = None
+    statuses: set[StatusType] = field(default_factory=set)
 
     def take_damage(self, damage: int):
         self.current_hp = max(0, self.current_hp - damage)
 
     def heal(self, amount: int):
         self.current_hp = min(self.max_hp, self.current_hp + amount)
+
+    def has_status(self, status: StatusType):
+        return status in self.statuses
 
     @property
     def fainted(self):

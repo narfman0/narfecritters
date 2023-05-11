@@ -353,6 +353,12 @@ class World:
                     information=information,
                     move=second_move,
                 )
+        if first.has_status(StatusType.POISONED):
+            first.take_damage(first.max_hp // 8)
+            self.check_and_observe_critter_faint(first, information)
+        if second.has_status(StatusType.POISONED):
+            second.take_damage(second.max_hp // 8)
+            self.check_and_observe_critter_faint(second, information)
         return TurnResult(information, player_critter.fainted)
 
     def turn_step(
@@ -384,14 +390,7 @@ class World:
             move,
             information,
         )
-        if defender.current_hp <= 0:
-            information.append(f"{defender.name} fainted!")
-            if defender in self.player.critters:
-                self.encounter.active_player_critter = self.player.active_critter
-                if self.encounter.active_player_critter is None:
-                    self.end_encounter(False, information)
-            else:
-                self.end_encounter(True, information)
+        self.check_and_observe_critter_faint(defender, information)
         if move.healing:
             defender.heal(round(defender.max_hp * (move.healing / 100)))
         calculate_move_stat_changes(
@@ -403,6 +402,16 @@ class World:
             information,
         )
         return TurnStepResult(move.flinch_chance >= self.random.randint(1, 100))
+
+    def check_and_observe_critter_faint(self, critter: Critter, information: list[str]):
+        if critter.current_hp <= 0:
+            information.append(f"{critter.name} fainted!")
+            if critter in self.player.critters:
+                self.encounter.active_player_critter = self.player.active_critter
+                if self.encounter.active_player_critter is None:
+                    self.end_encounter(False, information)
+            else:
+                self.end_encounter(True, information)
 
     def calculate_and_apply_move_damage(
         self,
