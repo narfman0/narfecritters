@@ -4,7 +4,6 @@ from typing import Optional
 from dataclasses import dataclass, field
 from dataclass_wizard import YAMLWizard
 
-from narfecritters.models.areas import *
 from narfecritters.models.critters import *
 from narfecritters.models.items import *
 from narfecritters.models.moves import *
@@ -20,7 +19,7 @@ class NPC:
     respawn_x: int = 0
     respawn_y: int = 0
     money: int = 0
-    respawn_area: Optional[Area] = None
+    respawn_area: Optional[str] = None
     inventory: dict[ItemType, int] = field(default_factory=dict)
     critters: list[Critter] = field(default_factory=list)
     active_critters: list[UUID] = field(default_factory=list)

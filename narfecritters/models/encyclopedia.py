@@ -4,7 +4,6 @@ import uuid
 from dataclasses import dataclass, field
 from dataclass_wizard import YAMLWizard
 
-from narfecritters.models.areas import *
 from narfecritters.models.critters import *
 from narfecritters.models.moves import *
 from narfecritters.models.npcs import *

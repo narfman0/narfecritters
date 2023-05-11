@@ -3,7 +3,6 @@ import logging
 import pygame
 from pygame_gui import UIManager
 
-from narfecritters.models import Area
 from narfecritters.game.world import World
 from narfecritters.ui.battle_screen import BattleScreen
 from narfecritters.ui.merchant.merchant_screen import MerchantScreen
@@ -24,7 +23,7 @@ class AreaScreen(Screen):
         ui_manager: UIManager,
         screen_manager: ScreenManager,
         world: World,
-        area: Area,
+        area: str,
     ):
         super().__init__(ui_manager)
         self.screen_manager = screen_manager

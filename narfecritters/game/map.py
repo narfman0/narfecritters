@@ -2,13 +2,12 @@ from dataclasses import dataclass
 
 import pytmx
 
-from narfecritters.models.areas import Area
 from narfecritters.models.encyclopedia import Encyclopedia
 
 
 @dataclass
 class TransitionDetails:
-    destination_area: Area
+    destination_area: str
     destination_x: int
     destination_y: int
 
@@ -20,9 +19,9 @@ class EncounterLevel:
 
 
 class Map:
-    def __init__(self, area: Area):
+    def __init__(self, area: str):
         self.area = area
-        self.tmxdata = pytmx.load_pygame(f"data/tiled/{area.name.lower()}.tmx")
+        self.tmxdata = pytmx.load_pygame(f"data/tiled/{area}.tmx")
 
     def get_start_tile(self):
         return map(int, self.tmxdata.properties.get("StartTile").split(","))
@@ -49,7 +48,7 @@ class Map:
 
     def get_transition_details(self, tile_x, tile_y):
         object = self.tmxdata.get_object_by_name(f"transition,{tile_x},{tile_y}")
-        destination_area = Area[object.properties["Destination"].upper()]
+        destination_area = object.properties["Destination"]
         dest_x, dest_y = map(int, object.properties["DestinationXY"].split(","))
         return TransitionDetails(destination_area, dest_x, dest_y)
 

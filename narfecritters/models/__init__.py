@@ -1,4 +1,3 @@
-from narfecritters.models.areas import *
 from narfecritters.models.critters import *
 from narfecritters.models.encyclopedia import *
 from narfecritters.models.moves import *

@@ -14,6 +14,7 @@ from narfecritters.game.map import Map
 LOGGER = logging.getLogger(__name__)
 ENCOUNTER_PROBABILITY = 0.1
 MOVE_SPEED = 200
+DEFAULT_AREA = "overworld"
 
 
 @dataclass
@@ -29,7 +30,7 @@ class Encounter:
 @dataclass
 class MoveResult:
     encounter: bool = False
-    area_change: Area = None
+    area_change: str = None
 
 
 @dataclass
@@ -59,7 +60,7 @@ class World:
         self.player = NPC()
         self.player.add_item(ItemType.BALL, 3)
         self.encounter: Optional[Encounter] = None
-        self.area: Optional[Area] = None
+        self.area: Optional[str] = None
         self.map: Optional[Map] = None
         self.candidate_encounters: list[int] = []
         self.move_action = None
@@ -162,7 +163,7 @@ class World:
                 LOGGER.info("Healed!")
             if self.map.get_tile_type(px, py, layer) == "transition":
                 details = self.map.get_transition_details(px, py)
-                LOGGER.info(f"Transitioning to {details.destination_area.name.lower()}")
+                LOGGER.info(f"Transitioning to {details.destination_area}")
                 self.player.x = TILE_SIZE * details.destination_x + TILE_SIZE // 2
                 self.player.y = TILE_SIZE * details.destination_y + TILE_SIZE // 2
                 return details.destination_area
@@ -420,7 +421,7 @@ class World:
                 + information_suffix
             )
 
-    def set_area(self, area: Area):
+    def set_area(self, area: str):
         self.area = area
         self.map = Map(area)
         if not self.player.respawn_area:
@@ -429,7 +430,7 @@ class World:
             self.player.y = TILE_SIZE * start_y + TILE_SIZE // 2
             self.update_respawn()
 
-        if area == Area.DEFAULT:
+        if area == DEFAULT_AREA:
             start_x, start_y = self.map.get_start_tile()
             merchant_x, merchant_y = self.random.choices([-3, -2, -1, 1, 2, 3], k=2)
             self.spawn_merchant(start_x + merchant_x, start_y + merchant_y)

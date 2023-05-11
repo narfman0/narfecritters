@@ -4,11 +4,10 @@ import pygame
 from pygame_gui import UI_BUTTON_PRESSED, UIManager
 from pygame_gui.elements import UIButton
 
-from narfecritters.models import Area
 from narfecritters.ui.area_screen import AreaScreen
 from narfecritters.ui.screen import Screen, ScreenManager
 from narfecritters.ui.settings import WINDOW_SIZE
-from narfecritters.game.world import World
+from narfecritters.game.world import DEFAULT_AREA, World
 
 
 LOGGER = logging.getLogger(__name__)
@@ -60,7 +59,7 @@ class StartScreen(Screen):
                         self.ui_manager,
                         self.screen_manager,
                         self.world,
-                        Area.DEFAULT,
+                        DEFAULT_AREA,
                     )
                 )
 
