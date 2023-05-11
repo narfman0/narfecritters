@@ -4,9 +4,9 @@
 
 * Moves
   * Model move buffs+debuffs
-  * Model healing
+  * Paralyze
+  * Poison
   * Model critical hit
-  * Model targets
   * Model evasion
   * Model accuracy
   * Model multi-turn moves

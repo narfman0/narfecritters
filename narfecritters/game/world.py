@@ -385,6 +385,8 @@ class World:
                     self.end_encounter(False, information)
             else:
                 self.end_encounter(True, information)
+        if move.healing:
+            defender.heal(round(defender.max_hp * (move.healing / 100)))
         calculate_move_stat_changes(
             attacker,
             defender,
