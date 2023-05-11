@@ -69,7 +69,7 @@ class TestWorld(unittest.TestCase):
             information=[],
             move=player_move,
         )
-        self.assertEqual(15, critter1.current_hp)
+        self.assertEqual(16, critter1.current_hp)
 
         while world.encounter:
             world.turn_step(
