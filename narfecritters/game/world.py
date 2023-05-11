@@ -266,7 +266,7 @@ class World:
             self.end_encounter(True, information)
         else:
             information.append(f"Failed to catch {self.enemy.name}.")
-            self.use_move(
+            self.turn_step(
                 defender=player_critter,
                 attacker=self.enemy,
                 attacker_encounter_stages=self.encounter.enemy_stat_stages,
@@ -300,7 +300,7 @@ class World:
         else:
             information.append(f"{player_critter.name} failed to run away.")
             self.encounter.run_attempts += 1
-            self.use_move(
+            self.turn_step(
                 defender=player_critter,
                 attacker=self.enemy,
                 attacker_encounter_stages=self.encounter.enemy_stat_stages,
@@ -328,7 +328,7 @@ class World:
             second_move = player_move
             first_encounter_stages = self.encounter.enemy_stat_stages
             second_encounter_stages = self.encounter.player_stat_stages
-        self.use_move(
+        self.turn_step(
             defender=second,
             attacker=first,
             attacker_encounter_stages=first_encounter_stages,
@@ -337,7 +337,7 @@ class World:
             move=first_move,
         )
         if not second.fainted:
-            self.use_move(
+            self.turn_step(
                 defender=first,
                 attacker=second,
                 attacker_encounter_stages=second_encounter_stages,
@@ -347,7 +347,7 @@ class World:
             )
         return TurnResult(information, player_critter.fainted)
 
-    def use_move(
+    def turn_step(
         self,
         attacker: Critter,
         defender: Critter,

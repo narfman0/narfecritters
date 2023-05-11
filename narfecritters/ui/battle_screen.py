@@ -74,7 +74,7 @@ class BattleScreen(Screen):
                 self.reload_self_critter_image()
                 information: list[str] = []
                 active_critter = self.world.active_critter
-                self.world.use_move(
+                self.world.turn_step(
                     defender=active_critter,
                     attacker=self.world.enemy,
                     attacker_encounter_stages=self.world.encounter.enemy_stat_stages,

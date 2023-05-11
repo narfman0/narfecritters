@@ -16,7 +16,7 @@ class TestWorld(unittest.TestCase):
         move.target = MoveTarget.ALL_OPPONENTS
         world.encounter = Encounter(critter2, active_player_critter=critter1)
         self.assertEqual(0, world.encounter.enemy_stat_stages.attack)
-        world.use_move(
+        world.turn_step(
             defender=critter2,
             attacker=critter1,
             attacker_encounter_stages=world.encounter.player_stat_stages,
@@ -26,7 +26,7 @@ class TestWorld(unittest.TestCase):
         )
         self.assertEqual(-1, world.encounter.enemy_stat_stages.attack)
         self.assertEqual(0, world.encounter.player_stat_stages.attack)
-        world.use_move(
+        world.turn_step(
             defender=critter1,
             attacker=critter2,
             attacker_encounter_stages=world.encounter.enemy_stat_stages,
@@ -52,7 +52,7 @@ class TestWorld(unittest.TestCase):
         player_move.accuracy = 100
         self.assertEqual(5, critter1.level)
         self.assertEqual(125, critter1.experience)
-        world.use_move(
+        world.turn_step(
             defender=critter2,
             attacker=critter1,
             attacker_encounter_stages=world.encounter.player_stat_stages,
@@ -61,7 +61,7 @@ class TestWorld(unittest.TestCase):
             move=player_move,
         )
         self.assertEqual(15, critter2.current_hp)
-        world.use_move(
+        world.turn_step(
             defender=critter1,
             attacker=critter2,
             attacker_encounter_stages=world.encounter.enemy_stat_stages,
@@ -72,7 +72,7 @@ class TestWorld(unittest.TestCase):
         self.assertEqual(15, critter1.current_hp)
 
         for x in range(4):
-            world.use_move(
+            world.turn_step(
                 attacker=critter1,
                 defender=critter2,
                 attacker_encounter_stages=world.encounter.player_stat_stages,
@@ -92,7 +92,7 @@ class TestWorld(unittest.TestCase):
             attacker_encounter_stages = EncounterStages()
             defender = world.encyclopedia.create(random=world.random, id=1, level=1)
             world.encounter = Encounter(defender, active_player_critter=attacker)
-            world.use_move(
+            world.turn_step(
                 attacker,
                 defender,
                 attacker_encounter_stages,
