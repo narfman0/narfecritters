@@ -3,7 +3,6 @@
 ## Required
 
 * Moves
-  * Flinching
   * Observe special moves (spatk/spdef)
   * Paralyze
   * Poison

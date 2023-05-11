@@ -41,6 +41,9 @@ class Encyclopedia(YAMLWizard):
         if species is None:
             raise Exception(f"Species name {name} or id {id} not found")
         instance = Critter(uuid=uuid.uuid1(), **species.__dict__)
+        instance.name = (
+            instance.name.capitalize()
+        )  # the species has the template name, this is a specific noun
         instance.evs = Stats()
         instance.ivs = Stats.create_random_ivs(random)
         # only modeling medium-fast xp group

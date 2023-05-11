@@ -71,7 +71,7 @@ class TestWorld(unittest.TestCase):
         )
         self.assertEqual(15, critter1.current_hp)
 
-        for x in range(4):
+        while world.encounter:
             world.turn_step(
                 attacker=critter1,
                 defender=critter2,

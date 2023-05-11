@@ -28,6 +28,11 @@ class Encounter:
 
 
 @dataclass
+class TurnStepResult:
+    defender_flinched: bool
+
+
+@dataclass
 class MoveResult:
     encounter: bool = False
     area_change: str = None
@@ -328,7 +333,7 @@ class World:
             second_move = player_move
             first_encounter_stages = self.encounter.enemy_stat_stages
             second_encounter_stages = self.encounter.player_stat_stages
-        self.turn_step(
+        result = self.turn_step(
             defender=second,
             attacker=first,
             attacker_encounter_stages=first_encounter_stages,
@@ -337,14 +342,17 @@ class World:
             move=first_move,
         )
         if not second.fainted:
-            self.turn_step(
-                defender=first,
-                attacker=second,
-                attacker_encounter_stages=second_encounter_stages,
-                defender_encounter_stages=first_encounter_stages,
-                information=information,
-                move=second_move,
-            )
+            if result.defender_flinched:
+                information.append(f"{second.name} flinched!")
+            else:
+                self.turn_step(
+                    defender=first,
+                    attacker=second,
+                    attacker_encounter_stages=second_encounter_stages,
+                    defender_encounter_stages=first_encounter_stages,
+                    information=information,
+                    move=second_move,
+                )
         return TurnResult(information, player_critter.fainted)
 
     def turn_step(
@@ -365,15 +373,17 @@ class World:
             * defender_encounter_stages.evasion_multipler
             >= self.random.randint(1, 100)
         )
-        if hit:
-            self.calculate_and_apply_move_damage(
-                attacker,
-                defender,
-                attacker_encounter_stages,
-                defender_encounter_stages,
-                move,
-                information,
-            )
+        if not hit:
+            information.append(f"{attacker.name} missed!")
+            return TurnStepResult(defender_flinched=False)
+        self.calculate_and_apply_move_damage(
+            attacker,
+            defender,
+            attacker_encounter_stages,
+            defender_encounter_stages,
+            move,
+            information,
+        )
         if defender.current_hp <= 0:
             information.append(f"{defender.name} fainted!")
             if defender in self.player.critters:
@@ -392,6 +402,7 @@ class World:
             move,
             information,
         )
+        return TurnStepResult(move.flinch_chance >= self.random.randint(1, 100))
 
     def calculate_and_apply_move_damage(
         self,
