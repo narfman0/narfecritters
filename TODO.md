@@ -5,7 +5,6 @@
 * Moves
   * Observe special moves (spatk/spdef)
   * Paralyze
-  * Poison
   * Model critical hit
   * Model multi-turn moves
   * Learn moves on levelup

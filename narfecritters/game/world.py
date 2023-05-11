@@ -353,10 +353,10 @@ class World:
                     information=information,
                     move=second_move,
                 )
-        if first.has_status(StatusType.POISONED):
+        if first.has_ailment(Ailment.POISON):
             first.take_damage(first.max_hp // 8)
             self.check_and_observe_critter_faint(first, information)
-        if second.has_status(StatusType.POISONED):
+        if second.has_ailment(Ailment.POISON):
             second.take_damage(second.max_hp // 8)
             self.check_and_observe_critter_faint(second, information)
         return TurnResult(information, player_critter.fainted)
@@ -401,6 +401,8 @@ class World:
             move,
             information,
         )
+        if move.ailment and move.ailment_chance >= self.random.randint(1, 100):
+            defender.ailments.add(move.ailment)
         return TurnStepResult(move.flinch_chance >= self.random.randint(1, 100))
 
     def check_and_observe_critter_faint(self, critter: Critter, information: list[str]):

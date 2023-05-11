@@ -6,11 +6,8 @@ from uuid import UUID
 from dataclasses import dataclass, field
 from dataclass_wizard import YAMLWizard
 
+from narfecritters.models.moves import *
 from narfecritters.models.stats import *
-
-
-class StatusType(Enum):
-    POISONED = auto()
 
 
 @dataclass
@@ -55,7 +52,7 @@ class Critter(Species, YAMLWizard):
     evs: Optional[Stats] = None
     current_hp: Optional[int] = None
     experience: Optional[int] = None
-    statuses: set[StatusType] = field(default_factory=set)
+    ailments: set[Ailment] = field(default_factory=set)
 
     def take_damage(self, damage: int):
         self.current_hp = max(0, self.current_hp - damage)
@@ -63,8 +60,8 @@ class Critter(Species, YAMLWizard):
     def heal(self, amount: int):
         self.current_hp = min(self.max_hp, self.current_hp + amount)
 
-    def has_status(self, status: StatusType):
-        return status in self.statuses
+    def has_ailment(self, status: Ailment):
+        return status in self.ailments
 
     @property
     def fainted(self):

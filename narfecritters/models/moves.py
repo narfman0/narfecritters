@@ -1,8 +1,22 @@
-from enum import Enum
+from enum import Enum, auto
 from typing import Optional
 from dataclasses import dataclass, field
 
 from dataclass_wizard import YAMLWizard
+
+
+class Ailment(Enum):
+    NONE = auto()
+    PARALYSIS = auto()
+    SLEEP = auto()
+    FREEZE = auto()
+    BURN = auto()
+    POISON = auto()
+    CONFUSION = auto()
+    INFATUATION = auto()
+    TRAP = auto()
+    NIGHTMARE = auto()
+    LEECH_SEED = auto()
 
 
 class MoveTarget(Enum):
@@ -58,6 +72,8 @@ class Move:
     healing: int
     stat_chance: int
     accuracy: int
+    ailment_chance: int
+    ailment: Optional[Ailment]
     category: MoveCategory = MoveCategory.DAMAGE
     power: Optional[int] = None
     stat_changes: list[StatChange] = field(default_factory=list)
