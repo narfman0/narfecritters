@@ -3,15 +3,13 @@
 ## Required
 
 * Moves
-  * Model move buffs+debuffs
+  * Flinching
+  * Observe special moves (spatk/spdef)
   * Paralyze
   * Poison
   * Model critical hit
-  * Model evasion
-  * Model accuracy
   * Model multi-turn moves
   * Learn moves on levelup
-  * Observe special moves (spatk/spdef)
   * Disallow unsupported moves
 * Worldbuilding
   * Build world to encompass paths leading to areas with the three legendary birds

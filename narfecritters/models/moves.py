@@ -57,6 +57,7 @@ class Move:
     flinch_chance: int
     healing: int
     stat_chance: int
+    accuracy: int
     category: MoveCategory = MoveCategory.DAMAGE
     power: Optional[int] = None
     stat_changes: list[StatChange] = field(default_factory=list)

@@ -358,24 +358,20 @@ class World:
         """Use a move, if not given, choose randomly"""
         if not move:
             move = self.moves.find_by_id(self.random.choice(attacker.moves).id)
-        result = calculate_move_damage(
-            attacker,
-            defender,
-            attacker_encounter_stages,
-            defender_encounter_stages,
-            move,
-            self.random,
+        hit = (
+            move.accuracy
+            * attacker_encounter_stages.accuracy_multipler
+            * defender_encounter_stages.evasion_multipler
+            >= self.random.randint(1, 100)
         )
-        if result and result.damage:
-            player_damage = result.damage
-            defender.take_damage(player_damage)
-
-            information_suffix = self.get_type_effectiveness_response_suffix(
-                result.type_factor
-            )
-            information.append(
-                f"{defender.name} took {player_damage} dmg from {move.name}. "
-                + information_suffix
+        if hit:
+            self.calculate_and_apply_move_damage(
+                attacker,
+                defender,
+                attacker_encounter_stages,
+                defender_encounter_stages,
+                move,
+                information,
             )
         if defender.current_hp <= 0:
             information.append(f"{defender.name} fainted!")
@@ -395,6 +391,34 @@ class World:
             move,
             information,
         )
+
+    def calculate_and_apply_move_damage(
+        self,
+        attacker: Critter,
+        defender: Critter,
+        attacker_encounter_stages: EncounterStages,
+        defender_encounter_stages: EncounterStages,
+        move: Move,
+        information: list[str],
+    ):
+        result = calculate_move_damage(
+            attacker,
+            defender,
+            attacker_encounter_stages,
+            defender_encounter_stages,
+            move,
+            self.random,
+        )
+        if result and result.damage:
+            player_damage = result.damage
+            defender.take_damage(player_damage)
+            information_suffix = self.get_type_effectiveness_response_suffix(
+                result.type_factor
+            )
+            information.append(
+                f"{defender.name} took {player_damage} dmg from {move.name}. "
+                + information_suffix
+            )
 
     def set_area(self, area: Area):
         self.area = area

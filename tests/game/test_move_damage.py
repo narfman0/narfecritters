@@ -24,6 +24,7 @@ class TestMoveDamage(unittest.TestCase):
             flinch_chance=0,
             healing=0,
             stat_chance=0,
+            accuracy=100,
         )
         self.assertEqual(
             4,
@@ -46,6 +47,7 @@ class TestMoveDamage(unittest.TestCase):
             flinch_chance=0,
             healing=0,
             stat_chance=0,
+            accuracy=100,
         )
         self.assertEqual(
             14,
