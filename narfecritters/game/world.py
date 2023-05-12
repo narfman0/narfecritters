@@ -116,9 +116,9 @@ class World:
         elif direction is Direction.DOWN:
             target_y += TILE_SIZE
 
+        self.player.direction = direction
         if self.detect_and_handle_collisions(target_x, target_y):
             return
-        self.player.direction = direction
         self.move_action = MoveAction(
             running=running, target_x=target_x, target_y=target_y
         )
@@ -174,16 +174,18 @@ class World:
         for layer in range(0, 2):
             if self.map.has_colliders(px, py, layer):
                 return True
+        if self.detect_merchant():
+            return True
         return False
 
     def detect_merchant(self):
-        """TODO track which way we are facing and interact with that thing on map"""
         if not self.merchant:
             return False
-        x_dist = math.pow(self.merchant.x - self.player.x, 2)
-        y_dist = math.pow(self.merchant.y - self.player.y, 2)
-        dist = math.sqrt(x_dist + y_dist)
-        return dist // TILE_SIZE <= 1
+        target_x, target_y = self.get_player_facing_tile()
+        return (
+            self.merchant.x // TILE_SIZE == target_x
+            and self.merchant.y // TILE_SIZE == target_y
+        )
 
     def end_encounter(self, win, information: list[str]):
         current_level = self.active_critter.level
@@ -463,6 +465,20 @@ class World:
         x = TILE_SIZE * tile_x + TILE_SIZE // 2
         y = TILE_SIZE * tile_y + TILE_SIZE // 2
         self.merchant = NPC(x, y, sprite="npc06")
+
+    def get_player_facing_tile(self) -> tuple[int, int]:
+        """Return the tile the player is facing, given their direction"""
+        target_x = self.player.x // TILE_SIZE
+        target_y = self.player.y // TILE_SIZE
+        if self.player.direction == Direction.LEFT:
+            target_x -= 1
+        elif self.player.direction == Direction.RIGHT:
+            target_x += 1
+        elif self.player.direction == Direction.UP:
+            target_y -= 1
+        elif self.player.direction == Direction.DOWN:
+            target_y += 1
+        return target_x, target_y
 
     @classmethod
     def get_type_effectiveness_response_suffix(cls, type_factor: float):
