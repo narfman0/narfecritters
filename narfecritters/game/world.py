@@ -267,7 +267,7 @@ class World:
             self.end_encounter(True, information)
         else:
             information.append(f"Failed to catch {self.enemy.name}.")
-            self.turn_step(
+            self.turn_step(  # TODO need to call turn to calculate poison+burn etc here
                 defender=player_critter,
                 attacker=self.enemy,
                 attacker_encounter_stages=self.encounter.enemy_stat_stages,
@@ -301,7 +301,7 @@ class World:
         else:
             information.append(f"{player_critter.name} failed to run away.")
             self.encounter.run_attempts += 1
-            self.turn_step(
+            self.turn_step(  # TODO need to call turn to calculate poison+burn etc here
                 defender=player_critter,
                 attacker=self.enemy,
                 attacker_encounter_stages=self.encounter.enemy_stat_stages,

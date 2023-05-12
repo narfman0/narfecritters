@@ -73,7 +73,7 @@ class BattleScreen(Screen):
                 self.reload_self_critter_image()
                 information: list[str] = []
                 active_critter = self.world.active_critter
-                self.world.turn_step(
+                self.world.turn_step(  # TODO need to call turn to calculate poison+burn etc here
                     defender=active_critter,
                     attacker=self.world.enemy,
                     attacker_encounter_stages=self.world.encounter.enemy_stat_stages,
