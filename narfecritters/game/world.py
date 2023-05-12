@@ -29,7 +29,7 @@ class Encounter:
 
 @dataclass
 class TurnStepResult:
-    defender_flinched: bool
+    defender_flinched: bool = False
 
 
 @dataclass
@@ -101,6 +101,7 @@ class World:
         self.set_area(self.player.respawn_area)
         for critter in self.player.critters:
             critter.current_hp = critter.max_hp
+            critter.ailments.clear()
 
     def move(
         self,
@@ -162,8 +163,9 @@ class World:
         py = int(self.player.y // TILE_SIZE)
         for layer in range(0, 2):
             if self.map.get_tile_type(px, py, layer) == "heal":
-                for critters in self.player.critters:
-                    critters.current_hp = critters.max_hp
+                for critter in self.player.critters:
+                    critter.current_hp = critter.max_hp
+                    critter.ailments.clear()
                 self.update_respawn()
                 LOGGER.info("Healed!")
             if self.map.get_tile_type(px, py, layer) == "transition":
@@ -373,6 +375,10 @@ class World:
         """Use a move, if not given, choose randomly"""
         if not move:
             move = self.moves.find_by_id(self.random.choice(attacker.moves).id)
+        if attacker.has_ailment(Ailment.PARALYSIS):
+            if self.random.randint(0, 100) < 25:
+                information(f"{attacker.name} is paralyzed! It can't move!")
+                return TurnStepResult()
         hit = (
             move.accuracy
             * attacker_encounter_stages.accuracy_multipler
@@ -381,7 +387,7 @@ class World:
         )
         if not hit:
             information.append(f"{attacker.name} missed!")
-            return TurnStepResult(defender_flinched=False)
+            return TurnStepResult()
         self.calculate_and_apply_move_damage(
             attacker,
             defender,
