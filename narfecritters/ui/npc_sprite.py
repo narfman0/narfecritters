@@ -1,13 +1,6 @@
-from enum import Enum
-
 import pygame
 
-
-class Direction(Enum):
-    UP = 1
-    DOWN = 2
-    LEFT = 3
-    RIGHT = 4
+from narfecritters.models import Direction
 
 
 class NPCSprite(pygame.sprite.Sprite):
@@ -41,23 +34,13 @@ class NPCSprite(pygame.sprite.Sprite):
         width, height = self.image.get_size()
         self.rect = pygame.Rect(0, 0, width, height)
 
-    def move(self, up=False, down=False, left=False, right=False):
+    def move(self, direction):
         self.moving = True
-        if left:
-            self.change_direction(Direction.LEFT)
-        elif right:
-            self.change_direction(Direction.RIGHT)
-        elif up:
-            self.change_direction(Direction.UP)
-        elif down:
-            self.change_direction(Direction.DOWN)
+        self.active_images = self.images[direction]
+        self.index = 0
 
     def stop(self):
         self.moving = False
-        self.index = 0
-
-    def change_direction(self, direction):
-        self.active_images = self.images[direction]
         self.index = 0
 
     def update(self):

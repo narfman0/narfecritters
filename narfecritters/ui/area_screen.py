@@ -3,6 +3,7 @@ import logging
 import pygame
 from pygame_gui import UIManager
 
+from narfecritters.models import Direction
 from narfecritters.game.world import World
 from narfecritters.ui.battle_screen import BattleScreen
 from narfecritters.ui.merchant.merchant_screen import MerchantScreen
@@ -43,7 +44,7 @@ class AreaScreen(Screen):
             )
         if (
             pygame.key.get_pressed()[pygame.K_RETURN]
-            or pygame.key.get_pressed()[pygame.K_EQUALS]
+            or pygame.key.get_pressed()[pygame.K_e]
         ):
             if self.world.detect_merchant():
                 self.screen_manager.push(
@@ -86,34 +87,34 @@ class AreaScreen(Screen):
             self.merchant_sprite.kill()
 
     def handle_move(self):
-        move_kwargs = {}
+        direction = None
         if (
             pygame.key.get_pressed()[pygame.K_LEFT]
             or pygame.key.get_pressed()[pygame.K_a]
         ):
-            move_kwargs["left"] = True
+            direction = Direction.LEFT
         elif (
             pygame.key.get_pressed()[pygame.K_RIGHT]
             or pygame.key.get_pressed()[pygame.K_d]
         ):
-            move_kwargs["right"] = True
+            direction = Direction.RIGHT
         elif (
             pygame.key.get_pressed()[pygame.K_UP]
             or pygame.key.get_pressed()[pygame.K_w]
         ):
-            move_kwargs["up"] = True
+            direction = Direction.UP
         elif (
             pygame.key.get_pressed()[pygame.K_DOWN]
             or pygame.key.get_pressed()[pygame.K_s]
         ):
-            move_kwargs["down"] = True
-        if move_kwargs:
+            direction = Direction.DOWN
+        if direction:
             running = (
                 pygame.key.get_pressed()[pygame.K_LSHIFT]
                 or pygame.key.get_pressed()[pygame.K_RSHIFT]
             )
-            self.world.move(running=running, **move_kwargs)
-            self.player_sprite.move(**move_kwargs)
+            self.world.move(direction, running)
+            self.player_sprite.move(direction)
 
     def draw(self, surface: pygame.Surface):
         surface.blit(self.background, (0, 0))

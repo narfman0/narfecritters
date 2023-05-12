@@ -102,29 +102,23 @@ class World:
         for critter in self.player.critters:
             critter.heal()
 
-    def move(
-        self,
-        up=False,
-        down=False,
-        left=False,
-        right=False,
-        running=False,
-    ):
+    def move(self, direction: Direction, running: bool):
         if self.move_action:
             return
         target_x = self.player.x
         target_y = self.player.y
-        if left:
+        if direction is Direction.LEFT:
             target_x -= TILE_SIZE
-        elif right:
+        elif direction is Direction.RIGHT:
             target_x += TILE_SIZE
-        elif up:
+        elif direction is Direction.UP:
             target_y -= TILE_SIZE
-        elif down:
+        elif direction is Direction.DOWN:
             target_y += TILE_SIZE
 
         if self.detect_and_handle_collisions(target_x, target_y):
             return
+        self.player.direction = direction
         self.move_action = MoveAction(
             running=running, target_x=target_x, target_y=target_y
         )

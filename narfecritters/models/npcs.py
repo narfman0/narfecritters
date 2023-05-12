@@ -5,6 +5,7 @@ from dataclasses import dataclass, field
 from dataclass_wizard import YAMLWizard
 
 from narfecritters.models.critters import *
+from narfecritters.models.direction import *
 from narfecritters.models.items import *
 from narfecritters.models.moves import *
 from narfecritters.models.stats import *
@@ -19,6 +20,7 @@ class NPC:
     respawn_x: int = 0
     respawn_y: int = 0
     money: int = 0
+    direction: Direction = Direction.DOWN
     respawn_area: Optional[str] = None
     inventory: dict[ItemType, int] = field(default_factory=dict)
     critters: list[Critter] = field(default_factory=list)
