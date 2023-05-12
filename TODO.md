@@ -3,6 +3,7 @@
 ## Required
 
 * Moves
+  * sleep, burn, confusion
   * Observe special moves (spatk/spdef)
   * Learn moves on levelup
 * Worldbuilding
