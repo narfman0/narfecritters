@@ -61,8 +61,7 @@ class BattleScreen(Screen):
                     self.initialize_information_elements()
             elif event.ui_element in self.fight_buttons:
                 self.kill_fight_buttons()
-                move_name = event.ui_element.move_name
-                result = self.world.turn(move_name)
+                result = self.world.turn(event.ui_element.move)
                 self.information_queue.extend(result.information)
                 if result.fainted:
                     self.reload_self_critter_image()
@@ -151,7 +150,7 @@ class BattleScreen(Screen):
                     manager=self.ui_manager,
                 )
             )
-            self.fight_buttons[-1].move_name = critters_move.name
+            self.fight_buttons[-1].move = critters_move
             y += 32
 
     def kill(self):

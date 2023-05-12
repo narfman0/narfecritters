@@ -310,10 +310,9 @@ class World:
             )
         return TurnResult(information, player_critter.fainted)
 
-    def turn(self, move_name) -> TurnResult:
+    def turn(self, player_move: Move) -> TurnResult:
         """Take each critters turn. Observes speeds for priority order."""
         information: list[str] = []
-        player_move = self.moves.find_by_name(move_name)
         player_critter = self.active_critter
         if self.encounter.order_player_first:
             first = player_critter
@@ -337,7 +336,7 @@ class World:
             information=information,
             move=first_move,
         )
-        if not second.fainted:
+        if not second.fainted and not first.fainted:
             if result.defender_flinched:
                 information.append(f"{second.name} flinched!")
             else:
@@ -349,19 +348,19 @@ class World:
                     information=information,
                     move=second_move,
                 )
-        if first.has_ailment(Ailment.BURN):
+        if not first.fainted and first.has_ailment(Ailment.BURN):
             first.add_current_hp(-first.max_hp // 8)
             information.append(f"{first.name} took damage from burn!")
             self.check_and_observe_critter_faint(first, information)
-        if second.has_ailment(Ailment.BURN):
+        if not second.fainted and second.has_ailment(Ailment.BURN):
             second.add_current_hp(-second.max_hp // 8)
             information.append(f"{second.name} took damage from burn!")
             self.check_and_observe_critter_faint(second, information)
-        if first.has_ailment(Ailment.POISON):
+        if not first.fainted and first.has_ailment(Ailment.POISON):
             first.add_current_hp(-first.max_hp // 8)
             information.append(f"{first.name} took damage from poison!")
             self.check_and_observe_critter_faint(first, information)
-        if second.has_ailment(Ailment.POISON):
+        if not second.fainted and second.has_ailment(Ailment.POISON):
             second.add_current_hp(-second.max_hp // 8)
             information.append(f"{second.name} took damage from poison!")
             self.check_and_observe_critter_faint(second, information)
@@ -382,6 +381,25 @@ class World:
         if attacker.has_ailment(Ailment.PARALYSIS):
             if self.random.randint(0, 100) < 25:
                 information(f"{attacker.name} is paralyzed! It can't move!")
+                return TurnStepResult()
+        if attacker.has_ailment(Ailment.CONFUSION):
+            attacker_encounter_stages.confusion_turns -= 1
+            if attacker_encounter_stages.confusion_turns == 0:
+                attacker.ailments.remove(Ailment.CONFUSION)
+                information.append(f"{attacker.name} snapped out of its confusion!")
+            elif self.random.randint(0, 100) < 50:
+                information.append(
+                    f"{attacker.name} is confused! It hurt itself in its confusion!"
+                )
+                defender = attacker
+                defender_encounter_stages = attacker_encounter_stages
+        if attacker.has_ailment(Ailment.SLEEP):
+            attacker_encounter_stages.sleep_turns -= 1
+            if attacker_encounter_stages.sleep_turns == 0:
+                attacker.ailments.remove(Ailment.SLEEP)
+                information.append(f"{attacker.name} woke up!")
+            else:
+                information.append(f"{attacker.name} is asleep!")
                 return TurnStepResult()
         hit = (
             move.accuracy
@@ -417,7 +435,12 @@ class World:
             and move.ailment_chance >= self.random.randint(1, 100)
         ):
             defender.ailments.add(move.ailment)
-        return TurnStepResult(move.flinch_chance >= self.random.randint(1, 100))
+            if move.ailment is Ailment.CONFUSION:
+                defender_encounter_stages.confusion_turns = self.random.randint(1, 4)
+            if move.ailment is Ailment.SLEEP:
+                defender_encounter_stages.sleep_turns = self.random.randint(1, 3)
+        flinched_check = move.flinch_chance >= self.random.randint(1, 100)
+        return TurnStepResult(defender != attacker and flinched_check)
 
     def check_and_observe_critter_faint(self, critter: Critter, information: list[str]):
         if critter.current_hp <= 0:

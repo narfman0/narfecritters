@@ -30,6 +30,8 @@ class EncounterStages(Stats):
 
     evasion: int = 0
     accuracy: int = 0
+    sleep_turns: int = 0
+    confusion_turns: int = 0
 
     @property
     def attack_multipler(self):
