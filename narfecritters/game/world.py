@@ -1,6 +1,6 @@
 import logging
 import math
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from random import Random
 
 from pygame.math import Vector2
@@ -23,8 +23,8 @@ class Encounter:
     active_player_critter: Critter
     order_player_first: bool = True
     run_attempts: int = 0
-    enemy_stat_stages: EncounterStages = EncounterStages()
-    player_stat_stages: EncounterStages = EncounterStages()
+    enemy_stat_stages: EncounterStages = field(default_factory=EncounterStages)
+    player_stat_stages: EncounterStages = field(default_factory=EncounterStages)
 
 
 @dataclass
@@ -138,6 +138,7 @@ class World:
                 )
                 enemy = self.encyclopedia.create(
                     self.random,
+                    self.moves,
                     id=enemy_id,
                     level=level,
                 )

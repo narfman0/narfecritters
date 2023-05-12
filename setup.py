@@ -23,6 +23,7 @@ setup(
         "pygame",
         "pygame_gui",
         "pytmx",
+        "pyyaml",
     ],
     test_suite="tests",
 )

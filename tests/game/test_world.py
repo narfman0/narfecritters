@@ -9,8 +9,8 @@ class TestWorld(unittest.TestCase):
     def test_debuff(self):
         random = Random(x=12345)
         world = World(random=random)
-        critter2 = world.encyclopedia.create(random, id=1, level=5)
-        critter1 = world.encyclopedia.create(random, id=4, level=5)
+        critter2 = world.encyclopedia.create(random, world.moves, id=1, level=5)
+        critter1 = world.encyclopedia.create(random, world.moves, id=4, level=5)
         world.player.add_critter(critter1)
         move = world.moves.find_by_name("growl")
         move.target = MoveTarget.ALL_OPPONENTS
@@ -43,8 +43,8 @@ class TestWorld(unittest.TestCase):
     def test_turn(self):
         random = Random(x=12345)
         world = World(random=random)
-        critter1 = world.encyclopedia.create(random, id=4, level=5)
-        critter2 = world.encyclopedia.create(random, id=1, level=5)
+        critter1 = world.encyclopedia.create(random, world.moves, id=4, level=5)
+        critter2 = world.encyclopedia.create(random, world.moves, id=1, level=5)
         world.player.add_critter(critter1)
         world.encounter = Encounter(critter2, active_player_critter=critter1)
 
@@ -85,12 +85,14 @@ class TestWorld(unittest.TestCase):
 
     def test_all_moves(self):
         world = World()
-        attacker = world.encyclopedia.create(random=world.random, id=1, level=5)
+        attacker = world.encyclopedia.create(world.random, world.moves, id=1, level=5)
         world.player.add_critter(attacker)
         for move in world.moves.moves:
             defender_encounter_stages = EncounterStages()
             attacker_encounter_stages = EncounterStages()
-            defender = world.encyclopedia.create(random=world.random, id=1, level=1)
+            defender = world.encyclopedia.create(
+                world.random, world.moves, id=1, level=1
+            )
             world.encounter = Encounter(defender, active_player_critter=attacker)
             world.turn_step(
                 attacker,
@@ -103,7 +105,7 @@ class TestWorld(unittest.TestCase):
 
     def test_evolution(self):
         world = World()
-        critter = world.encyclopedia.create(random=world.random, id=1, level=16)
+        critter = world.encyclopedia.create(world.random, world.moves, id=1, level=16)
         world.player.add_critter(critter)
         world.detect_and_execute_evolution([])
         self.assertEqual(2, world.player.active_critter.id)

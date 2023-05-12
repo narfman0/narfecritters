@@ -1,6 +1,6 @@
 import os
 
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from dataclass_wizard import YAMLWizard
 
 
@@ -10,9 +10,13 @@ class XYPair:
     y: int
 
 
+def xypairsplooger():
+    return XYPair(800, 600)
+
+
 @dataclass
 class Settings(YAMLWizard):
-    window_size: XYPair = XYPair(800, 600)
+    window_size: XYPair = field(default_factory=xypairsplooger)
     tile_size: int = 32
 
     @classmethod

@@ -32,7 +32,9 @@ class Encyclopedia(YAMLWizard):
         target_species = self.find_by_id(target_species_id)
         critter.__dict__.update(target_species.__dict__)
 
-    def create(self, random: Random, name=None, id=None, level=0) -> Critter:
+    def create(
+        self, random: Random, moves: Moves, name=None, id=None, level=0
+    ) -> Critter:
         species = None
         if id:
             species = self.find_by_id(id)
@@ -49,7 +51,7 @@ class Encyclopedia(YAMLWizard):
         # only modeling medium-fast xp group
         instance.experience = max(instance.base_experience, level**3)
         instance.current_hp = instance.max_hp
-        instance.moves = [
+        species_moves = [
             move
             for move in instance.moves
             if move.learn_method == "egg"
@@ -58,4 +60,5 @@ class Encyclopedia(YAMLWizard):
                 and move.level_learned_at <= instance.level
             )
         ][0::4]
+        instance.moves = [moves.find_by_id(move.id) for move in species_moves]
         return instance
