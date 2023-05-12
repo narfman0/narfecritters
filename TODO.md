@@ -4,10 +4,7 @@
 
 * Moves
   * Observe special moves (spatk/spdef)
-  * Model critical hit
-  * Model multi-turn moves
   * Learn moves on levelup
-  * Disallow unsupported moves
 * Worldbuilding
   * Build world to encompass paths leading to areas with the three legendary birds
   * Intermediary zones hold critters that can potentially counter a separate path's legendary when leveled up (lvl 20-30?)
@@ -36,3 +33,7 @@
   * Predator/prey populations
   * Town advancement
 * Skill based minigames
+* Moves
+  * Model critical hit
+  * Model multi-turn moves
+  * Disallow unsupported moves
