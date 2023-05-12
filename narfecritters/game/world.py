@@ -100,8 +100,7 @@ class World:
         self.player.y = self.player.respawn_y
         self.set_area(self.player.respawn_area)
         for critter in self.player.critters:
-            critter.current_hp = critter.max_hp
-            critter.ailments.clear()
+            critter.heal()
 
     def move(
         self,
@@ -164,8 +163,7 @@ class World:
         for layer in range(0, 2):
             if self.map.get_tile_type(px, py, layer) == "heal":
                 for critter in self.player.critters:
-                    critter.current_hp = critter.max_hp
-                    critter.ailments.clear()
+                    critter.heal()
                 self.update_respawn()
                 LOGGER.info("Healed!")
             if self.map.get_tile_type(px, py, layer) == "transition":
@@ -356,10 +354,10 @@ class World:
                     move=second_move,
                 )
         if first.has_ailment(Ailment.POISON):
-            first.take_damage(first.max_hp // 8)
+            first.add_current_hp(-first.max_hp // 8)
             self.check_and_observe_critter_faint(first, information)
         if second.has_ailment(Ailment.POISON):
-            second.take_damage(second.max_hp // 8)
+            second.add_current_hp(-second.max_hp // 8)
             self.check_and_observe_critter_faint(second, information)
         return TurnResult(information, player_critter.fainted)
 
@@ -398,7 +396,7 @@ class World:
         )
         self.check_and_observe_critter_faint(defender, information)
         if move.healing:
-            defender.heal(round(defender.max_hp * (move.healing / 100)))
+            defender.add_current_hp(round(defender.max_hp * (move.healing / 100)))
         calculate_move_stat_changes(
             attacker,
             defender,
@@ -440,7 +438,7 @@ class World:
         )
         if result and result.damage:
             player_damage = result.damage
-            defender.take_damage(player_damage)
+            defender.add_current_hp(-player_damage)
             information_suffix = self.get_type_effectiveness_response_suffix(
                 result.type_factor
             )

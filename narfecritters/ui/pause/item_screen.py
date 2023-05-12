@@ -61,7 +61,7 @@ class ItemScreen(Screen):
                 self.world.player.remove_item(self.active_item_type)
                 if self.active_item_type == ItemType.POTION:
                     critter = self.world.player.critters[critter_slot_idx]
-                    critter.heal(POTION_HEAL_AMOUNT)
+                    critter.add_current_hp(POTION_HEAL_AMOUNT)
                     LOGGER.warn(f"Healed {critter.name}")
                 self.reinit()
 

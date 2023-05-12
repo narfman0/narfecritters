@@ -54,11 +54,12 @@ class Critter(Species, YAMLWizard):
     experience: Optional[int] = None
     ailments: set[Ailment] = field(default_factory=set)
 
-    def take_damage(self, damage: int):
-        self.current_hp = max(0, self.current_hp - damage)
+    def heal(self):
+        self.current_hp = self.max_hp
+        self.ailments.clear()
 
-    def heal(self, amount: int):
-        self.current_hp = min(self.max_hp, self.current_hp + amount)
+    def add_current_hp(self, amount: int):
+        self.current_hp = max(0, min(self.max_hp, self.current_hp + amount))
 
     def has_ailment(self, status: Ailment):
         return status in self.ailments
