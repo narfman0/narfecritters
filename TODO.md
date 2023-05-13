@@ -2,9 +2,7 @@
 
 ## Required
 
-* Moves
-  * Observe special moves (spatk/spdef)
-  * Learn moves on levelup
+* Moves - Learn moves on levelup
 * Worldbuilding
   * Build world to encompass paths leading to areas with the three legendary birds
   * Intermediary zones hold critters that can potentially counter a separate path's legendary when leveled up (lvl 20-30?)

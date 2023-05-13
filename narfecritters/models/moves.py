@@ -5,6 +5,12 @@ from dataclasses import dataclass, field
 from dataclass_wizard import YAMLWizard
 
 
+class DamageClass(Enum):
+    STATUS = auto()
+    PHYSICAL = auto()
+    SPECIAL = auto()
+
+
 class Ailment(Enum):
     NONE = auto()
     PARALYSIS = auto()
@@ -73,6 +79,7 @@ class Move:
     stat_chance: int
     accuracy: int
     ailment_chance: int
+    damage_class: DamageClass
     ailment: Optional[Ailment]
     category: MoveCategory = MoveCategory.DAMAGE
     power: Optional[int] = None

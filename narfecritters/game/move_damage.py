@@ -24,15 +24,20 @@ def calculate_base_damage(
     defender_encounter_stages: EncounterStages,
     move: Move,
 ):
+    if move.damage_class is DamageClass.PHYSICAL:
+        attack = attacker.attack * attacker_encounter_stages.attack_multipler
+        defense = defender.defense * defender_encounter_stages.defense_multipler
+    elif move.damage_class is DamageClass.SPECIAL:
+        attack = attacker.spattack * attacker_encounter_stages.spattack_multipler
+        defense = defender.spdefense * defender_encounter_stages.spdefense_multipler
+    else:
+        raise Exception(f"Error: status move {move.name} calculating base damage")
     return (
         round(
             (
                 (round((2 * attacker.level) / 5) + 2)
                 * move.power
-                * round(
-                    (attacker.attack * attacker_encounter_stages.attack_multipler)
-                    / (defender.defense * defender_encounter_stages.defense_multipler)
-                )
+                * round(attack / defense)
             )
             / 50
         )
@@ -63,7 +68,7 @@ def calculate_move_damage(
     """Follows gen5 dmg formula as defined: https://bulbapedia.bulbagarden.net/wiki/Damage#Generation_V_onward"""
     if move.category not in APPLICABILITY:
         return
-    if move.power is None:
+    if not move.power:
         print(
             f"Move {move.name} is trying to calculate damage, but the move has no power!"
         )
