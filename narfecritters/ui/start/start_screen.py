@@ -50,7 +50,10 @@ class StartScreen(Screen):
             if event.ui_element in self.buttons:
                 species = event.ui_element.species
                 critter = self.world.encyclopedia.create(
-                    self.world.random, self.world.moves, id=species.id, level=5
+                    self.world.random,
+                    self.world.moves,
+                    id=species.id,
+                    level=5,
                 )
                 LOGGER.info(f"{critter.name} chosen! Congratulations!")
                 self.world.player.add_critter(critter)
