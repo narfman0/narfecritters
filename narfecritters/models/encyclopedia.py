@@ -56,12 +56,16 @@ class Encyclopedia(YAMLWizard):
         # only modeling medium-fast xp group
         instance.experience = max(instance.base_experience, level**3)
         instance.current_hp = instance.max_hp
-        instance.moves = [
-            moves.find_by_id(move.id)
+        available_moves = [
+            move
             for move in instance.moves
             if (
                 move.learn_method == "level-up"
                 and move.level_learned_at <= instance.level
             )
-        ][0:3]
+        ]
+        instance.moves = random.sample(
+            [moves.find_by_id(move.id) for move in available_moves],
+            k=min(4, len(available_moves)),
+        )
         return instance

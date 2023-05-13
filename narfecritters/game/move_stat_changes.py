@@ -26,7 +26,9 @@ def calculate_move_stat_changes(
                 stat_change.name,
                 current_stat + stat_change.amount,
             )
-            information.append(f"{stat_change.name} changed for {defender.name}")
+            information.append(
+                f"{stat_change.name.capitalize()} changed for {defender.name}"
+            )
         if move.target in [
             MoveTarget.ALL_CRITTERS,
             MoveTarget.ENTIRE_FIELD,
@@ -43,4 +45,6 @@ def calculate_move_stat_changes(
                 stat_change.name,
                 current_stat + stat_change.amount,
             )
-            information.append(f"{stat_change.name} changed for {attacker.name}")
+            information.append(
+                f"{stat_change.name.capitalize()} changed for {attacker.name}"
+            )
