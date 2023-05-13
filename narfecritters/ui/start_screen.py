@@ -6,7 +6,7 @@ from pygame_gui.elements import UIButton
 
 from narfecritters.ui.area_screen import AreaScreen
 from narfecritters.ui.screen import Screen, ScreenManager
-from narfecritters.ui.settings import WINDOW_SIZE
+from narfecritters.ui.settings import WINDOW_SIZE, SETTINGS
 from narfecritters.game.world import DEFAULT_AREA, World
 
 
@@ -29,27 +29,28 @@ class StartScreen(Screen):
         self.buttons: list[UIButton] = []
         y = WINDOW_SIZE[1] // 2
         candidate_starters = [
-            self.world.encyclopedia.find_by_id(id) for id in [1, 4, 7, 25, 133]
+            self.world.encyclopedia.find_by_id(id)
+            for id in SETTINGS.candidate_starter_species
         ]
-        for candidate_starter_critters in candidate_starters:
+        for candidate_starter_species in candidate_starters:
             button = UIButton(
                 (
                     WINDOW_SIZE[0] / 2,
                     y,
                 ),
-                candidate_starter_critters.name_pretty,
+                candidate_starter_species.name_pretty,
                 manager=self.ui_manager,
             )
-            button.critter_id = candidate_starter_critters.id
+            button.species = candidate_starter_species
             self.buttons.append(button)
             y += 32
 
     def process_event(self, event):
         if event.type == UI_BUTTON_PRESSED:
             if event.ui_element in self.buttons:
-                critter_id = event.ui_element.critter_id
+                species = event.ui_element.species
                 critter = self.world.encyclopedia.create(
-                    self.world.random, self.world.moves, id=critter_id, level=5
+                    self.world.random, self.world.moves, id=species.id, level=5
                 )
                 LOGGER.info(f"{critter.name} chosen! Congratulations!")
                 self.world.player.add_critter(critter)

@@ -10,14 +10,21 @@ class XYPair:
     y: int
 
 
-def xypairsplooger():
+def window_size_default():
     return XYPair(800, 600)
+
+
+def candidate_starter_species_default():
+    return [1, 4, 7, 25, 133]
 
 
 @dataclass
 class Settings(YAMLWizard):
-    window_size: XYPair = field(default_factory=xypairsplooger)
+    window_size: XYPair = field(default_factory=window_size_default)
     tile_size: int = 32
+    candidate_starter_species: list[int] = field(
+        default_factory=candidate_starter_species_default
+    )
 
     @classmethod
     def load(cls, path="settings.yml"):
