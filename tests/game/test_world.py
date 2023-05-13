@@ -48,7 +48,7 @@ class TestWorld(unittest.TestCase):
         world.player.add_critter(critter1)
         world.encounter = Encounter(critter2, active_player_critter=critter1)
 
-        player_move = world.moves.find_by_id(critter1.moves[0].id)
+        player_move = world.moves.find_by_name("scratch")
         player_move.accuracy = 100
         self.assertEqual(5, critter1.level)
         self.assertEqual(125, critter1.experience)

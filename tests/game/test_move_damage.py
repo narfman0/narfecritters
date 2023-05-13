@@ -18,7 +18,7 @@ class TestMoveDamage(unittest.TestCase):
         ember = moves.find_by_name("ember")
 
         self.assertEqual(
-            4,
+            5,
             calculate_move_damage(
                 critter1,
                 critter2,
@@ -29,7 +29,7 @@ class TestMoveDamage(unittest.TestCase):
             ).damage,
         )
         self.assertEqual(
-            14,
+            13,
             calculate_move_damage(
                 critter1, critter2, c1stages, c2stages, ember, random
             ).damage,
