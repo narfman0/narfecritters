@@ -30,7 +30,9 @@ class Encyclopedia(YAMLWizard):
 
     def evolve(self, critter, target_species_id):
         target_species = self.find_by_id(target_species_id)
+        old_moves = critter.moves
         critter.__dict__.update(target_species.__dict__)
+        critter.moves = old_moves
 
     def create(
         self,

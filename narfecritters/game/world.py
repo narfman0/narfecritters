@@ -189,17 +189,35 @@ class World:
         )
 
     def end_encounter(self, win, information: list[str]):
-        current_level = self.active_critter.level
         if win:
-            self.grant_experience(information)
+            current_level = self.active_critter.level
+            self.grant_experience()
             if current_level < self.active_critter.level:
-                information.append(
-                    f"{self.active_critter.name} leveled up to {self.active_critter.level}"
-                )
-                self.detect_and_execute_evolution(information)
+                self.handle_level_up(information, current_level)
         self.encounter = None
         if self.active_critter is None:
             self.respawn()
+
+    def handle_level_up(self, information: list[str], previous_level: int):
+        information.append(
+            f"{self.active_critter.name} leveled up to {self.active_critter.level}"
+        )
+        self.active_critter.current_hp = self.active_critter.max_hp
+        self.detect_and_execute_evolution(information)
+        self.learn_moves_from_level_up(information, previous_level)
+
+    def learn_moves_from_level_up(self, information: list[str], previous_level: int):
+        for species_move in self.encyclopedia.find_by_id(self.active_critter.id).moves:
+            if (
+                species_move.level_learned_at > previous_level
+                and species_move.level_learned_at <= self.active_critter.level
+                and species_move.learn_method == "level-up"
+            ):
+                move = self.moves.find_by_id(species_move.id)
+                self.active_critter.moves.append(move)
+                information.append(
+                    f"{self.active_critter.name} learned {move.name_pretty}"
+                )
 
     def detect_and_execute_evolution(self, information: list[str]):
         previous_name = self.active_critter.name
@@ -220,7 +238,7 @@ class World:
         self.player.respawn_x = self.player.x
         self.player.respawn_y = self.player.y
 
-    def grant_experience(self, information: list[str]):
+    def grant_experience(self):
         # xp gain formula described: https://bulbapedia.bulbagarden.net/wiki/Experience
         xp_gain_level_scalar_numerator = int(
             round(math.sqrt(2 * self.enemy.level + 10))

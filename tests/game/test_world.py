@@ -110,6 +110,14 @@ class TestWorld(unittest.TestCase):
         world.detect_and_execute_evolution([])
         self.assertEqual(2, world.player.active_critter.id)
 
+    def test_handle_level_up(self):
+        world = World()
+        critter = world.encyclopedia.create(world.random, world.moves, id=4, level=17)
+        self.assertEqual(4, len(critter.moves))
+        world.player.add_critter(critter)
+        world.handle_level_up([], 16)
+        self.assertEqual(5, len(critter.moves))
+
     def test_save_load(self):
         npc = NPC(x=15, y=15)
         npc_slot = 5

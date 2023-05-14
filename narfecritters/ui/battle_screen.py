@@ -9,6 +9,7 @@ from pygame_gui.elements import UIButton
 from narfecritters.game.world import World
 from narfecritters.models.items import ItemType
 from narfecritters.ui.screen import Screen, ScreenManager
+from narfecritters.ui.move_select_screen import MoveSelectScreen
 from narfecritters.ui.settings import WINDOW_SIZE
 
 
@@ -86,7 +87,7 @@ class BattleScreen(Screen):
                 self.information_queue.extend(information)
                 self.initialize_information_elements()
             elif event.ui_element in self.information_elements:
-                self.information_queue.pop(0)
+                last_information = self.information_queue.pop(0)
                 self.kill_information_elements()
                 if self.information_queue:
                     self.initialize_information_elements()
@@ -94,6 +95,26 @@ class BattleScreen(Screen):
                     self.screen_manager.pop()
                 else:
                     self.initialize_menu_buttons()
+                if "leveled up to" in last_information:
+                    # TODO hack: Need to enrich information queue with a struct that describes a trigger
+                    # for other screen or things. It doesn't exist right now though, and while useful in general,
+                    # this is the only specific thing I need this for right now. Consider refactoring.
+                    if len(self.world.active_critter.moves) > 4:
+                        self.screen_manager.push(
+                            MoveSelectScreen(
+                                screen_manager=self.screen_manager,
+                                ui_manager=self.ui_manager,
+                                world=self.world,
+                            )
+                        )
+
+    def init(self):
+        if self.information_queue:
+            self.initialize_information_elements()
+        elif self.world.encounter is None:
+            self.screen_manager.pop()
+        else:
+            self.initialize_menu_buttons()
 
     def initialize_information_elements(self):
         y = WINDOW_SIZE[1] - (len(MenuOptions) + 1) * 32

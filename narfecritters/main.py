@@ -4,7 +4,7 @@ import pygame
 from pygame_gui import UIManager
 
 from narfecritters.util.logging import initialize_logging
-from narfecritters.ui.start.start_screen import StartScreen
+from narfecritters.ui.start_screen import StartScreen
 from narfecritters.ui.screen import ScreenManager
 from narfecritters.ui.settings import WINDOW_SIZE
 
