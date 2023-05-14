@@ -20,6 +20,12 @@ clean-pyc: ## remove Python file artifacts
 	find . -name '__pycache__' -exec rm -rf {} +
 	find . -name '*~' -exec rm -f {} +
 
+db-pull:
+	rsync -avz ${NARFECRITTERS_DB_REMOTE} .
+
+db-push:
+	rsync -avz data/ ${NARFECRITTERS_DB_REMOTE}
+
 init:
 	pip install -r .
 

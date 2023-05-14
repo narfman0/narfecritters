@@ -101,5 +101,4 @@ bin/
 data/db/
 data/sprites/
 data/tiled/
-db.*
 settings.yml
