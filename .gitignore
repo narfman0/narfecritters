@@ -101,5 +101,5 @@ bin/
 data/db/
 data/sprites/
 data/tiled/
-db.bat
+db.*
 settings.yml
