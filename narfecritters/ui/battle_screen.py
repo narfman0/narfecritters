@@ -38,6 +38,7 @@ class BattleScreen(Screen):
         self.fight_buttons: list[UIButton] = []
         self.critter_buttons: list[UIButton] = []
         self.enemy_critters_image = self.load_scaled_critters_image(world.enemy.id, 4)
+        self.initialize_background()
         self.reload_self_critter_image()
         self.initialize_information_elements()
 
@@ -116,6 +117,15 @@ class BattleScreen(Screen):
         else:
             self.initialize_menu_buttons()
 
+    def initialize_background(self):
+        self.background_image = pygame.image.load(
+            "data/images/battles/grass.png"
+        ).convert()
+        width, height = self.background_image.get_size()
+        background_x = WINDOW_SIZE[0] // 2 - width // 2
+        background_y = WINDOW_SIZE[1] // 2 - height // 2
+        self.background_xy = (background_x, background_y)
+
     def initialize_information_elements(self):
         y = WINDOW_SIZE[1] - (len(MenuOptions) + 1) * 32
         information_text = self.information_queue[0]
@@ -193,7 +203,7 @@ class BattleScreen(Screen):
         self.kill_elements(self.information_elements)
 
     def draw(self, surface: pygame.Surface):
-        surface.blit(self.background, (0, 0))
+        surface.blit(self.background_image, self.background_xy)
         surface.blit(
             self.enemy_critters_image,
             (
