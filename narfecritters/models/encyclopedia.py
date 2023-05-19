@@ -28,11 +28,9 @@ class Encyclopedia(YAMLWizard):
     def find_by_name(self, name):
         return self.find_by_id(self.name_to_id[name])
 
-    def evolve(self, critter, target_species_id):
+    def evolve(self, critter: Critter, target_species_id):
         target_species = self.find_by_id(target_species_id)
-        old_moves = critter.moves
-        critter.__dict__.update(target_species.__dict__)
-        critter.moves = old_moves
+        critter.__dict__.update(target_species.critter_attributes)
 
     def create(
         self,
@@ -49,25 +47,27 @@ class Encyclopedia(YAMLWizard):
             species = self.find_by_name(name)
         if species is None:
             raise Exception(f"Species name {name} or id {id} not found")
-        instance = Critter(uuid=uuid.uuid1(), **species.__dict__)
-        instance.name = (
-            instance.name.capitalize()
-        )  # the species has the template name, this is a specific noun
-        instance.evs = Stats()
-        instance.ivs = Stats.create_random_ivs(random)
-        # only modeling medium-fast xp group
-        instance.experience = max(instance.base_experience, level**3)
-        instance.current_hp = instance.max_hp
+
+        ivs = Stats.create_random_ivs(random)
         available_moves = [
             move
-            for move in instance.moves
-            if (
-                move.learn_method == "level-up"
-                and move.level_learned_at <= instance.level
-            )
+            for move in species.moves
+            if (move.learn_method == "level-up" and move.level_learned_at <= level)
         ]
-        instance.moves = random.sample(
+        moves = random.sample(
             [moves.find_by_id(move.id) for move in available_moves],
             k=min(4, len(available_moves)),
         )
+        # only modeling medium-fast xp group
+        experience = max(species.base_experience, level**3)
+        instance = Critter(
+            uuid=uuid.uuid1(),
+            moves=moves,
+            ivs=ivs,
+            evs=Stats(),
+            experience=experience,
+            **species.critter_attributes,
+            name=species.name_pretty,
+        )
+        instance.heal()
         return instance

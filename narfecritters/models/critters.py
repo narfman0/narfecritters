@@ -44,9 +44,26 @@ class Species(YAMLWizard):
     def name_pretty(self):
         return self.name.replace("-", " ").capitalize()
 
+    @property
+    def critter_attributes(self):
+        attributes = dict(self.__dict__)
+        del attributes["moves"]
+        del attributes["name"]
+        return attributes
+
 
 @dataclass
-class Critter(Species, YAMLWizard):
+class Critter(YAMLWizard):
+    id: int
+    name: str
+    base_experience: int
+    base_stats: Stats
+    type_ids: list[int]
+    moves: list[Move]
+    evolution_triggers: list[EvolutionTrigger]
+    capture_rate: Optional[int]
+    flavor_text: Optional[str]
+
     uuid: UUID
     ivs: Optional[Stats] = None
     evs: Optional[Stats] = None
