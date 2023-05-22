@@ -1,4 +1,4 @@
-default: test
+default: m
 
 clean: clean-build clean-pyc clean-installer
 c: clean

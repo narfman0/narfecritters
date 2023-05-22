@@ -155,7 +155,7 @@ class World:
     def detect_area_transition(self):
         px = int(self.player.x // TILE_SIZE)
         py = int(self.player.y // TILE_SIZE)
-        for layer in range(0, 2):
+        for layer in range(self.map.get_tile_layer_count()):
             if self.map.get_tile_type(px, py, layer) == "heal":
                 for critter in self.player.critters:
                     critter.heal()
@@ -172,7 +172,7 @@ class World:
     def detect_and_handle_collisions(self, target_x, target_y):
         px = target_x // TILE_SIZE
         py = target_y // TILE_SIZE
-        for layer in range(0, 2):
+        for layer in range(self.map.get_tile_layer_count()):
             if self.map.has_colliders(px, py, layer):
                 return True
         if self.detect_merchant():
