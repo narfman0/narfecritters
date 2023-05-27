@@ -18,6 +18,14 @@ class EncounterLevel:
     sigma: float
 
 
+@dataclass
+class SpecialEncounter:
+    name: str
+    level: int
+    tile_x: int
+    tile_y: int
+
+
 class Map:
     def __init__(self, area: str):
         self.area = area
@@ -51,6 +59,15 @@ class Map:
         destination_area = object.properties["Destination"]
         dest_x, dest_y = map(int, object.properties["DestinationXY"].split(","))
         return TransitionDetails(destination_area, dest_x, dest_y)
+
+    def get_area_special_encounters(self) -> list[SpecialEncounter]:
+        for tile_x, tile_y in self.get_area_npc_locations():
+            npc = self.tmxdata.get_object_by_name(f"npc,{tile_x},{tile_y}")
+            name = npc.properties["Name"]
+            if name != "merchant":
+                yield SpecialEncounter(
+                    name, int(npc.properties["Level"]), tile_x, tile_y
+                )
 
     def get_area_merchant_details(self) -> None | tuple[int, int]:
         for tile_x, tile_y in self.get_area_npc_locations():

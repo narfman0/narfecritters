@@ -2,7 +2,6 @@
 
 ## Required
 
-* Model special encounters like legendaries in maps
 * Worldbuilding
   * Build world to encompass paths leading to areas with the three legendary birds
   * Intermediary zones hold critters that can potentially counter a separate path's legendary when leveled up (lvl 20-30?)

@@ -142,15 +142,23 @@ class World:
                     id=enemy_id,
                     level=level,
                 )
-                order_player_first = enemy.speed < self.active_critter.speed
-                if enemy.speed == self.active_critter.speed:
-                    order_player_first = self.random.choice([False, True])
-                self.encounter = Encounter(
-                    enemy=enemy,
-                    order_player_first=order_player_first,
-                    active_player_critter=self.player.active_critter,
-                )
+                self.start_encounter(enemy)
                 return True
+
+    def start_encounter(self, enemy: Critter):
+        order_player_first = enemy.speed < self.active_critter.speed
+        if enemy.speed == self.active_critter.speed:
+            order_player_first = self.random.choice([False, True])
+        self.encounter = Encounter(
+            enemy=enemy,
+            order_player_first=order_player_first,
+            active_player_critter=self.player.active_critter,
+        )
+
+    def start_special_encounter(self, npc: NPC):
+        self.special_encounters.remove(npc)
+        enemy = npc.active_critter
+        self.start_encounter(enemy)
 
     def detect_area_transition(self):
         px = int(self.player.x // TILE_SIZE)
@@ -175,7 +183,7 @@ class World:
         for layer in range(self.map.get_tile_layer_count()):
             if self.map.has_colliders(px, py, layer):
                 return True
-        if self.detect_merchant():
+        if self.detect_merchant() or self.detect_special_encounter():
             return True
         return False
 
@@ -187,6 +195,16 @@ class World:
             self.merchant.x // TILE_SIZE == target_x
             and self.merchant.y // TILE_SIZE == target_y
         )
+
+    def detect_special_encounter(self) -> None | NPC:
+        target_x, target_y = self.get_player_facing_tile()
+        for special_encounter in self.special_encounters:
+            if (
+                special_encounter.x // TILE_SIZE == target_x
+                or special_encounter.y // TILE_SIZE == target_y
+            ):
+                return special_encounter
+        return None
 
     def end_encounter(self, win, information: list[str]):
         if win:
@@ -399,7 +417,7 @@ class World:
             move = self.moves.find_by_id(self.random.choice(attacker.moves).id)
         if attacker.has_ailment(Ailment.PARALYSIS):
             if self.random.randint(0, 100) < 25:
-                information(f"{attacker.name} is paralyzed! It can't move!")
+                information.append(f"{attacker.name} is paralyzed! It can't move!")
                 return TurnStepResult()
         if attacker.has_ailment(Ailment.CONFUSION):
             attacker_encounter_stages.confusion_turns -= 1
@@ -511,6 +529,7 @@ class World:
         if area == DEFAULT_AREA:
             start_x, start_y = self.map.get_start_tile()
         self.spawn_merchant()
+        self.spawn_special_encounters()
         self.candidate_encounters = self.map.get_candidate_encounters(self.encyclopedia)
 
     def spawn_merchant(self):
@@ -522,6 +541,20 @@ class World:
             self.merchant = NPC(x, y, sprite="npc06")
         else:
             self.merchant = None
+
+    def spawn_special_encounters(self):
+        self.special_encounters: list[NPC] = []
+        for special_encounter in self.map.get_area_special_encounters():
+            x = TILE_SIZE * special_encounter.tile_x + TILE_SIZE // 2
+            y = TILE_SIZE * special_encounter.tile_y + TILE_SIZE // 2
+            critter = self.encyclopedia.create(
+                self.random,
+                self.moves,
+                name=special_encounter.name,
+                level=special_encounter.level,
+            )
+            npc = NPC(x=x, y=y, critters=[critter], active_critters=[critter.uuid])
+            self.special_encounters.append(npc)
 
     def get_player_facing_tile(self) -> tuple[int, int]:
         """Return the tile the player is facing, given their direction"""

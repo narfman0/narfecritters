@@ -3,7 +3,7 @@ import logging
 import pygame
 from pygame_gui import UIManager
 
-from narfecritters.models import Direction
+from narfecritters.models import Direction, NPC
 from narfecritters.game.world import World
 from narfecritters.ui.battle_screen import BattleScreen
 from narfecritters.ui.merchant.merchant_screen import MerchantScreen
@@ -33,6 +33,7 @@ class AreaScreen(Screen):
         self.sprites = pygame.sprite.Group(self.player_sprite)
         self.world.set_area(area)
         self.merchant_sprite = None
+        self.area_species_id_to_images: dict[int, pygame.sprite.Sprite] = {}
 
     def update(self, dt: float):
         if (
@@ -49,6 +50,12 @@ class AreaScreen(Screen):
             if self.world.detect_merchant():
                 self.screen_manager.push(
                     MerchantScreen(self.ui_manager, self.screen_manager, self.world)
+                )
+            special_encounter = self.world.detect_special_encounter()
+            if special_encounter:
+                self.world.start_special_encounter(special_encounter)
+                self.screen_manager.push(
+                    BattleScreen(self.ui_manager, self.screen_manager, self.world)
                 )
         if not self.world.move_action:
             self.player_sprite.stop()
@@ -77,10 +84,8 @@ class AreaScreen(Screen):
         if self.world.merchant:
             if not self.merchant_sprite:
                 self.merchant_sprite = NPCSprite("npc06", 1, offset=(0, -4))
-            self.merchant_sprite.set_position(
-                WINDOW_SIZE[0] // 2 + self.world.merchant.x - self.world.player.x,
-                WINDOW_SIZE[1] // 2 + self.world.merchant.y - self.world.player.y,
-            )
+            x, y = self.get_npc_draw_position(self.world.merchant)
+            self.merchant_sprite.set_position(x, y)
             if not self.sprites.has(self.merchant_sprite):
                 self.sprites.add(self.merchant_sprite)
         elif self.world.merchant is None and self.merchant_sprite:
@@ -120,6 +125,17 @@ class AreaScreen(Screen):
         surface.blit(self.background, (0, 0))
         self.draw_terrain(surface)
         self.sprites.draw(surface)
+        for npc in self.world.special_encounters:
+            image = self.area_species_id_to_images.get(npc.active_critter.id)
+            if not image:
+                path = f"data/sprites/critters/front/{npc.active_critter.id}.png"
+                image = pygame.image.load(path).convert_alpha()
+                self.area_species_id_to_images[npc.active_critter.id] = image
+            x, y = self.get_npc_draw_position(npc)
+            size_x, size_y = image.get_size()
+            x -= size_x // 2
+            y += TILE_SIZE - size_y
+            surface.blit(image, (x, y))
 
     def draw_terrain(self, surface):
         px = self.world.player.x
@@ -142,3 +158,8 @@ class AreaScreen(Screen):
                                 WINDOW_SIZE[1] // 2 + y * TILE_SIZE - py,
                             ),
                         )
+
+    def get_npc_draw_position(self, npc: NPC):
+        x = WINDOW_SIZE[0] // 2 + npc.x - self.world.player.x
+        y = WINDOW_SIZE[1] // 2 + npc.y - self.world.player.y
+        return x, y
