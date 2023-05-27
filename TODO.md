@@ -2,7 +2,6 @@
 
 ## Required
 
-* Random encounters in cavelike environment
 * Model special encounters like legendaries in maps
 * Worldbuilding
   * Build world to encompass paths leading to areas with the three legendary birds

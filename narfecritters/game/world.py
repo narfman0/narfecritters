@@ -129,8 +129,8 @@ class World:
         for layer in range(self.map.get_tile_layer_count()):
             if (
                 self.map.get_tile_type(px, py, layer) == "tallgrass"
-                and self.random.random() < ENCOUNTER_PROBABILITY
-            ):
+                or self.map.is_area_cave()
+            ) and self.random.random() < ENCOUNTER_PROBABILITY:
                 enemy_id = self.random.choice(self.candidate_encounters)
                 encounter_level = self.map.get_area_encounter_level()
                 level = round(

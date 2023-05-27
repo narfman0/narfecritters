@@ -62,6 +62,9 @@ class Map:
     def get_tile_layer_count(self):
         return len(list(self.tmxdata.visible_tile_layers))
 
+    def is_area_cave(self):
+        return self.tmxdata.properties.get("AreaType") == "cave"
+
     @property
     def width(self):
         return self.tmxdata.width
