@@ -53,10 +53,17 @@ class Map:
         return TransitionDetails(destination_area, dest_x, dest_y)
 
     def get_area_merchant_details(self) -> None | tuple[int, int]:
-        data = self.tmxdata.properties.get("Merchant")
+        for tile_x, tile_y in self.get_area_npc_locations():
+            npc = self.tmxdata.get_object_by_name(f"npc,{tile_x},{tile_y}")
+            if npc.properties["Name"] == "merchant":
+                return tile_x, tile_y
+
+    def get_area_npc_locations(self) -> list[int, int]:
+        data = self.tmxdata.properties.get("NPCs")
         if not data:
-            return None
-        return map(int, data.split(","))
+            return []
+        for datum_str in data.split("\n"):
+            yield map(int, datum_str.split(","))
 
     def has_colliders(self, tile_x, tile_y, layer):
         tile_props = self.tmxdata.get_tile_properties(tile_x, tile_y, layer) or {}
