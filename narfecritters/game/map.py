@@ -52,6 +52,12 @@ class Map:
         dest_x, dest_y = map(int, object.properties["DestinationXY"].split(","))
         return TransitionDetails(destination_area, dest_x, dest_y)
 
+    def get_area_merchant_details(self) -> None | tuple[int, int]:
+        data = self.tmxdata.properties.get("Merchant")
+        if not data:
+            return None
+        return map(int, data.split(","))
+
     def has_colliders(self, tile_x, tile_y, layer):
         tile_props = self.tmxdata.get_tile_properties(tile_x, tile_y, layer) or {}
         return tile_props.get("colliders")

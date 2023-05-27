@@ -510,17 +510,18 @@ class World:
 
         if area == DEFAULT_AREA:
             start_x, start_y = self.map.get_start_tile()
-            merchant_x, merchant_y = self.random.choices([-3, -2, -1, 1, 2, 3], k=2)
-            self.spawn_merchant(start_x + merchant_x, start_y + merchant_y)
-        else:
-            self.merchant = None
-
+        self.spawn_merchant()
         self.candidate_encounters = self.map.get_candidate_encounters(self.encyclopedia)
 
-    def spawn_merchant(self, tile_x, tile_y):
-        x = TILE_SIZE * tile_x + TILE_SIZE // 2
-        y = TILE_SIZE * tile_y + TILE_SIZE // 2
-        self.merchant = NPC(x, y, sprite="npc06")
+    def spawn_merchant(self):
+        merchant_details = self.map.get_area_merchant_details()
+        if merchant_details:
+            tile_x, tile_y = merchant_details
+            x = TILE_SIZE * tile_x + TILE_SIZE // 2
+            y = TILE_SIZE * tile_y + TILE_SIZE // 2
+            self.merchant = NPC(x, y, sprite="npc06")
+        else:
+            self.merchant = None
 
     def get_player_facing_tile(self) -> tuple[int, int]:
         """Return the tile the player is facing, given their direction"""
