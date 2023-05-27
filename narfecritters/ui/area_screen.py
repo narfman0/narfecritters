@@ -124,7 +124,6 @@ class AreaScreen(Screen):
     def draw(self, surface: pygame.Surface):
         surface.blit(self.background, (0, 0))
         self.draw_terrain(surface)
-        self.sprites.draw(surface)
         for npc in self.world.special_encounters:
             image = self.area_species_id_to_images.get(npc.active_critter.id)
             if not image:
@@ -158,6 +157,8 @@ class AreaScreen(Screen):
                                 WINDOW_SIZE[1] // 2 + y * TILE_SIZE - py,
                             ),
                         )
+            if self.world.map.tmxdata.layers[layer].name == "Tile Layer 2":
+                self.sprites.draw(surface)
 
     def get_npc_draw_position(self, npc: NPC):
         x = WINDOW_SIZE[0] // 2 + npc.x - self.world.player.x
