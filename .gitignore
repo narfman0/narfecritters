@@ -98,5 +98,5 @@ output/
 taspart.fm2
 bin/
 
-data/*
+data/
 settings.yml
