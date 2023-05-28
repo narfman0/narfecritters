@@ -12,7 +12,7 @@ from narfecritters.game.move_stat_changes import calculate_move_stat_changes
 from narfecritters.game.map import Map
 
 LOGGER = logging.getLogger(__name__)
-ENCOUNTER_PROBABILITY = 0.1
+ENCOUNTER_PROBABILITY = 0.02
 MOVE_SPEED = 200
 DEFAULT_AREA = "overworld"
 
