@@ -201,7 +201,7 @@ class World:
         for special_encounter in self.special_encounters:
             if (
                 special_encounter.x // TILE_SIZE == target_x
-                or special_encounter.y // TILE_SIZE == target_y
+                and special_encounter.y // TILE_SIZE == target_y
             ):
                 return special_encounter
         return None
