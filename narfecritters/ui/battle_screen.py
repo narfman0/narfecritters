@@ -161,7 +161,7 @@ class BattleScreen(Screen):
             self.critter_buttons.append(
                 UIButton(
                     (WINDOW_SIZE[0] - 128, y),
-                    critter.name_pretty,
+                    critter.name,
                     manager=self.ui_manager,
                 )
             )

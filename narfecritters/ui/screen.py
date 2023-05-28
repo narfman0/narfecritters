@@ -1,4 +1,5 @@
 from pygame.event import Event
+from pygame.image import load as load_image
 from pygame.surface import Surface
 from pygame_gui import UIManager
 from pygame_gui.core import UIElement
@@ -9,8 +10,7 @@ from narfecritters.ui.settings import WINDOW_SIZE
 class Screen:
     def __init__(self, ui_manager: UIManager):
         self.ui_manager = ui_manager
-        self.background = Surface(WINDOW_SIZE)
-        self.background.fill("gray")
+        self.background = load_image("data/images/background.png").convert_alpha()
 
     def init(self):
         pass
@@ -22,7 +22,7 @@ class Screen:
         pass
 
     def draw(self, surface: Surface):
-        pass
+        surface.blit(self.background, (WINDOW_SIZE[0] // 2, WINDOW_SIZE[1] // 2))
 
     def kill(self):
         pass
