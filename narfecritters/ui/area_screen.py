@@ -29,7 +29,7 @@ class AreaScreen(Screen):
         super().__init__(ui_manager)
         self.screen_manager = screen_manager
         self.world = world
-        self.player_sprite = NPCSprite("player", 0.8, offset=(0, -4))
+        self.player_sprite = NPCSprite("player", 0.8, offset=(0, -7))
         self.sprites = pygame.sprite.Group(self.player_sprite)
         self.world.set_area(area)
         self.merchant_sprite = None
@@ -83,7 +83,7 @@ class AreaScreen(Screen):
     def update_merchant_sprite(self):
         if self.world.merchant:
             if not self.merchant_sprite:
-                self.merchant_sprite = NPCSprite("npc06", 1, offset=(0, -4))
+                self.merchant_sprite = NPCSprite("npc06", 1, offset=(0, -7))
             x, y = self.get_npc_draw_position(self.world.merchant)
             self.merchant_sprite.set_position(x, y)
             if not self.sprites.has(self.merchant_sprite):
