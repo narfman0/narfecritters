@@ -1,5 +1,6 @@
 import logging
 from enum import Enum
+from sys import exit
 
 import pygame
 from pygame_gui import UI_BUTTON_PRESSED, UIManager

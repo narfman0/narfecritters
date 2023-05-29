@@ -33,11 +33,10 @@ init-dev:
 	pip install -r requirements_test.txt
 
 pyinstaller: clean
-	pyinstaller --noconfirm --onefile --console \
+	pyinstaller --noconfirm --onefile --windowed \
 		-n narfecritters --uac-admin \
 		app.py
-	cp -r data/ dist/
-	cp config.ini.sample dist/config.ini
+	rsync -av --exclude='.git' data dist/
 	cp README.* dist/
 	7z a narfecritters.zip dist/*
 	7z rn narfecritters.zip dist narfecritters
