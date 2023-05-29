@@ -25,6 +25,8 @@ class Settings(YAMLWizard):
     candidate_starter_species: list[int] = field(
         default_factory=candidate_starter_species_default
     )
+    encounter_probability: float = 0.05
+    default_area: str = "overworld"
 
     @classmethod
     def load(cls, path="settings.yml"):
@@ -36,3 +38,5 @@ class Settings(YAMLWizard):
 SETTINGS = Settings.load()
 WINDOW_SIZE = (SETTINGS.window_size.x, SETTINGS.window_size.y)
 TILE_SIZE = SETTINGS.tile_size
+ENCOUNTER_PROBABILITY = SETTINGS.encounter_probability
+DEFAULT_AREA = SETTINGS.default_area

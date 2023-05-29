@@ -5,16 +5,14 @@ from random import Random
 
 from pygame.math import Vector2
 
-from narfecritters.ui.settings import TILE_SIZE
+from narfecritters.ui.settings import TILE_SIZE, ENCOUNTER_PROBABILITY, DEFAULT_AREA
 from narfecritters.models import *
 from narfecritters.game.move_damage import calculate_move_damage
 from narfecritters.game.move_stat_changes import calculate_move_stat_changes
 from narfecritters.game.map import Map
 
 LOGGER = logging.getLogger(__name__)
-ENCOUNTER_PROBABILITY = 0.02
 MOVE_SPEED = 200
-DEFAULT_AREA = "overworld"
 
 
 @dataclass
